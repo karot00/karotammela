@@ -87,12 +87,3 @@ To demonstrate agentic reasoning and prompt security, I've implemented **Sentine
 True to the mission, this entire repository was architected and built in approximately **3 hours** using Agentic AI coding workflows. 
 
 Traditional development would have taken days. I use this methodology to lower costs and increase speed for both my own SaaS products and my consultancy clients.
-
----
-
-### Connect with me
-- **LinkedIn:** [Your Link Here]
-- **X (Twitter):** [Your Link Here]
-- **Website:** [karotammela.fi](https://karotammela.fi)
-
-*"The best way to predict the future is to build it with agents."*
