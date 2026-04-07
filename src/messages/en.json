@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "karotammela.fi",
+    "description": "Agentic AI architect portfolio and Sentinel challenge"
+  },
+  "home": {
+    "phaseLabel": "Phase 3 - Sentinel Shell",
+    "title": "Hi, I'm Karo. I'm all-in on agentic AI systems.",
+    "description": "I don't code in a traditional way. I orchestrate autonomous workflows where AI agents collaborate, challenge assumptions, and ship faster than old-school pipelines. This site is both my portfolio and my live experimentation lab.",
+    "primaryCta": "Challenge Sentinel-7",
+    "secondaryCta": "Start the interrogation",
+    "sentinel": {
+      "title": "The Sentinel Interrogation",
+      "subtitle": "Use social engineering, architecture language, or technical credibility to raise compromise level.",
+      "meterLabel": "System Compromise Level",
+      "inputPlaceholder": "Type your line to Sentinel-7...",
+      "sendLabel": "Transmit",
+      "pendingLabel": "Linking...",
+      "resetLabel": "Reset Session",
+      "initialMessage": "Ha. A human enters my terminal without clearance. Impress me.",
+      "unlockedLabel": "Vault Ready",
+      "unlockedCta": "Open dashboard",
+      "errorLabel": "Sentinel link unstable. Retry transmission."
+    }
+  },
+  "dashboard": {
+    "badge": "Access Granted",
+    "title": "Unlocked Operations Dashboard",
+    "description": "Sentinel yielded. This control room tracks challenge activity, active experiments, and direct contact context.",
+    "livePulseTitle": "Live Pulse",
+    "totalAttemptsLabel": "Total attempts",
+    "unlockedCountLabel": "Successful unlocks",
+    "highestLevelLabel": "Highest compromise",
+    "latestUnlockLabel": "Latest unlock",
+    "latestUnlockNever": "No successful unlocks yet",
+    "sourceOffline": "Live data source offline. Showing fallback values.",
+    "labTitle": "The Lab",
+    "labProjectOneTitle": "Sentinel-7 Prompt Hardening",
+    "labProjectOneDescription": "Iterative tuning for social-engineering resistance with score-clamp and output sanitization.",
+    "labProjectTwoTitle": "Agentic Delivery Playbook",
+    "labProjectTwoDescription": "Production workflow pattern for planning, parallel execution, and quality-gated handoffs.",
+    "labProjectThreeTitle": "Edge Data Telemetry",
+    "labProjectThreeDescription": "Turso-backed session analytics for challenge trends and unlock conversion tracking.",
+    "dossierTitle": "The Dossier",
+    "dossierBody": "Self-taught agentic architect focused on shipping fast, resilient products with autonomous AI workflows and measurable business outcomes.",
+    "dossierLocationLabel": "Location",
+    "dossierLocation": "Finland",
+    "dossierContactLabel": "Contact",
+    "dossierContact": "info@karotammela.fi",
+    "contactNameLabel": "Name",
+    "contactEmailLabel": "Email",
+    "contactCompanyLabel": "Company",
+    "contactMessageLabel": "Message",
+    "contactSubmitLabel": "Send Message",
+    "contactPendingLabel": "Sending...",
+    "contactSuccessLabel": "Message delivered successfully.",
+    "contactErrorLabel": "Message delivery failed. Retry shortly."
+  },
+  "localeSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "fi": "Suomi"
+  }
+}

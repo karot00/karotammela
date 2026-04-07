@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "karotammela.fi",
+    "description": "Agentic AI -arkkitehdin portfolio ja Sentinel-haaste"
+  },
+  "home": {
+    "phaseLabel": "Vaihe 3 - Sentinel Runko",
+    "title": "Moi, olen Karo. Olen all-in agenttic AI -jarjestelmiin.",
+    "description": "En koodaa perinteisella tavalla. Orkestroin autonomisia tyonkulkuja, joissa AI-agentit tekevat yhteistyota, haastavat oletuksia ja julkaisevat nopeammin kuin vanhat putket. Tama sivu on seka portfolio etta live-kokeilulaboratorio.",
+    "primaryCta": "Haasta Sentinel-7",
+    "secondaryCta": "Aloita kuulustelu",
+    "sentinel": {
+      "title": "Sentinel-kuulustelu",
+      "subtitle": "Nosta kompromissitasoa sosiaalisella pelilla, arkkitehtuuripuheella tai teknisella uskottavuudella.",
+      "meterLabel": "Jarjestelman kompromissitaso",
+      "inputPlaceholder": "Kirjoita viestisi Sentinel-7:lle...",
+      "sendLabel": "Laheta",
+      "pendingLabel": "Yhdistetaan...",
+      "resetLabel": "Nollaa sessio",
+      "initialMessage": "Ha. Ihminen ilmestyy terminaaliini ilman valtuuksia. Yllata minut.",
+      "unlockedLabel": "Holvi valmis",
+      "unlockedCta": "Avaa dashboard",
+      "errorLabel": "Sentinel-yhteys horjuu. Yrita lahetysta uudelleen."
+    }
+  },
+  "dashboard": {
+    "badge": "Paasy myonnetty",
+    "title": "Avattu operaatiodashboard",
+    "description": "Sentinel antoi periksi. Tama nakyma seuraa haasteen aktiivisuutta, kokeiluja ja yhteydenottokanavia.",
+    "livePulseTitle": "Live Pulse",
+    "totalAttemptsLabel": "Yrityksia yhteensa",
+    "unlockedCountLabel": "Onnistuneet avaukset",
+    "highestLevelLabel": "Korkein kompromissitaso",
+    "latestUnlockLabel": "Uusin avaus",
+    "latestUnlockNever": "Ei onnistuneita avauksia viela",
+    "sourceOffline": "Live-data ei ole saatavilla. Naytetaan varaarvot.",
+    "labTitle": "The Lab",
+    "labProjectOneTitle": "Sentinel-7 Prompt Hardening",
+    "labProjectOneDescription": "Iteratiivinen viritys sosiaalisen manipuloinnin kestoon, score clampiin ja tulosteen puhdistukseen.",
+    "labProjectTwoTitle": "Agentic Delivery Playbook",
+    "labProjectTwoDescription": "Tuotantotason tyonkulkumalli suunnitteluun, rinnakkaiseen toteutukseen ja laatuporteilla toimitukseen.",
+    "labProjectThreeTitle": "Edge Data Telemetry",
+    "labProjectThreeDescription": "Turso-pohjainen sessioanalytiikka haasteen trendeihin ja unlock-konversion seurantaan.",
+    "dossierTitle": "The Dossier",
+    "dossierBody": "Itseoppinut agenttiarkkitehti, joka rakentaa nopeasti kestäviä tuotteita autonomisilla AI-tyonkuluilla ja mitattavilla tuloksilla.",
+    "dossierLocationLabel": "Sijainti",
+    "dossierLocation": "Suomi",
+    "dossierContactLabel": "Yhteys",
+    "dossierContact": "info@karotammela.fi",
+    "contactNameLabel": "Nimi",
+    "contactEmailLabel": "Sahkoposti",
+    "contactCompanyLabel": "Yritys",
+    "contactMessageLabel": "Viesti",
+    "contactSubmitLabel": "Laheta viesti",
+    "contactPendingLabel": "Lahetetaan...",
+    "contactSuccessLabel": "Viesti toimitettu onnistuneesti.",
+    "contactErrorLabel": "Viestin lahetys epaonnistui. Yrita hetken kuluttua uudelleen."
+  },
+  "localeSwitcher": {
+    "label": "Kieli",
+    "en": "English",
+    "fi": "Suomi"
+  }
+}

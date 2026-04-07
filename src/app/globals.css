@@ -49,38 +49,38 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #101114;
+  --card-foreground: #ededed;
+  --popover: #121318;
+  --popover-foreground: #ededed;
+  --primary: #00d2ff;
+  --primary-foreground: #06131a;
+  --secondary: #171a1f;
+  --secondary-foreground: #d4d8df;
+  --muted: #14161b;
+  --muted-foreground: #9da2ad;
+  --accent: #ff8c00;
+  --accent-foreground: #231200;
+  --destructive: #dc2626;
+  --border: #272a31;
+  --input: #242832;
+  --ring: #00d2ff;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #0e1014;
+  --sidebar-foreground: #e8eaf0;
+  --sidebar-primary: #00d2ff;
+  --sidebar-primary-foreground: #06131a;
+  --sidebar-accent: #1a1f29;
+  --sidebar-accent-foreground: #dce0e9;
+  --sidebar-border: #2b313d;
+  --sidebar-ring: #00d2ff;
 }
 
 .dark {
@@ -123,6 +123,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at top, #101824 0%, #0a0a0a 56%);
   }
   html {
     @apply font-sans;
