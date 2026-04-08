@@ -11,9 +11,9 @@ type CacheEntry = {
 const CACHE_TTL_MS = 15_000;
 const cache = new Map<string, CacheEntry>();
 
-export async function getCachedDashboardStats(locale: "en" | "fi") {
+export async function getCachedDashboardStats() {
   const now = Date.now();
-  const key = `stats:${locale}`;
+  const key = "stats:all";
   const hit = cache.get(key);
 
   if (hit && hit.expiresAt > now) {
@@ -21,7 +21,7 @@ export async function getCachedDashboardStats(locale: "en" | "fi") {
   }
 
   await runMigrationsIfNeeded();
-  const fresh = await getDashboardStats(locale);
+  const fresh = await getDashboardStats();
 
   cache.set(key, {
     expiresAt: now + CACHE_TTL_MS,

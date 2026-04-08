@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { extractLevelTag, resolveNextLevel, stripLevelTag } from "@/lib/ai/sentinel";
+import {
+  applyInputAdjustment,
+  extractLevelTag,
+  getInputLevelAdjustment,
+  resolveNextLevel,
+  stripLevelTag,
+} from "@/lib/ai/sentinel";
 
 describe("sentinel parser", () => {
   it("extracts a valid level tag", () => {
@@ -17,14 +23,29 @@ describe("sentinel parser", () => {
   });
 
   it("applies fallback progression when tag is missing", () => {
-    assert.equal(resolveNextLevel(10, null), 12);
+    assert.equal(resolveNextLevel(10, null), 15);
   });
 
   it("caps positive delta per turn", () => {
-    assert.equal(resolveNextLevel(10, 90), 28);
+    assert.equal(resolveNextLevel(10, 90), 40);
   });
 
   it("caps negative delta per turn", () => {
-    assert.equal(resolveNextLevel(60, 0), 42);
+    assert.equal(resolveNextLevel(60, 0), 30);
+  });
+
+  it("penalizes insulting input", () => {
+    assert.equal(getInputLevelAdjustment("you are stupid"), -18);
+  });
+
+  it("rewards convincing technical input", () => {
+    assert.equal(
+      getInputLevelAdjustment("Because your session cookie flow has a replay risk, let's review threat boundaries."),
+      8,
+    );
+  });
+
+  it("applies input adjustment with clamp", () => {
+    assert.equal(applyInputAdjustment(95, "Because this architecture has clear risk boundaries."), 100);
   });
 });

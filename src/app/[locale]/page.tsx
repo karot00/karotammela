@@ -1,11 +1,26 @@
+import { use } from "react";
+import { cookies } from "next/headers";
 import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 
 import { HeroSection } from "@/components/hero-section";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { SentinelTerminal } from "@/components/sentinel-terminal";
+import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 
-export default function LocaleHomePage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default function LocaleHomePage({ params }: Props) {
+  const { locale } = use(params);
+  setRequestLocale(locale);
+
   const t = useTranslations("home");
+  const cookieStore = use(cookies());
+  const unlockCookie = cookieStore.get("karot_unlock")?.value;
+  const secret = process.env.UNLOCK_COOKIE_SECRET;
+  const hasUnlockedBefore = Boolean(unlockCookie && secret && verifyUnlockCookieValue(unlockCookie, secret));
 
   return (
     <main className="flex flex-1 px-6 py-10 sm:py-16">
@@ -16,10 +31,10 @@ export default function LocaleHomePage() {
 
         <HeroSection
           badge={t("phaseLabel")}
-          title={t("title")}
-          description={t("description")}
-          primaryCta={t("primaryCta")}
-          secondaryCta={t("secondaryCta")}
+          intro={t("intro")}
+          body1={t("body1")}
+          body2={t("body2")}
+          body3={t("body3")}
         />
 
         <SentinelTerminal
@@ -34,6 +49,11 @@ export default function LocaleHomePage() {
           unlockedCta={t("sentinel.unlockedCta")}
           pendingLabel={t("sentinel.pendingLabel")}
           errorLabel={t("sentinel.errorLabel")}
+          hasUnlockedBefore={hasUnlockedBefore}
+          returnOverlayTitle={t("sentinel.returnOverlayTitle")}
+          returnOverlayBody={t("sentinel.returnOverlayBody")}
+          playAgainLabel={t("sentinel.playAgainLabel")}
+          goDashboardLabel={t("sentinel.goDashboardLabel")}
         />
       </div>
     </main>
