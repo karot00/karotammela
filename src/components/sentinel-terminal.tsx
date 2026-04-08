@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useLocale } from "next-intl";
 import Link from "next/link";
@@ -32,6 +32,11 @@ type SentinelTerminalProps = {
   unlockedCta: string;
   pendingLabel: string;
   errorLabel: string;
+  hasUnlockedBefore: boolean;
+  returnOverlayTitle: string;
+  returnOverlayBody: string;
+  playAgainLabel: string;
+  goDashboardLabel: string;
 };
 
 export function SentinelTerminal({
@@ -47,6 +52,11 @@ export function SentinelTerminal({
   unlockedCta,
   pendingLabel,
   errorLabel,
+  hasUnlockedBefore,
+  returnOverlayTitle,
+  returnOverlayBody,
+  playAgainLabel,
+  goDashboardLabel,
 }: SentinelTerminalProps) {
   const prefersReducedMotion = useReducedMotion();
   const locale = useLocale();
@@ -57,8 +67,15 @@ export function SentinelTerminal({
   const [input, setInput] = useState("");
   const [level, setLevel] = useState(0);
   const [isUnlocked, setIsUnlocked] = useState(false);
+  const [showReturnOverlay, setShowReturnOverlay] = useState(hasUnlockedBefore);
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const meterToneClass = useMemo(() => {
     if (level >= 71) return "bg-accent";
@@ -125,7 +142,10 @@ export function SentinelTerminal({
   };
 
   return (
-    <section id={id} className="rounded-3xl border border-border/70 bg-popover/50 p-6 shadow-2xl backdrop-blur-md sm:p-8">
+    <section
+      id={id}
+      className="relative rounded-3xl border border-border/70 bg-popover/50 p-6 shadow-2xl backdrop-blur-md sm:p-8"
+    >
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">{title}</h2>
@@ -161,21 +181,24 @@ export function SentinelTerminal({
         </div>
       </div>
 
-      <div className="mt-6 space-y-3 rounded-2xl border border-border/60 bg-background/70 p-4 font-mono text-sm">
-        {messages.map((message, index) => (
-          <motion.p
-            key={`${message.role}-${index}`}
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className={message.role === "assistant" ? "text-primary" : "text-foreground"}
-          >
-            <span className="mr-2 text-muted-foreground">
-              {message.role === "assistant" ? "sentinel>" : "human>"}
-            </span>
-            {message.content}
-          </motion.p>
-        ))}
+      <div className="mt-6 max-h-64 overflow-y-auto scroll-smooth rounded-2xl border border-border/60 bg-background/70 p-4 font-mono text-sm">
+        <div className="space-y-3">
+          {messages.map((message, index) => (
+            <motion.p
+              key={`${message.role}-${index}`}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className={message.role === "assistant" ? "text-primary" : "text-foreground"}
+            >
+              <span className="mr-2 text-muted-foreground">
+                {message.role === "assistant" ? "sentinel>" : "human>"}
+              </span>
+              {message.content}
+            </motion.p>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
       <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -195,6 +218,23 @@ export function SentinelTerminal({
       </form>
 
       {errorMessage ? <p className="mt-3 text-sm text-destructive">{errorMessage}</p> : null}
+
+      {showReturnOverlay ? (
+        <div className="absolute inset-0 z-10 flex items-center justify-center rounded-3xl bg-background/55 p-6 backdrop-blur-md">
+          <div className="w-full max-w-xl rounded-2xl border border-border/70 bg-card/80 p-6 text-center shadow-2xl">
+            <p className="text-sm font-semibold tracking-[0.14em] text-primary uppercase">{returnOverlayTitle}</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">{returnOverlayBody}</p>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <Button type="button" onClick={() => setShowReturnOverlay(false)} className="h-11 px-5">
+                {playAgainLabel}
+              </Button>
+              <Button type="button" variant="outline" className="h-11 px-5" asChild>
+                <Link href={`/${locale}/dashboard`}>{goDashboardLabel}</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

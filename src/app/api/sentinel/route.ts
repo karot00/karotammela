@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import {
+  applyInputAdjustment,
   buildSentinelSystemPrompt,
   extractLevelTag,
   getAccessCode,
@@ -108,8 +109,8 @@ export async function POST(request: Request) {
       model: google(getModelName()),
       system: buildSentinelSystemPrompt(locale),
       messages,
-      temperature: 0.8,
-      maxOutputTokens: 400,
+      temperature: 0.7,
+      maxOutputTokens: 300,
     });
 
     let fullText = "";
@@ -118,7 +119,8 @@ export async function POST(request: Request) {
     }
 
     const parsedLevel = extractLevelTag(fullText);
-    const level = resolveNextLevel(currentLevel, parsedLevel);
+    const resolvedLevel = resolveNextLevel(currentLevel, parsedLevel);
+    const level = applyInputAdjustment(resolvedLevel, latestUserInput);
     const cleanText = stripLevelTag(fullText);
     const unlocked = isUnlockTriggered(fullText, level);
 

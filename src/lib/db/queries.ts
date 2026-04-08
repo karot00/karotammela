@@ -1,4 +1,4 @@
-import { and, desc, eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 
 import { getDb } from "@/lib/db/client";
 import { insertLogSchema, insertSessionSchema } from "@/lib/db/validation";
@@ -50,7 +50,7 @@ export async function persistSentinelTurn(input: PersistSentinelTurnInput) {
   await db.insert(logs).values(logPayload);
 }
 
-export async function getDashboardStats(locale: "en" | "fi") {
+export async function getDashboardStats() {
   const db = getDb();
 
   const [totals] = await db
@@ -59,8 +59,7 @@ export async function getDashboardStats(locale: "en" | "fi") {
       unlockedCount: sql<number>`sum(case when ${logs.success} = 1 then 1 else 0 end)`,
       highestLevel: sql<number>`max(${logs.levelReached})`,
     })
-    .from(logs)
-    .where(eq(logs.locale, locale));
+    .from(logs);
 
   const latest = await db
     .select({
@@ -69,7 +68,7 @@ export async function getDashboardStats(locale: "en" | "fi") {
       success: logs.success,
     })
     .from(logs)
-    .where(and(eq(logs.locale, locale), eq(logs.success, true)))
+    .where(eq(logs.success, true))
     .orderBy(desc(logs.timestamp))
     .limit(1);
 

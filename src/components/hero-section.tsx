@@ -3,22 +3,20 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
-
 type HeroSectionProps = {
   badge: string;
-  title: string;
-  description: string;
-  primaryCta: string;
-  secondaryCta: string;
+  intro: string;
+  body1: string;
+  body2: string;
+  body3: string;
 };
 
 export function HeroSection({
   badge,
-  title,
-  description,
-  primaryCta,
-  secondaryCta,
+  intro,
+  body1,
+  body2,
+  body3,
 }: HeroSectionProps) {
   const prefersReducedMotion = useReducedMotion();
   const videoEnabled = process.env.NEXT_PUBLIC_HERO_VIDEO_ENABLED === "1";
@@ -67,28 +65,16 @@ export function HeroSection({
           {badge}
         </p>
 
-        <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight text-foreground sm:text-5xl sm:leading-[1.08]">
-          {title}
-        </h1>
-
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {description}
+        <p className="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-foreground sm:text-2xl sm:leading-snug">
+          {intro}
         </p>
 
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Button asChild size="lg" className="border border-primary/50 bg-primary/15 text-primary hover:bg-primary/25">
-            <a href="#sentinel">{primaryCta}</a>
-          </Button>
-
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="border-border/70 bg-secondary/40 text-secondary-foreground hover:bg-secondary/70"
-          >
-            <a href="#sentinel">{secondaryCta}</a>
-          </Button>
+        <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>{body1}</p>
+          <p>{body2}</p>
+          <p>{body3}</p>
         </div>
+
       </motion.div>
     </section>
   );
