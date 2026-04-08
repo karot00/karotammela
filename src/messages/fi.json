@@ -4,7 +4,7 @@
     "description": "Agentic AI -arkkitehdin portfolio ja Sentinel-haaste"
   },
   "home": {
-    "phaseLabel": "Vaihe 3 - Sentinel Runko",
+    "phaseLabel": "Karo tammela",
     "intro": "Tervetuloa - rakensin tämän sivuston noin kolmessa tunnissa orkestroimalla koodausagentteja.",
     "body1": "Olen viimeiset kaksi vuotta keskittynyt siihen, miten koodaaminen muuttuu agentic AI -aikakaudella. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa tekoäly ei ole vain avustaja, vaan aktiivinen tekijä.",
     "body2": "Olen siirtynyt \"vibe-koodauksesta\" systemaattiseen arkkitehtuuriin: hallitsen stackit, joilla ideat muuttuvat toimivaksi koodiksi, GitHub-repoiksi ja Vercel-deploymenteiksi minuuteissa. Prosessi on nopea, mutta laatu pysyy arkkitehtuurin ansiosta kasassa.",
