@@ -31,7 +31,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const stats = await getCachedDashboardStats(parsed.data.locale);
+    const stats = await getCachedDashboardStats();
     const payload = responseSchema.parse(stats);
 
     return NextResponse.json(payload);
