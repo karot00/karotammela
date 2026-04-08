@@ -18,7 +18,11 @@ export const runtime = "nodejs";
 
 export async function GET(request: Request) {
   if (!process.env.TURSO_DATABASE_URL) {
-    return NextResponse.json({ error: "Stats database is not configured." }, { status: 503 });
+    console.warn("[api/stats] TURSO_DATABASE_URL is missing.");
+    return NextResponse.json(
+      { error: "Stats database is not configured." },
+      { status: 503 },
+    );
   }
 
   const url = new URL(request.url);
@@ -35,7 +39,11 @@ export async function GET(request: Request) {
     const payload = responseSchema.parse(stats);
 
     return NextResponse.json(payload);
-  } catch {
-    return NextResponse.json({ error: "Failed to read stats." }, { status: 500 });
+  } catch (error) {
+    console.error("[api/stats] Failed to read stats", error);
+    return NextResponse.json(
+      { error: "Failed to read stats." },
+      { status: 500 },
+    );
   }
 }
