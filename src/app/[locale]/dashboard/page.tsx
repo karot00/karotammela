@@ -20,6 +20,9 @@ type StatsResponse = {
 
 async function getStats(): Promise<StatsResponse | null> {
   if (!process.env.TURSO_DATABASE_URL) {
+    console.warn(
+      "[dashboard] TURSO_DATABASE_URL is missing; returning null stats.",
+    );
     return null;
   }
 
@@ -28,9 +31,12 @@ async function getStats(): Promise<StatsResponse | null> {
 
     return {
       ...stats,
-      latestUnlockAt: stats.latestUnlockAt ? stats.latestUnlockAt.toISOString() : null,
+      latestUnlockAt: stats.latestUnlockAt
+        ? stats.latestUnlockAt.toISOString()
+        : null,
     };
-  } catch {
+  } catch (error) {
+    console.error("[dashboard] Failed to read stats", error);
     return null;
   }
 }

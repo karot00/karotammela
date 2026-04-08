@@ -68,11 +68,17 @@ export async function POST(request: Request) {
 
   const parsed = requestSchema.safeParse(await request.json());
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid request payload." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid request payload." },
+      { status: 400 },
+    );
   }
 
   if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-    return NextResponse.json({ error: "AI provider key is missing." }, { status: 500 });
+    return NextResponse.json(
+      { error: "AI provider key is missing." },
+      { status: 500 },
+    );
   }
 
   const { locale, messages, sessionId, currentLevel } = parsed.data;
@@ -102,7 +108,8 @@ export async function POST(request: Request) {
   }
 
   const latestUserInput =
-    [...messages].reverse().find((message) => message.role === "user")?.content ?? "";
+    [...messages].reverse().find((message) => message.role === "user")
+      ?.content ?? "";
 
   try {
     const result = streamText({
@@ -168,13 +175,17 @@ export async function POST(request: Request) {
           levelReached: level,
           success: unlocked,
         });
-      } catch {
+      } catch (error) {
+        console.error("[api/sentinel] Failed to persist sentinel turn", error);
         // Keep API resilient when persistence layer is unavailable.
       }
     }
 
     return response;
   } catch {
-    return NextResponse.json({ error: "Sentinel route failed." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Sentinel route failed." },
+      { status: 500 },
+    );
   }
 }
