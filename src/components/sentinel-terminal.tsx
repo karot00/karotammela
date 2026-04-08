@@ -71,10 +71,22 @@ export function SentinelTerminal({
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const logContainerRef = useRef<HTMLDivElement>(null);
+  const hasMountedRef = useRef(false);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+
+    const container = logContainerRef.current;
+    if (!container) return;
+
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: "smooth",
+    });
   }, [messages]);
 
   const meterToneClass = useMemo(() => {
@@ -181,7 +193,10 @@ export function SentinelTerminal({
         </div>
       </div>
 
-      <div className="mt-6 max-h-64 overflow-y-auto scroll-smooth rounded-2xl border border-border/60 bg-background/70 p-4 font-mono text-sm">
+      <div
+        ref={logContainerRef}
+        className="mt-6 max-h-64 overflow-y-auto scroll-smooth rounded-2xl border border-border/60 bg-background/70 p-4 font-mono text-sm"
+      >
         <div className="space-y-3">
           {messages.map((message, index) => (
             <motion.p
@@ -197,7 +212,6 @@ export function SentinelTerminal({
               {message.content}
             </motion.p>
           ))}
-          <div ref={messagesEndRef} />
         </div>
       </div>
 
