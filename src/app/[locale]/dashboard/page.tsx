@@ -3,12 +3,23 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { UnlockedDashboard } from "@/components/unlocked-dashboard";
+import {
+  getAllBlogPosts,
+  getBlogPostBySlug,
+  normalizeBlogViewQuery,
+  paginateBlogPosts,
+} from "@/lib/blog";
 import { getCachedDashboardStats } from "@/lib/db/stats-cache";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 import { trackServerEvent } from "@/lib/telemetry/events";
 
 type DashboardPageProps = {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{
+    view?: string;
+    page?: string;
+    post?: string;
+  }>;
 };
 
 type StatsResponse = {
@@ -41,8 +52,14 @@ async function getStats(): Promise<StatsResponse | null> {
   }
 }
 
-export default async function DashboardPage({ params }: DashboardPageProps) {
+export default async function DashboardPage({
+  params,
+  searchParams,
+}: DashboardPageProps) {
   const { locale } = await params;
+  const query = await searchParams;
+  const normalizedBlogState = normalizeBlogViewQuery(query);
+
   setRequestLocale(locale);
   const cookieStore = await cookies();
   const unlockCookie = cookieStore.get("karot_unlock")?.value;
@@ -65,10 +82,48 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
 
   const t = await getTranslations("dashboard");
   const stats = await getStats();
+  const posts = await getAllBlogPosts(locale === "fi" ? "fi" : "en");
+  const paginatedPosts = paginateBlogPosts(posts, normalizedBlogState.page, 10);
+
+  const selectedPost = normalizedBlogState.post
+    ? await getBlogPostBySlug(
+        locale === "fi" ? "fi" : "en",
+        normalizedBlogState.post,
+      )
+    : (paginatedPosts.items[0] ?? null);
 
   return (
     <UnlockedDashboard
       locale={locale}
+      initialView={normalizedBlogState.view}
+      blog={{
+        page: paginatedPosts.page,
+        pageSize: paginatedPosts.pageSize,
+        total: paginatedPosts.total,
+        pages: paginatedPosts.pages,
+        hasPrev: paginatedPosts.hasPrev,
+        hasNext: paginatedPosts.hasNext,
+        requestedPost: normalizedBlogState.post,
+        selectedPost: selectedPost
+          ? {
+              title: selectedPost.title,
+              description: selectedPost.description,
+              publishedAt: selectedPost.publishedAt,
+              slug: selectedPost.slug,
+              draft: selectedPost.draft,
+              tags: selectedPost.tags,
+              body: selectedPost.body,
+            }
+          : null,
+        items: paginatedPosts.items.map((post) => ({
+          title: post.title,
+          description: post.description,
+          publishedAt: post.publishedAt,
+          slug: post.slug,
+          draft: post.draft,
+          tags: post.tags,
+        })),
+      }}
       stats={
         stats
           ? {
@@ -114,7 +169,62 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         projectFourDescription: t("projectFourDescription"),
         projectGithubLabel: t("projectGithubLabel"),
         techTitle: t("techTitle"),
+        techCategories: {
+          frontend: t("techCategories.frontend"),
+          backendDb: t("techCategories.backendDb"),
+          infrastructure: t("techCategories.infrastructure"),
+          tools: t("techCategories.tools"),
+        },
+        techItems: {
+          nextjs: {
+            name: t("techItems.nextjs.name"),
+            description: t("techItems.nextjs.description"),
+          },
+          tailwindCss: {
+            name: t("techItems.tailwindCss.name"),
+            description: t("techItems.tailwindCss.description"),
+          },
+          postgresql: {
+            name: t("techItems.postgresql.name"),
+            description: t("techItems.postgresql.description"),
+          },
+          sqlite: {
+            name: t("techItems.sqlite.name"),
+            description: t("techItems.sqlite.description"),
+          },
+          vercel: {
+            name: t("techItems.vercel.name"),
+            description: t("techItems.vercel.description"),
+          },
+          cloudflare: {
+            name: t("techItems.cloudflare.name"),
+            description: t("techItems.cloudflare.description"),
+          },
+          github: {
+            name: t("techItems.github.name"),
+            description: t("techItems.github.description"),
+          },
+          resend: {
+            name: t("techItems.resend.name"),
+            description: t("techItems.resend.description"),
+          },
+          vsCode: {
+            name: t("techItems.vsCode.name"),
+            description: t("techItems.vsCode.description"),
+          },
+          kiloCode: {
+            name: t("techItems.kiloCode.name"),
+            description: t("techItems.kiloCode.description"),
+          },
+        },
         blogPlaceholder: t("blogPlaceholder"),
+        blogPreviousLabel: t("blogPreviousLabel"),
+        blogNextLabel: t("blogNextLabel"),
+        blogBackLabel: t("blogBackLabel"),
+        blogPageLabel: t("blogPageLabel"),
+        blogNoPostsLabel: t("blogNoPostsLabel"),
+        blogMissingPostLabel: t("blogMissingPostLabel"),
+        blogDraftBadgeLabel: t("blogDraftBadgeLabel"),
         settingsLanguageTitle: t("settingsLanguageTitle"),
         settingsLanguageDescription: t("settingsLanguageDescription"),
         settingsThemeTitle: t("settingsThemeTitle"),

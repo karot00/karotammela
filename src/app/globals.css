@@ -165,3 +165,77 @@
     line-height: 1.6;
   }
 }
+
+@layer components {
+  .blog-prose {
+    color: var(--foreground);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .blog-prose h1,
+  .blog-prose h2,
+  .blog-prose h3,
+  .blog-prose h4,
+  .blog-prose h5,
+  .blog-prose h6 {
+    color: var(--foreground);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+  }
+
+  .blog-prose h1 {
+    font-size: 1.7rem;
+  }
+
+  .blog-prose h2 {
+    font-size: 1.45rem;
+  }
+
+  .blog-prose h3 {
+    font-size: 1.2rem;
+  }
+
+  .blog-prose p {
+    margin: 0.9em 0;
+    color: var(--foreground);
+  }
+
+  .blog-prose ul,
+  .blog-prose ol {
+    margin: 0.8em 0 1.1em;
+    padding-left: 1.25em;
+  }
+
+  .blog-prose li {
+    margin: 0.35em 0;
+  }
+
+  .blog-prose strong {
+    color: var(--foreground);
+    font-weight: 700;
+  }
+
+  .blog-prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .blog-prose img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    margin: 1.1rem auto;
+  }
+
+  .blog-prose br {
+    display: block;
+    content: "";
+    margin-top: 0.55rem;
+  }
+}
