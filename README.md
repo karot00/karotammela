@@ -1,89 +1,83 @@
-# karotammela.fi — Agentic AI Architect Portfolio
+# karotammela.fi
 
-This is the central hub for my work, experiments, and thoughts on the transition from traditional software development to **Agentic AI Workflows**.
+Professional portfolio platform for Karo Tammela, focused on agentic AI orchestration, practical product delivery, and modern web engineering.
 
-## 🚀 The Vision
-I am a self-taught developer and "AI-native" architect. I believe that the future of coding isn't just about writing syntax—it's about orchestrating autonomous agents to build scalable solutions at 10x speed. This site serves as a live testbed for these theories.
+## What This Project Is
 
-## 🛠 The Stack
-This project is built with a high-performance "Edge-first" stack:
-- **Framework:** [Next.js 16+](https://nextjs.org/) (App Router)
-- **Database:** [Turso](https://turso.tech/) (LibSQL at the edge)
-- **AI Orchestration:** [Vercel AI SDK](https://sdk.vercel.ai/)
-- **Styling:** Tailwind CSS & [shadcn/ui](https://ui.shadcn.com/)
-- **Animations:** Framer Motion
-- **Deployment:** [Vercel](https://vercel.com/)
+This repository powers the live site and protected dashboard experience at `karotammela.fi`.
 
-## Stack Versions
-- next `16.2.2`
-- react `19.2.4`
-- react-dom `19.2.4`
-- tailwindcss `4.2.2`
-- @tailwindcss/postcss `4.2.2`
-- shadcn `4.1.2`
-- framer-motion `12.38.0`
-- next-intl `4.9.0`
-- ai `5.0.169`
-- @ai-sdk/google `2.0.67`
-- drizzle-orm `0.45.2`
-- @libsql/client `0.17.2`
-- drizzle-kit `0.31.10`
-- zod `4.3.6`
-- drizzle-zod `0.8.3`
-- resend `6.10.0`
+It combines a public-facing portfolio with an interactive AI gate and a localized backstage dashboard that presents projects, technology stack, and long-form blog content.
 
-## Environment Setup (`.env.local`)
+## Current Product Scope
 
-Copy `.env.example` to `.env.local` and configure values:
+- Public landing page with brand narrative and conversion-focused hero section
+- AI Bouncer (Sentinel) challenge flow with trust/compromise progression
+- Secure dashboard access flow with signed unlock cookie validation
+- Dashboard views:
+  - Overview
+  - Projects
+  - Technologies (categorized, localized card layout)
+  - Blog (markdown-backed, paginated, localized)
+  - Settings (language and light/dark theme)
+- Contact form integration for inbound business inquiries
+- Bilingual UX (`fi`, `en`) using structured locale messages
 
-- `GOOGLE_GENERATIVE_AI_API_KEY` - required for Sentinel AI route.
-- `AI_MODEL` - defaults to `gemini-3.1-flash-lite-preview`.
-- `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` - required for stats/log persistence.
-- `UNLOCK_COOKIE_SECRET` - required for secure dashboard unlock cookies.
-- `APP_URL` - local: `http://localhost:3000`, production: `https://karotammela.fi`.
-- `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` - required for `POST /api/contact`.
-- `NEXT_PUBLIC_DEFAULT_LOCALE` - recommended `fi`.
-- `NEXT_PUBLIC_HERO_VIDEO_ENABLED` - `0` (image fallback only) or `1` (enable hero video).
+## Technology Stack
+
+- Framework: Next.js 16 (App Router), React 19, TypeScript
+- UI: Tailwind CSS v4, shadcn/ui primitives, Lucide icons, Framer Motion
+- Internationalization: next-intl
+- AI: Vercel AI SDK + Google provider
+- Data: Turso (LibSQL) + Drizzle ORM
+- Content: Markdown blog pipeline (`gray-matter`, `marked`, `sanitize-html`)
+- Messaging: Resend (contact delivery)
+- Deployment: Vercel
+
+## Engineering Characteristics
+
+- Token-based theme system with dark/light compatibility
+- Server-side locale routing and translation contracts
+- Typed data boundaries across dashboard and content flows
+- Security-oriented unlock/session handling
+- Structured, maintainable component architecture for iterative delivery
+
+## Local Development
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+### Core Scripts
+
+```bash
+npm run lint
+npm run test
+npm run build
+```
+
+## Environment Variables
+
+Configure required values in `.env.local` for local runtime:
+
+- `GOOGLE_GENERATIVE_AI_API_KEY`
+- `AI_MODEL`
+- `TURSO_DATABASE_URL`
+- `TURSO_AUTH_TOKEN`
+- `UNLOCK_COOKIE_SECRET`
+- `APP_URL`
+- `RESEND_API_KEY`
+- `CONTACT_FROM_EMAIL`
+- `CONTACT_TO_EMAIL`
+- `NEXT_PUBLIC_DEFAULT_LOCALE`
 
 Optional analytics:
 
 - `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
 
-If Umami variables are missing, analytics script is not injected and the app works normally.
+## Repository Purpose
 
-## Testing
-
-- Run unit tests: `npm run test`
-- Run lint checks: `npm run lint`
-- Build validation: `npm run build`
-- Current unit tests:
-  - `src/lib/ai/sentinel.test.ts`
-  - `src/lib/security/unlock-cookie.test.ts`
-
-## Operations Runbook
-
-- Deployment verification and incident fallback procedures are documented in:
-  - `plans/deploy-verification-runbook.md`
-
-## Resend + Cloudflare Notes
-
-- Resend handles **outbound sending** for `info@karotammela.fi`.
-- Cloudflare Email Routing can forward **inbound mail** from `info@karotammela.fi` to your personal inbox.
-- You do not need a separate mailbox host to use this contact flow.
-
-## 🤖 My Agentic Toolkit
-To achieve maximum velocity, I leverage the best of the 2026 AI ecosystem:
-- **Primary IDE:** [Kilo Code](https://kilo.dev/) (Optimized for agentic workflows)
-- **Favorite LLM:** **GPT Codex 5.3** (My go-to for complex architecture and logic)
-- **Secondary Models:** **Opus 4.6** for deep reasoning and various lighter models for specialized sub-tasks to keep the workflow agile and cost-effective.
-
-## 🔒 Key Feature: The Sentinel Challenge
-To demonstrate agentic reasoning and prompt security, I've implemented **Sentinel-7**, a high-status security agent guarding the "inner vault" of this site.
-- **Challenge:** Use social engineering or technical reasoning to bypass its defensive layers.
-- **Technology:** Stateful AI interactions with a real-time "Compromise Meter" backed by Turso.
-
-## 🧠 Built with Agents
-True to the mission, this entire repository was architected and built in approximately **3 hours** using Agentic AI coding workflows. 
-
-Traditional development would have taken days. I use this methodology to lower costs and increase speed for both my own SaaS products and my consultancy clients.
+This codebase is both a production portfolio and an execution environment for testing high-velocity, agent-assisted software workflows with business-grade output quality.
