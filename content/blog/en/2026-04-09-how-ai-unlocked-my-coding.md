@@ -13,7 +13,7 @@ Everything changed when Gemini 2.0 hit the market. It provided a way to skip the
 
 ### Copy-paste koodauksella alkuun
 
-My first concrete project was a PHP-based Green Fee sales platform. The implementation was straightforward: I discussed the necessary logic with Gemini, took the PHP snippets it suggested, and moved them directly into the cPanel file manager. The project involved integrating a MariaDB database and Stripe payment processing.
+My first concrete project was a PHP-based Green Fee sales platform. The implementation was straightforward, but slow and error-prone: I discussed the necessary logic with Gemini, took the PHP snippets it suggested, and moved them directly into the cPanel file manager. The project involved integrating a MariaDB database and Stripe payment processing. I developed a workflow to manage context limits while coding. When Gemini’s context window filled up, I used a text-based 'handover file' to port the progress from the previous session into a new chat, attaching only the most essential code files. I quickly realized that the AI would start to lose its grip and become erratic once the context window became too cluttered.
 
 Even though I started by heavily copying and testing, the process turned out to be a surprisingly good teacher. Seeing the application come to life and fixing errors through conversation grew my understanding of code structure much faster than online courses ever did. I began to grasp how database queries, APIs, and the UI work together, even if I hadn't written every single line from scratch yet. My understanding grew exponentially during that phase.
 

@@ -13,7 +13,7 @@ Tilanne muuttui, kun Gemini 2.0 tuli markkinoille. Se tarjosi tavan siirtyä suo
 
 ### Copy-paste koodauksella alkuun
 
-Ensimmäinen konkreettinen projektini oli PHP-pohjainen Green Fee -myyntialusta. Toteutustapa oli suoraviivainen: keskustelin Geminin kanssa sovelluksen tarvitsemasta logiikasta, otin sen ehdottamat PHP-pätkät ja siirsin ne suoraan cPanelin tiedostonhallintaan. Integroitavana oli MariaDB-tietokanta ja Stripe-maksunvälitys.
+Ensimmäinen konkreettinen projektini oli PHP-pohjainen Green Fee -myyntialusta. Toteutustapa oli suoraviivainen, mutta hidas ja virhealtis: keskustelin Geminin kanssa sovelluksen tarvitsemasta logiikasta, otin sen ehdottamat PHP-pätkät ja siirsin ne suoraan cPanelin tiedostonhallintaan. Integroitavana oli MariaDB-tietokanta ja Stripe-maksunvälitys. Kehitin koodaukseen systeemin, jolla geminin konteksti-ikkunan täyttyessä, minulla oli tekstipohjainen "siirtotiedosto", jonka avulla siirsin edellisen keskustelun tehdyt työt seuraavaan keskusteluun ja liitin mukaan oleellisimmat kooditiedostot. Huomasin nopeasti, että tekoäly alkoi sekoilla omiaan, kun konteksti-ikkunaan tuli riittävän paljon sisältöä.
 
 Vaikka alkuun liikuttiin vahvasti kopioimalla ja kokeilemalla, prosessi toimi yllättävän hyvänä opettajana. Kun näin sovelluksen rakentuvan ja virheiden korjaantuvan keskustelun kautta, ymmärrykseni koodin rakenteesta kasvoi huomattavasti nopeammin kuin pelkillä verkkokursseilla. Opin hahmottamaan, miten tietokantakyselyt, rajapinnat ja käyttöliittymä toimivat yhteen, vaikka en ollut vielä ehtinyt kirjoittaa jokaista riviä itse alusta asti. Ymmärrykseni kasvoi tuossa vaiheessa suorastaan eksponentiaalisesti.
 
