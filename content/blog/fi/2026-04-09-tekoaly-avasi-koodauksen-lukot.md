@@ -9,7 +9,7 @@ tags: ["koodaus", "ai", "web-kehitys", "yrittäjyys"]
 
 Matkani koodaamisen parissa alkoi perinteisesti: kävin muutamia Python-kursseja ja opettelin ohjelmoinnin perusteita. Rehellisyyden nimissä on kuitenkin sanottava, että koodaaminen ja sen opiskelu tuntui tuolloin puisevalta. Teoriapainotteinen harjoittelu ei oikein ottanut tuulta alle, ja tekeminen jäi helposti junnaamaan paikalleen, kun motivaatio katosi syntaksin ja harjoitustehtävien uumeniin.
 
-Tilanne muuttui, kun Gemini 2.5 tuli markkinoille. Se tarjosi tavan siirtyä suoraan perusteiden kertaamisesta käytännön rakentamiseen. Enää koodaaminen ei ollut vain sääntöjen opettelua, vaan pääsin ratkomaan oikeita teknisiä haasteita suoraan projektitasolla. Tämä muutos teki oppimisesta tavoitteellista ja huomattavasti palkitsevampaa.
+Tilanne muuttui, kun Gemini 2.0 tuli markkinoille. Se tarjosi tavan siirtyä suoraan perusteiden kertaamisesta käytännön rakentamiseen. Enää koodaaminen ei ollut vain sääntöjen opettelua, vaan pääsin ratkomaan oikeita teknisiä haasteita suoraan projektitasolla. Tämä muutos teki oppimisesta tavoitteellista ja huomattavasti palkitsevampaa.
 
 ### Copy-paste koodauksella alkuun
 

@@ -9,7 +9,7 @@ tags: ["coding", "ai", "web-development", "entrepreneurship"]
 
 My journey with coding began traditionally: I took a few Python courses and learned the basics of programming. To be honest, however, coding and the process of learning it felt quite tedious back then. Theory-heavy practice didn't really take off, and my progress often stalled as my motivation vanished into the depths of syntax and exercise drills.
 
-Everything changed when Gemini 2.5 hit the market. It provided a way to skip the endless repetition of basics and move directly into practical building. Coding was no longer just about learning rules; I could start solving real technical challenges at a project level. This shift made learning goal-oriented and significantly more rewarding.
+Everything changed when Gemini 2.0 hit the market. It provided a way to skip the endless repetition of basics and move directly into practical building. Coding was no longer just about learning rules; I could start solving real technical challenges at a project level. This shift made learning goal-oriented and significantly more rewarding.
 
 ### Copy-paste koodauksella alkuun
 
