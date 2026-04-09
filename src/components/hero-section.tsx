@@ -61,20 +61,21 @@ export function HeroSection({
         transition={{ duration: 0.65, ease: "easeOut" }}
         className="relative"
       >
-        <p className="text-xs font-semibold tracking-[0.24em] text-primary uppercase">
-          {badge}
-        </p>
+        <div>
+          <p className="text-xs font-semibold tracking-[0.24em] text-primary uppercase">
+            {badge}
+          </p>
 
-        <p className="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-foreground sm:text-2xl sm:leading-snug">
-          {intro}
-        </p>
+          <p className="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-foreground sm:text-2xl sm:leading-snug">
+            {intro}
+          </p>
 
-        <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-          <p>{body1}</p>
-          <p>{body2}</p>
-          <p>{body3}</p>
+          <div className="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p>{body1}</p>
+            <p>{body2}</p>
+            <p>{body3}</p>
+          </div>
         </div>
-
       </motion.div>
     </section>
   );

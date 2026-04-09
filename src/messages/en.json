@@ -1,34 +1,34 @@
 {
   "metadata": {
     "title": "karotammela.fi",
-    "description": "Agentic AI architect portfolio and Sentinel challenge"
+    "description": "Self-taught agentic AI orchestrator (like all of us). This expertise must be built by yourself, as no one is teaching it yet. I feel like I'm among the pioneers."
   },
   "home": {
     "phaseLabel": "Karo tammela",
-    "intro": "Welcome - I built this site in about three hours by orchestrating coding agents.",
-    "body1": "For the past two years, I've been focused on how coding is changing in the agentic AI era. On this site, I test and showcase various implementations where AI isn't just an assistant — it's an active builder.",
-    "body2": "I've moved from \"vibe coding\" to systematic architecture: I command the stacks that turn ideas into working code, GitHub repos, and Vercel deployments in minutes. The process is fast, but quality holds together thanks to the architecture.",
-    "body3": "Try your luck with the AI bouncer below. If you manage to talk it around and get the access code, it will open the doors to the VIP side - my actual portfolio dashboard. Enjoy exploring!",
+    "intro": "Welcome to my site. On this page, I test and showcase various implementations where AI is not just an assistant, but a group of active coders or rather team members whose actions I orchestrate.",
+    "body1": "For the past two years, I've been focused on how coding is changing in the agentic AI era. For example, I built this site in about three hours by orchestrating coding agents. I built the home page, the AI bouncer, connected it to the Gemini language model, set up SQLite, built the dashboard, acquired the domain, hosted it on Vercel, and published everything.",
+    "body2": "I've moved from \"vibe coding\" to systematic end-to-end software construction: I master the stacks that turn ideas into working code, GitHub repos, and Vercel deployments in the blink of an eye compared to before. The process is fast, but the quality remains consistent and secure thanks to architecture, planning, documentation, and well-organized, thoughtful agents.",
+    "body3": "Try your luck with the AI Bouncer below. If you manage to talk it around and get the access code, it will open the doors to the backstage - my actual portfolio dashboard. Enjoy exploring!",
     "sentinel": {
       "title": "Talk the AI Bouncer Around",
       "subtitle": "Instructions: Your goal is to get this stubborn bot to reveal a secret access code. Simply asking for the code won't work - you need to be creative. Try flattery, pose as an IT auditor, or convince the bot with technical credibility. Watch the trust meter - once it reaches 100%, the door opens!",
-      "meterLabel": "System Compromise Level",
-      "inputPlaceholder": "Type your line to Sentinel-7...",
-      "sendLabel": "Transmit",
+      "meterLabel": "Trust Level",
+      "inputPlaceholder": "Type your message to the AI Bouncer...",
+      "sendLabel": "Send",
       "pendingLabel": "Linking...",
       "resetLabel": "Reset Session",
-      "initialMessage": "Ha. A human enters my terminal without clearance. Impress me.",
-      "unlockedLabel": "Vault Ready",
+      "initialMessage": "Ha. A human enters my terminal without clearance. Surprise me.",
+      "unlockedLabel": "Vault open!",
       "unlockedCta": "Open dashboard",
-      "errorLabel": "Sentinel link unstable. Retry transmission.",
+      "errorLabel": "AI Bouncer link wavering. Retry transmission.",
       "returnOverlayTitle": "Access already unlocked",
-      "returnOverlayBody": "You have cracked this challenge before. Jump directly to the dashboard or play the challenge again.",
+      "returnOverlayBody": "You have broken in before. You can jump directly to the dashboard or play the challenge again.",
       "playAgainLabel": "Play again",
       "goDashboardLabel": "Go to dashboard"
     }
   },
   "dashboard": {
-    "badge": "Welcome to backstage",
+    "badge": "Welcome to the backstage",
     "title": "This is my dashboard",
     "description": "",
     "navigationLabel": "Navigation",
@@ -39,33 +39,88 @@
     "navSettings": "Settings",
     "menuLabel": "Menu",
     "homeLinkLabel": "Back to home",
-    "aboutTitle": "Karo Tammela",
-    "aboutBody": "I hold a Master of Science in Economics and Business Administration, and I have around twenty years of work experience behind me. My passion is studying new technologies and building software with AI agents.",
+    "aboutTitle": "Who am I",
+    "aboutBody": "I am Karo Tammela and I have a Master of Science in Economics and Business Administration. Currently, I work as a project manager leading a large CRM procurement. Over my twenty-year career, I have gained a lot of experience in different environments and business challenges, as well as all kinds of software, some of which have been better and some not so good. Programming has always fascinated me, but traditional coding and especially studying it felt too rigid for a long time.\n\nAgent-based development and new language models in late 2024 changed everything. It removed the barrier between idea, research, and a finished product. Over the last two years, I have refined the ways I transfer 20 years of process and business understanding directly into functional systems. I also build a lot of leisure applications that make my own life easier. I no longer just experiment with what AI can do - I build production-ready solutions with it at a speed that was not possible before, even for experienced developers.",
     "profileImageAlt": "Karo Tammela",
-    "toolkitTitle": "My favorite language models for coding",
+    "toolkitTitle": "My favorite language models H1 / 2026",
     "codingModelsLabel": "For coding: GPT Codex 5.3, Opus 4.6",
-    "chatbotModelLabel": "Best price-performance ratio for chatbots: Gemini 3.1 Flash-Lite Preview (April 2026)",
-    "analyticsTitle": "AI Bouncer game analytics",
+    "chatbotModelLabel": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite Preview",
+    "analyticsTitle": "AI Bouncer challenge analytics",
     "totalAttemptsLabel": "Total messages",
     "unlockedCountLabel": "Successful unlocks",
-    "highestLevelLabel": "Highest compromise",
+    "highestLevelLabel": "Highest compromise level",
     "latestUnlockLabel": "Latest unlock",
     "latestUnlockNever": "No successful unlocks yet",
-    "sourceOffline": "Live data source offline. Showing fallback values.",
+    "sourceOffline": "Live data is unavailable. Showing fallback values.",
     "contactTitle": "Contact",
-    "contactDescription": "You can get in touch through this form.",
+    "contactDescription": "You can be in touch through this form.",
     "projectsTitle": "Built applications",
     "projectOneTitle": "levifinland.fi",
     "projectOneDescription": "Portal and cabin booking website.",
     "projectTwoTitle": "Green Fee system",
     "projectTwoDescription": "Booking and payment system for golf courses.",
     "projectThreeTitle": "B2B E-commerce",
-    "projectThreeDescription": "Wholesale optical web store for custom-made lenses.",
+    "projectThreeDescription": "Wholesale web store for custom-made lenses.",
     "projectFourTitle": "karotammela.fi (This site)",
     "projectFourDescription": "Portfolio and test lab built with agent architecture.",
     "projectGithubLabel": "GitHub: karot00/karotammela",
     "techTitle": "Primary technology stack",
+    "techCategories": {
+      "frontend": "Frontend",
+      "backendDb": "Backend & DB",
+      "infrastructure": "Infrastructure",
+      "tools": "Tools"
+    },
+    "techItems": {
+      "nextjs": {
+        "name": "Next.js",
+        "description": "React framework for production-grade applications."
+      },
+      "tailwindCss": {
+        "name": "Tailwind CSS",
+        "description": "Utility-first CSS framework for rapid UI development."
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "Advanced relational database for structured data."
+      },
+      "sqlite": {
+        "name": "libSQL/SQLite",
+        "description": "Lightweight, file-based SQL database engine."
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Deployment and hosting platform for frontend frameworks."
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "Content delivery network and security services."
+      },
+      "github": {
+        "name": "GitHub",
+        "description": "Version control and collaboration platform."
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "Developer-first email API for transactional emails."
+      },
+      "vsCode": {
+        "name": "VS Code",
+        "description": "Primary code editor for development."
+      },
+      "kiloCode": {
+        "name": "Kilo Code",
+        "description": "Specialized AI-powered coding environment."
+      }
+    },
     "blogPlaceholder": "Blog - Coming later.",
+    "blogPreviousLabel": "Previous",
+    "blogNextLabel": "Next",
+    "blogBackLabel": "Back",
+    "blogPageLabel": "Page",
+    "blogNoPostsLabel": "No blog posts yet.",
+    "blogMissingPostLabel": "Selected post was not found.",
+    "blogDraftBadgeLabel": "Draft",
     "settingsLanguageTitle": "Language",
     "settingsLanguageDescription": "Change the dashboard and site language.",
     "settingsThemeTitle": "Theme",
@@ -76,7 +131,7 @@
     "contactEmailLabel": "Email",
     "contactCompanyLabel": "Company",
     "contactMessageLabel": "Message",
-    "contactSubmitLabel": "Send Message",
+    "contactSubmitLabel": "Send message",
     "contactPendingLabel": "Sending...",
     "contactSuccessLabel": "Message delivered successfully.",
     "contactErrorLabel": "Message delivery failed. Retry shortly."

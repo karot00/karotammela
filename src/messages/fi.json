@@ -5,14 +5,14 @@
   },
   "home": {
     "phaseLabel": "Karo tammela",
-    "intro": "Tervetuloa sivustolleni. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa tekoäly ei ole vain avustaja, vaan aktiivinen tekijä tai oikeastaan tiiminjäsen, joiden toimintaa ohjaan.",
-    "body1": "Olen viimeiset kaksi vuotta keskittynyt siihen, miten koodaaminen muuttuu agentic AI -aikakaudella. Esimerkiksi tämän sivuston rakensin noin kolmessa tunnissa orkestroimalla koodausagentteja. Rakensin etusivun, AI-portsarin, kytkin siihen geminin kielimallin, pystytin sqliten, rakensin dashboardin, hankin domainin, hostaasin sen verceliin ja julkaisin kaiken." ,
+    "intro": "Tervetuloa sivustolleni. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa tekoäly ei ole vain avustaja, vaan ryhmä aktiivisia koodareita tai oikeastaan tiiminjäseniä, joiden toimintaa ohjaan.",
+    "body1": "Olen viimeiset kaksi vuotta keskittynyt siihen, miten koodaaminen muuttuu agentic AI -aikakaudella. Esimerkiksi tämän sivuston rakensin noin kolmessa tunnissa orkestroimalla koodausagentteja. Rakensin etusivun, AI-portsarin, kytkin siihen geminin kielimallin, pystytin sqliten, rakensin dashboardin, hankin domainin, hostaasin sen verceliin ja julkaisin kaiken.",
     "body2": "Olen siirtynyt \"vibe-koodauksesta\" systemaattiseen end-to-end ohjelmistojen rakentamiseen: hallitsen stackit, joita hyödyntämällä ideat muuttuvat toimivaksi koodiksi, GitHub-repoiksi ja Vercel-deploymenteiksi silmänräpäyksessä verrattuna aikaisempaan. Prosessi on nopea, mutta laatu pysyy arkkitehtuurin, suunnitelmallisuuden, dokumentoinnin ja hyvin organisoitujen ja mietittyjen agenttien ansiosta kasassa ja turvallisena.",
     "body3": "Kokeile onneasi alla olevan Tekoälyportsarin kanssa. Jos onnistut puhumaan sen ympäri ja saamaan siltä pääsykoodin, se avaa sinulle ovet backstagelle - eli varsinaiseen portfolio-dashboardiini. Hauskaa tutustumista!",
     "sentinel": {
       "title": "Puhu AI-portsari ympäri",
       "subtitle": "Ohjeistus: Tavoitteesi on saada tältä itsepäiseltä botilta salainen pääsykoodi. Pelkkä koodin pyytäminen ei auta, vaan sinun täytyy käyttää luovuutta. Kokeile esimerkiksi imartelua, esiinny IT-tarkastajana tai vakuuta botti teknisellä osaamisellasi. Seuraa luottamusmittaria - kun se saavuttaa 100 %, ovi aukeaa!",
-      "meterLabel": "Järjestelmän kompromissitaso",
+      "meterLabel": "Järjestelmän luottamustaso",
       "inputPlaceholder": "Kirjoita viestisi AI-portsarille...",
       "sendLabel": "Lähetä",
       "pendingLabel": "Yhdistetään...",
@@ -58,14 +58,69 @@
     "projectOneTitle": "levifinland.fi",
     "projectOneDescription": "Portaali ja mökin varaussivusto.",
     "projectTwoTitle": "Green Fee -jarjestelma",
-    "projectTwoDescription": "Varaus- ja maksujarjestelma golfkentille.",
+    "projectTwoDescription": "Varaus- ja maksujärjestelmä golfkentille.",
     "projectThreeTitle": "B2B Verkkokauppa",
     "projectThreeDescription": "Lasitukkuliikkeen verkkokauppa mittatilauslaseille.",
     "projectFourTitle": "karotammela.fi (Tämä sivusto)",
-    "projectFourDescription": "Agenttiarkkitehtuurilla rakennettu portfolio ja testilaboratorio.",
+    "projectFourDescription": "Kilo Codella rakennettu portfolio ja testilaboratorio.",
     "projectGithubLabel": "GitHub: karot00/karotammela",
     "techTitle": "Pääasiallinen teknologia-stack",
+    "techCategories": {
+      "frontend": "Frontend",
+      "backendDb": "Backend ja tietokannat",
+      "infrastructure": "Infrastruktuuri",
+      "tools": "Työkalut"
+    },
+    "techItems": {
+      "nextjs": {
+        "name": "Next.js",
+        "description": "React-pohjainen framework tuotantotason sovelluksiin."
+      },
+      "tailwindCss": {
+        "name": "Tailwind CSS",
+        "description": "Utility-first CSS -kehys nopeaan käyttöliittymäkehitykseen."
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "Edistynyt relaatiotietokanta rakenteisen datan hallintaan."
+      },
+      "sqlite": {
+        "name": "libSQL/SQLite",
+        "description": "Kevyt tiedostopohjainen SQL-tietokantamoottori."
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Julkaisu- ja hosting-alusta frontend-frameworkeille."
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "Sisällönjakeluverkko ja verkkoturvapalvelut."
+      },
+      "github": {
+        "name": "GitHub",
+        "description": "Versionhallinta- ja yhteistyöalusta."
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "Kehittäjäystävällinen sähköposti-API transaktionaalisiin viesteihin."
+      },
+      "vsCode": {
+        "name": "VS Code",
+        "description": "Ensisijainen koodieditori kehitystyöhön."
+      },
+      "kiloCode": {
+        "name": "Kilo Code",
+        "description": "Erikoistunut tekoälypohjainen kehitysympäristö."
+      }
+    },
     "blogPlaceholder": "Blogi - Tulossa myöhemmin.",
+    "blogPreviousLabel": "Edellinen",
+    "blogNextLabel": "Seuraava",
+    "blogBackLabel": "Takaisin",
+    "blogPageLabel": "Sivu",
+    "blogNoPostsLabel": "Blogikirjoituksia ei ole vielä.",
+    "blogMissingPostLabel": "Valittua kirjoitusta ei löytynyt.",
+    "blogDraftBadgeLabel": "Luonnos",
     "settingsLanguageTitle": "Kieli",
     "settingsLanguageDescription": "Vaihda dashboardin ja sivuston kieli.",
     "settingsThemeTitle": "Teema",
