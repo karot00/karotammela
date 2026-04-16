@@ -39,7 +39,7 @@
     "navSettings": "Settings",
     "menuLabel": "Menu",
     "homeLinkLabel": "Back to home",
-    "aboutTitle": "Who am I",
+    "aboutTitle": "Who?",
     "aboutBody": "I am Karo Tammela and I have a Master of Science in Economics and Business Administration. Currently, I work as a project manager leading a large CRM procurement. Over my twenty-year career, I have gained a lot of experience in different environments and business challenges, as well as all kinds of software, some of which have been better and some not so good. Programming has always fascinated me, but traditional coding and especially studying it felt too rigid for a long time.\n\nAgent-based development and new language models in late 2024 changed everything. It removed the barrier between idea, research, and a finished product. Over the last two years, I have refined the ways I transfer 20 years of process and business understanding directly into functional systems. I also build a lot of leisure applications that make my own life easier. I no longer just experiment with what AI can do - I build production-ready solutions with it at a speed that was not possible before, even for experienced developers.",
     "profileImageAlt": "Karo Tammela",
     "toolkitTitle": "My favorite language models H1 / 2026",
@@ -110,7 +110,7 @@
       },
       "kiloCode": {
         "name": "Kilo Code",
-        "description": "Specialized AI-powered coding environment."
+        "description": "open-source AI coding agent."
       }
     },
     "blogPlaceholder": "Blog - Coming later.",

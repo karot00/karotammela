@@ -39,7 +39,7 @@
     "navSettings": "Asetukset",
     "menuLabel": "Valikko",
     "homeLinkLabel": "Etusivulle",
-    "aboutTitle": "Kuka olen",
+    "aboutTitle": "Kuka?",
     "aboutBody": "Olen Karo Tammela ja koulutukseltani olen KTM. Tällä hetkellä päivätöikseni luotsaan projektipäällikköna laajaa CRM-hankintaa. Parinkymmen vuoden pituisen työurani aikana mukaani on jäänyt paljon kokemusta eri ymparistöistä ja liiketoiminnan haasteista sekä kaikenlaisista ohjelmistoista, joista osa on ollut parempia ja osa taas ei niin hyviä. Ohjelmointi on aina kiehtonut minua, mutta perinteinen koodaaminen ja erityisesti sen opiskelu tuntui pitkään liian kankealta.\n\nAgenttipohjainen kehitys ja uudet kielimallit vuoden 2024 loppupuolella muuttivat kaiken. Se poisti kynnyksen idean, tiedonhaun ja valmiin tuotteen väliltä. Viimeiset kaksi vuotta olen hionut työtapoja, joilla siirrän 20 vuoden prosessi- ja liiketoimintaymmärryksen suoraan toimiviksi järjestelmiksi. Luon myös paljon ihan omaa elämääni helpottavia vapaa-ajan sovelluksia. En enää vain kokeile, mitä tekoälyllä voi tehda - rakennan sillä tuotantovalmiita ratkaisuja vauhdilla, joka ei aiemmin ollut mahdollista edes kokeneille devaajille.",
     "profileImageAlt": "Karo Tammela",
     "toolkitTitle": "Lempi kielimallini H1 / 2026",
@@ -82,7 +82,7 @@
       },
       "postgresql": {
         "name": "PostgreSQL",
-        "description": "Edistynyt relaatiotietokanta rakenteisen datan hallintaan."
+        "description": "Luotettava ja skaalautuva relaatiotietokanta."
       },
       "sqlite": {
         "name": "libSQL/SQLite",
@@ -98,7 +98,7 @@
       },
       "github": {
         "name": "GitHub",
-        "description": "Versionhallinta- ja yhteistyöalusta."
+        "description": "Versionhallinta."
       },
       "resend": {
         "name": "Resend",
@@ -110,10 +110,9 @@
       },
       "kiloCode": {
         "name": "Kilo Code",
-        "description": "Erikoistunut tekoälypohjainen kehitysympäristö."
+        "description": "avoimen lähdekoodin tekoälypohjainen ohjelmointiagentti (AI coding agent)."
       }
     },
-    "blogPlaceholder": "Blogi - Tulossa myöhemmin.",
     "blogPreviousLabel": "Edellinen",
     "blogNextLabel": "Seuraava",
     "blogBackLabel": "Takaisin",
