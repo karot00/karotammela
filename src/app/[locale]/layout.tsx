@@ -3,6 +3,8 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { CookieConsentPreferences } from "@/components/cookie-consent-preferences";
 import { routing } from "@/i18n/routing";
 
 type LocaleLayoutProps = {
@@ -25,7 +27,11 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <div className="flex min-h-full flex-1 flex-col">{children}</div>
+      <div className="flex min-h-full flex-1 flex-col">
+        {children}
+        <CookieConsentPreferences />
+        <CookieConsentBanner />
+      </div>
     </NextIntlClientProvider>
   );
 }

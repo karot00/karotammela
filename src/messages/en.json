@@ -113,16 +113,18 @@
         "description": "open-source AI coding agent."
       }
     },
-    "blogPlaceholder": "Blog - Coming later.",
     "blogPreviousLabel": "Previous",
     "blogNextLabel": "Next",
     "blogBackLabel": "Back",
     "blogPageLabel": "Page",
     "blogNoPostsLabel": "No blog posts yet.",
     "blogMissingPostLabel": "Selected post was not found.",
+    "blogPlaceholder": "Choose a blog post to start reading.",
     "blogDraftBadgeLabel": "Draft",
     "settingsLanguageTitle": "Language",
     "settingsLanguageDescription": "Change the dashboard and site language.",
+    "settingsCookieTitle": "Cookie preferences",
+    "settingsCookieDescription": "Review and update your cookie consent choices.",
     "settingsThemeTitle": "Theme",
     "settingsThemeDescription": "Choose light or dark mode for the dashboard.",
     "lightModeLabel": "Light mode",
@@ -140,5 +142,57 @@
     "label": "Language",
     "en": "English",
     "fi": "Suomi"
+  },
+  "cookieConsent": {
+    "settingsTrigger": "Cookie settings",
+    "settingsTriggerAriaLabel": "Open cookie settings",
+    "banner": {
+      "ariaLabel": "Cookie consent notice",
+      "eyebrow": "Privacy settings",
+      "title": "Cookie and storage preferences",
+      "description": "We use essential storage for core functionality. You can choose optional categories anytime.",
+      "acceptAll": "Accept all",
+      "rejectNonEssential": "Reject non-essential",
+      "manageSettings": "Manage settings"
+    },
+    "preferences": {
+      "eyebrow": "Consent center",
+      "title": "Manage your preferences",
+      "description": "Select which optional categories can be used. Essential storage stays enabled for security and core access."
+    },
+    "categories": {
+      "alwaysActive": "Always active",
+      "optional": "Optional",
+      "essential": {
+        "title": "Strictly necessary",
+        "description": "Required for security, unlock verification, and core site operation."
+      },
+      "functional": {
+        "title": "Functional",
+        "description": "Stores language and theme preferences to improve your experience."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Helps us understand usage patterns. In this setup, Umami analytics runs cookieless."
+      },
+      "marketing": {
+        "title": "Marketing",
+        "description": "Reserved for future marketing integrations and campaign measurement."
+      }
+    },
+    "inventory": {
+      "detailsLabel": "Show details",
+      "name": "Name",
+      "provider": "Provider",
+      "purpose": "Purpose",
+      "duration": "Duration",
+      "emptyCategory": "No active items currently mapped to this category."
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "rejectNonEssential": "Reject non-essential",
+      "acceptAll": "Accept all",
+      "savePreferences": "Save preferences"
+    }
   }
 }

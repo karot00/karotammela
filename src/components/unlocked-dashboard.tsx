@@ -22,6 +22,7 @@ import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 
 import { ContactForm } from "@/components/contact-form";
+import { CookieConsentSettingsTrigger } from "@/components/cookie-consent-settings-trigger";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Button } from "@/components/ui/button";
 
@@ -131,6 +132,8 @@ type DashboardCopy = {
   blogDraftBadgeLabel: string;
   settingsLanguageTitle: string;
   settingsLanguageDescription: string;
+  settingsCookieTitle: string;
+  settingsCookieDescription: string;
   settingsThemeTitle: string;
   settingsThemeDescription: string;
   lightModeLabel: string;
@@ -705,6 +708,18 @@ function SettingsView({
         </p>
         <div className="mt-4">
           <LocaleSwitcher />
+        </div>
+      </article>
+
+      <article className="rounded-xl border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold text-foreground">
+          {copy.settingsCookieTitle}
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {copy.settingsCookieDescription}
+        </p>
+        <div className="mt-4">
+          <CookieConsentSettingsTrigger />
         </div>
       </article>
 
