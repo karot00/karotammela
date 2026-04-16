@@ -119,9 +119,12 @@
     "blogPageLabel": "Sivu",
     "blogNoPostsLabel": "Blogikirjoituksia ei ole vielä.",
     "blogMissingPostLabel": "Valittua kirjoitusta ei löytynyt.",
+    "blogPlaceholder": "Valitse blogikirjoitus lukeaksesi sen.",
     "blogDraftBadgeLabel": "Luonnos",
     "settingsLanguageTitle": "Kieli",
     "settingsLanguageDescription": "Vaihda dashboardin ja sivuston kieli.",
+    "settingsCookieTitle": "Evästeasetukset",
+    "settingsCookieDescription": "Tarkastele ja päivitä suostumusvalintojasi.",
     "settingsThemeTitle": "Teema",
     "settingsThemeDescription": "Valitse vaalea tai tumma tila dashboardiin.",
     "lightModeLabel": "Vaalea tila",
@@ -139,5 +142,57 @@
     "label": "Kieli",
     "en": "English",
     "fi": "Suomi"
+  },
+  "cookieConsent": {
+    "settingsTrigger": "Evästeasetukset",
+    "settingsTriggerAriaLabel": "Avaa evästeasetukset",
+    "banner": {
+      "ariaLabel": "Evästesuostumusilmoitus",
+      "eyebrow": "Tietosuoja-asetukset",
+      "title": "Eväste- ja tallennusasetukset",
+      "description": "Käytämme välttämätöntä tallennusta sivuston perustoimintoihin. Voit valita valinnaiset kategoriat milloin tahansa.",
+      "acceptAll": "Hyväksy kaikki",
+      "rejectNonEssential": "Hylkää ei-välttämättömät",
+      "manageSettings": "Hallitse asetuksia"
+    },
+    "preferences": {
+      "eyebrow": "Suostumuskeskus",
+      "title": "Hallitse valintojasi",
+      "description": "Valitse, mitä valinnaisia kategorioita voidaan käyttää. Välttämätön tallennus pysyy päällä turvallisuuden ja peruskäytön vuoksi."
+    },
+    "categories": {
+      "alwaysActive": "Aina käytössä",
+      "optional": "Valinnainen",
+      "essential": {
+        "title": "Välttämättömät",
+        "description": "Tarvitaan turvallisuuteen, lukituksen varmistukseen ja sivuston perustoimintaan."
+      },
+      "functional": {
+        "title": "Toiminnalliset",
+        "description": "Tallentaa kieli- ja teemavalinnat käyttökokemuksen parantamiseksi."
+      },
+      "analytics": {
+        "title": "Analytiikka",
+        "description": "Auttaa ymmärtämään käyttöä. Tässä toteutuksessa Umami-analytiikka toimii ilman evästeitä."
+      },
+      "marketing": {
+        "title": "Markkinointi",
+        "description": "Varattu tuleville markkinointi-integraatioille ja kampanjamittaukselle."
+      }
+    },
+    "inventory": {
+      "detailsLabel": "Näytä lisätiedot",
+      "name": "Nimi",
+      "provider": "Tarjoaja",
+      "purpose": "Tarkoitus",
+      "duration": "Kesto",
+      "emptyCategory": "Tähän kategoriaan ei ole tällä hetkellä liitetty aktiivisia kohteita."
+    },
+    "actions": {
+      "cancel": "Peruuta",
+      "rejectNonEssential": "Hylkää ei-välttämättömät",
+      "acceptAll": "Hyväksy kaikki",
+      "savePreferences": "Tallenna valinnat"
+    }
   }
 }

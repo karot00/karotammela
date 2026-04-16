@@ -14,6 +14,7 @@ export function UmamiScript() {
       strategy="afterInteractive"
       data-website-id={websiteId}
       data-auto-track="true"
+      data-do-not-track="true"
     />
   );
 }

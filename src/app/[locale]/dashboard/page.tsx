@@ -227,6 +227,8 @@ export default async function DashboardPage({
         blogDraftBadgeLabel: t("blogDraftBadgeLabel"),
         settingsLanguageTitle: t("settingsLanguageTitle"),
         settingsLanguageDescription: t("settingsLanguageDescription"),
+        settingsCookieTitle: t("settingsCookieTitle"),
+        settingsCookieDescription: t("settingsCookieDescription"),
         settingsThemeTitle: t("settingsThemeTitle"),
         settingsThemeDescription: t("settingsThemeDescription"),
         lightModeLabel: t("lightModeLabel"),
