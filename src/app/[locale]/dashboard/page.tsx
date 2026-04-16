@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -10,6 +11,7 @@ import {
   paginateBlogPosts,
 } from "@/lib/blog";
 import { getCachedDashboardStats } from "@/lib/db/stats-cache";
+import { getLocaleFromSegment, getLocalizedAlternates } from "@/lib/seo";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 import { trackServerEvent } from "@/lib/telemetry/events";
 
@@ -29,6 +31,29 @@ type StatsResponse = {
   avgMessagesToUnlock: number;
   latestUnlockAt: string | null;
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const currentLocale = getLocaleFromSegment(locale);
+  const t = await getTranslations({
+    locale: currentLocale,
+    namespace: "dashboard",
+  });
+
+  return {
+    title: t("title"),
+    description: t("description") || undefined,
+    alternates: getLocalizedAlternates("dashboard"),
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
+}
 
 async function getStats(): Promise<StatsResponse | null> {
   if (!process.env.TURSO_DATABASE_URL) {

@@ -8,6 +8,8 @@ import {
   CookieConsentProvider,
   parseConsentFromServerCookie,
 } from "@/modules/cookie-consent";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_OWNER_NAME } from "@/lib/seo";
+import { getSiteUrl, toAbsoluteUrl } from "@/lib/site-url";
 
 import "./globals.css";
 
@@ -22,8 +24,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "karotammela.fi",
-  description: "Agentic AI architect portfolio and Sentinel challenge",
+  metadataBase: new URL(getSiteUrl()),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: toAbsoluteUrl("/"),
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
+  alternates: {
+    canonical: toAbsoluteUrl("/"),
+  },
+  authors: [{ name: SITE_OWNER_NAME }],
 };
 
 export default async function RootLayout({
@@ -37,7 +59,6 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
@@ -48,6 +69,23 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: SITE_NAME,
+              url: toAbsoluteUrl("/"),
+              inLanguage: ["fi-FI", "en-US"],
+              publisher: {
+                "@type": "Person",
+                name: SITE_OWNER_NAME,
+                url: toAbsoluteUrl("/"),
+              },
+            }),
+          }}
+        />
         <CookieConsentProvider initialConsent={initialConsent}>
           {children}
           <UmamiScript />
