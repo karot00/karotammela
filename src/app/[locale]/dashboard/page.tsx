@@ -257,6 +257,7 @@ export default async function DashboardPage({
         settingsCookieDescription: t("settingsCookieDescription"),
         settingsThemeTitle: t("settingsThemeTitle"),
         settingsThemeDescription: t("settingsThemeDescription"),
+        privacyPolicyLink: t("privacyPolicyLink"),
         lightModeLabel: t("lightModeLabel"),
         darkModeLabel: t("darkModeLabel"),
         contactNameLabel: t("contactNameLabel"),

@@ -1,4 +1,5 @@
 import { use } from "react";
+import Link from "next/link";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
@@ -93,6 +94,14 @@ export default function LocaleHomePage({ params }: Props) {
           playAgainLabel={t("sentinel.playAgainLabel")}
           goDashboardLabel={t("sentinel.goDashboardLabel")}
         />
+        <div className="flex justify-center mt-8">
+          <Link
+            href={`/${locale}/privacy?returnTo=${encodeURIComponent(`/${locale}`)}`}
+            className="text-xs text-muted-foreground hover:text-foreground"
+          >
+            {t("privacyPolicyLink")}
+          </Link>
+        </div>
       </div>
     </main>
   );

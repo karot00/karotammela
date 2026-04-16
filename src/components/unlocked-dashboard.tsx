@@ -137,6 +137,7 @@ type DashboardCopy = {
   settingsCookieDescription: string;
   settingsThemeTitle: string;
   settingsThemeDescription: string;
+  privacyPolicyLink: string;
   lightModeLabel: string;
   darkModeLabel: string;
   contactNameLabel: string;
@@ -690,10 +691,12 @@ function BlogView({
 }
 
 function SettingsView({
+  locale,
   copy,
   themeMode,
   onThemeChange,
 }: {
+  locale: string;
   copy: DashboardCopy;
   themeMode: ThemeMode;
   onThemeChange: (mode: ThemeMode) => void;
@@ -709,18 +712,6 @@ function SettingsView({
         </p>
         <div className="mt-4">
           <LocaleSwitcher />
-        </div>
-      </article>
-
-      <article className="rounded-xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold text-foreground">
-          {copy.settingsCookieTitle}
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {copy.settingsCookieDescription}
-        </p>
-        <div className="mt-4">
-          <CookieConsentSettingsTrigger />
         </div>
       </article>
 
@@ -747,6 +738,34 @@ function SettingsView({
           >
             {copy.darkModeLabel}
           </Button>
+        </div>
+      </article>
+
+      <article className="rounded-xl border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold text-foreground">
+          {copy.settingsCookieTitle}
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {copy.settingsCookieDescription}
+        </p>
+        <div className="mt-4">
+          <CookieConsentSettingsTrigger />
+        </div>
+      </article>
+
+      <article className="rounded-xl border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold text-foreground">
+          {copy.privacyPolicyLink}
+        </h2>
+        <div className="mt-4">
+          <Link
+            href={`/${locale}/privacy?returnTo=${encodeURIComponent(
+              `/${locale}/dashboard?view=settings`,
+            )}`}
+            className="text-sm text-primary underline-offset-4 hover:underline"
+          >
+            {copy.privacyPolicyLink}
+          </Link>
         </div>
       </article>
     </section>
@@ -828,6 +847,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
   if (activeView === "settings")
     view = (
       <SettingsView
+        locale={locale}
         copy={copy}
         themeMode={themeMode}
         onThemeChange={onThemeChange}
