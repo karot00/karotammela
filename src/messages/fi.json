@@ -48,7 +48,7 @@
     "analyticsTitle": "AI-portsarihaasteen analytiikka",
     "totalAttemptsLabel": "Viestejä yhteensä",
     "unlockedCountLabel": "Onnistuneet avaukset",
-    "highestLevelLabel": "Korkein kompromissitaso",
+    "avgMessagesToUnlockLabel": "Viestien määrän keskiarvo avaukseen",
     "latestUnlockLabel": "Uusin avaus",
     "latestUnlockNever": "Ei onnistuneita avauksia vielä",
     "sourceOffline": "Live-data ei ole saatavilla. Näytetään varaarvot.",

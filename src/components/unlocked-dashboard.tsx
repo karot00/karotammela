@@ -30,6 +30,7 @@ type DashboardStats = {
   totalAttempts: number;
   unlockedCount: number;
   highestLevel: number;
+  avgMessagesToUnlock: number;
   latestUnlockAt: string | null;
 };
 
@@ -97,7 +98,7 @@ type DashboardCopy = {
   analyticsTitle: string;
   totalAttemptsLabel: string;
   unlockedCountLabel: string;
-  highestLevelLabel: string;
+  avgMessagesToUnlockLabel: string;
   latestUnlockLabel: string;
   latestUnlockNever: string;
   sourceOffline: string;
@@ -349,10 +350,10 @@ function OverviewView({
 
           <article className="rounded-xl border border-border bg-card p-4">
             <p className="text-xs text-muted-foreground">
-              {copy.highestLevelLabel}
+              {copy.avgMessagesToUnlockLabel}
             </p>
             <p className="mt-2 text-2xl font-semibold text-foreground">
-              {stats?.highestLevel ?? 0}%
+              {Number((stats?.avgMessagesToUnlock ?? 0).toFixed(1))}
             </p>
           </article>
 

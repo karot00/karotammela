@@ -26,6 +26,7 @@ type StatsResponse = {
   totalAttempts: number;
   unlockedCount: number;
   highestLevel: number;
+  avgMessagesToUnlock: number;
   latestUnlockAt: string | null;
 };
 
@@ -152,7 +153,7 @@ export default async function DashboardPage({
         analyticsTitle: t("analyticsTitle"),
         totalAttemptsLabel: t("totalAttemptsLabel"),
         unlockedCountLabel: t("unlockedCountLabel"),
-        highestLevelLabel: t("highestLevelLabel"),
+        avgMessagesToUnlockLabel: t("avgMessagesToUnlockLabel"),
         latestUnlockLabel: t("latestUnlockLabel"),
         latestUnlockNever: t("latestUnlockNever"),
         sourceOffline: t("sourceOffline"),
