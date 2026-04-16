@@ -37,7 +37,7 @@ I’ve learned to manage the context window of language models to keep project i
 
 ### Learning has never been this fast or this much fun
 
-Even with a lot of hours behind me, the journey is just beginning. The learning curve has remained steep, and absorbing new information is faster than ever with current tools. What felt like a chore in the beginning has turned into addictive problem-solving. As a kid, I loved playing world-building and strategy games like Civilization, Command and Conquer, Theme Park, and A-train. This modern way of coding feels like those games brought to life. Instead of building a fictional game world, I’m building real-world applications. It’s incredibly rewarding. 
+Even with a lot of hours behind me, the journey is just beginning. The learning curve has remained gentle, and absorbing new information is faster than ever with current tools. What felt like a chore in the beginning has turned into addictive problem-solving. As a kid, I loved playing world-building and strategy games like Civilization, Command and Conquer, Theme Park, and A-train. This modern way of coding feels like those games brought to life. Instead of building a fictional game world, I’m building real-world applications. It’s incredibly rewarding. 
 
 I hear this same sentiment in almost every podcast or blog I consume regarding agentic AI or language models. Many developers have rediscovered their passion for building software now that AI handles the tedious work, allowing them to focus on the big picture and challenging problems. 
 
