@@ -7,9 +7,11 @@ import { getAllBlogPosts } from "@/lib/blog";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
+  getDefaultSocialImage,
   getLocaleFromSegment,
   getLocalizedAlternates,
 } from "@/lib/seo";
+import { toAbsoluteUrl } from "@/lib/site-url";
 
 type BlogIndexPageProps = {
   params: Promise<{ locale: string }>;
@@ -36,11 +38,14 @@ export async function generateMetadata({
       type: "website",
       locale: currentLocale === "fi" ? "fi_FI" : "en_US",
       siteName: SITE_NAME,
+      url: toAbsoluteUrl(`/${currentLocale}/blog`),
+      images: [getDefaultSocialImage()],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: SITE_DESCRIPTION,
+      images: [getDefaultSocialImage().url],
     },
   };
 }

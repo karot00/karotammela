@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog";
 import {
   SITE_NAME,
+  getDefaultSocialImage,
   getLocaleFromSegment,
   getLocalizedAlternates,
 } from "@/lib/seo";
@@ -50,11 +51,13 @@ export async function generateMetadata({
       url: toAbsoluteUrl(`/${currentLocale}/blog/${post.slug}`),
       publishedTime: new Date(post.publishedAt).toISOString(),
       tags: post.tags,
+      images: [getDefaultSocialImage()],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: [getDefaultSocialImage().url],
     },
   };
 }
