@@ -30,6 +30,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
+  icons: {
+    icon: "/karo-tammela-tammenterho.svg",
+  },
   title: {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
