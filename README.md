@@ -13,14 +13,17 @@ It combines a public-facing portfolio with an interactive AI gate and a localize
 - Public landing page with brand narrative and conversion-focused hero section
 - AI Bouncer (Sentinel) challenge flow with trust/compromise progression
 - Secure dashboard access flow with signed unlock cookie validation
+- Privacy Policy page (localized)
+- Native sharing capabilities on home and blog pages
 - Dashboard views:
   - Overview
   - Projects
   - Technologies (categorized, localized card layout)
   - Blog (markdown-backed, paginated, localized)
-  - Settings (language and light/dark theme)
+  - Settings (language, theme, and cookie preferences)
 - Contact form integration for inbound business inquiries
 - Bilingual UX (`fi`, `en`) using structured locale messages
+- Custom SVG favicon
 
 ## Technology Stack
 
@@ -77,6 +80,8 @@ Optional analytics:
 
 - `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
+
+> Note: Sensitive files, local databases (`*.sqlite`, `*.db`), environment files (`.env*`), and development-specific instructions (`AGENTS.md`, `CLAUDE.md`, `.kilo/`, `plans/`) are ignored by Git to maintain repository security.
 
 ## Repository Purpose
 
