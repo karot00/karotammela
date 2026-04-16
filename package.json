@@ -21,7 +21,6 @@
     "clsx": "2.1.1",
     "drizzle-orm": "0.45.2",
     "drizzle-zod": "0.8.3",
-    "framer-motion": "12.38.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "1.7.0",
     "marked": "^18.0.0",
