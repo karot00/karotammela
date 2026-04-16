@@ -25,7 +25,8 @@
       "returnOverlayBody": "You have broken in before. You can jump directly to the dashboard or play the challenge again.",
       "playAgainLabel": "Play again",
       "goDashboardLabel": "Go to dashboard"
-    }
+    },
+    "privacyPolicyLink": "Privacy Policy"
   },
   "dashboard": {
     "badge": "Welcome to the backstage",
@@ -127,6 +128,7 @@
     "settingsCookieDescription": "Review and update your cookie consent choices.",
     "settingsThemeTitle": "Theme",
     "settingsThemeDescription": "Choose light or dark mode for the dashboard.",
+    "privacyPolicyLink": "Privacy Policy",
     "lightModeLabel": "Light",
     "darkModeLabel": "Dark",
     "contactNameLabel": "Name",
@@ -142,6 +144,25 @@
     "label": "Language",
     "en": "English",
     "fi": "Suomi"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "introTitle": "1. Introduction",
+    "introBody": "This privacy policy explains how we collect, use, and protect your information when you visit this website.",
+    "dataTitle": "2. Data We Collect",
+    "contactForm": "Contact Form",
+    "contactFormBody": "If you use our contact form, we collect your name and email address to process your inquiry and send you a response. This information is not stored in a database.",
+    "analytics": "Analytics",
+    "analyticsBody": "We use Umami Analytics to understand usage patterns. This tracking is cookieless and respects your privacy.",
+    "cookies": "Cookies",
+    "cookiesBody": "We use cookies for the following purposes:",
+    "cookieUnlock": "Used to manage access to the dashboard features.",
+    "cookieConsent": "Stores your preferences regarding cookie usage on this site.",
+    "backLinkLabel": "Back",
+    "rightsTitle": "3. Your Rights",
+    "rightsBody": "You have the right to request access to your personal data and to ask for corrections.",
+    "contactTitle": "4. Contact",
+    "contactBody": "If you have any questions, please contact us at info@karotammela.fi."
   },
   "cookieConsent": {
     "settingsTrigger": "Cookie settings",

@@ -25,7 +25,8 @@
       "returnOverlayBody": "Olet murtautunut sisään aiemmin. Voit hypätä suoraan dashboardille tai pelata haasteen uudelleen.",
       "playAgainLabel": "Pelaa uudelleen",
       "goDashboardLabel": "Siirry dashboardille"
-    }
+    },
+    "privacyPolicyLink": "Tietosuojaseloste"
   },
   "dashboard": {
     "badge": "Tervetuloa backstagelle",
@@ -127,6 +128,7 @@
     "settingsCookieDescription": "Tarkastele ja päivitä suostumusvalintojasi.",
     "settingsThemeTitle": "Teema",
     "settingsThemeDescription": "Valitse vaalea tai tumma tila dashboardiin.",
+    "privacyPolicyLink": "Tietosuojaseloste",
     "lightModeLabel": "Vaalea",
     "darkModeLabel": "Tumma",
     "contactNameLabel": "Nimi",
@@ -142,6 +144,25 @@
     "label": "Kieli",
     "en": "English",
     "fi": "Suomi"
+  },
+  "privacyPolicy": {
+    "title": "Tietosuojaseloste",
+    "introTitle": "1. Johdanto",
+    "introBody": "Tämä tietosuojaseloste kertoo, miten keräämme, käytämme ja suojaamme tietojasi, kun vierailet tällä sivustolla.",
+    "dataTitle": "2. Keräämämme tiedot",
+    "contactForm": "Yhteydenottolomake",
+    "contactFormBody": "Jos käytät yhteydenottolomakettamme, keräämme nimesi ja sähköpostiosoitteesi yhteydenoton käsittelyä ja vastaamista varten. Näitä tietoja ei tallenneta tietokantaan.",
+    "analytics": "Analytiikka",
+    "analyticsBody": "Käytämme Umami Analyticsia ymmärtääksemme sivuston käyttöä. Tämä seuranta on evästeetöntä ja kunnioittaa yksityisyyttäsi.",
+    "cookies": "Evästeet",
+    "cookiesBody": "Käytämme evästeitä seuraaviin tarkoituksiin:",
+    "cookieUnlock": "Käytetään kojelaudan toimintojen käyttöoikeuksien hallintaan.",
+    "cookieConsent": "Tallentaa asetuksesi evästeiden käytöstä tällä sivustolla.",
+    "backLinkLabel": "Takaisin",
+    "rightsTitle": "3. Oikeutesi",
+    "rightsBody": "Sinulla on oikeus pyytää pääsyä henkilötietoihisi ja pyytää niiden korjaamista.",
+    "contactTitle": "4. Yhteystiedot",
+    "contactBody": "Jos sinulla on kysyttävää, ota yhteyttä osoitteeseen info@karotammela.fi."
   },
   "cookieConsent": {
     "settingsTrigger": "Evästeasetukset",
