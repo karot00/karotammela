@@ -72,10 +72,27 @@ export async function getDashboardStats() {
     .orderBy(desc(logs.timestamp))
     .limit(1);
 
+  const successfulSessionCounts = db
+    .select({
+      sessionId: logs.sessionId,
+      messageCount: sql<number>`count(*)`.as("message_count"),
+    })
+    .from(logs)
+    .groupBy(logs.sessionId)
+    .having(sql`sum(case when ${logs.success} = 1 then 1 else 0 end) > 0`)
+    .as("successful_session_counts");
+
+  const [averages] = await db
+    .select({
+      avgMessagesToUnlock: sql<number>`coalesce(avg(${successfulSessionCounts.messageCount}), 0)`,
+    })
+    .from(successfulSessionCounts);
+
   return {
     totalAttempts: totals?.totalAttempts ?? 0,
     unlockedCount: totals?.unlockedCount ?? 0,
     highestLevel: totals?.highestLevel ?? 0,
+    avgMessagesToUnlock: Number(averages?.avgMessagesToUnlock ?? 0),
     latestUnlockAt: latest[0]?.timestamp ?? null,
   };
 }

@@ -48,7 +48,7 @@
     "analyticsTitle": "AI Bouncer challenge analytics",
     "totalAttemptsLabel": "Total messages",
     "unlockedCountLabel": "Successful unlocks",
-    "highestLevelLabel": "Highest compromise level",
+    "avgMessagesToUnlockLabel": "Average amount of messages to unlock",
     "latestUnlockLabel": "Latest unlock",
     "latestUnlockNever": "No successful unlocks yet",
     "sourceOffline": "Live data is unavailable. Showing fallback values.",
