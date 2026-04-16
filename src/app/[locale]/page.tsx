@@ -7,7 +7,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HeroSection } from "@/components/hero-section";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { SentinelTerminal } from "@/components/sentinel-terminal";
-import { getLocaleFromSegment, getLocalizedAlternates } from "@/lib/seo";
+import {
+  getDefaultSocialImage,
+  getLocaleFromSegment,
+  getLocalizedAlternates,
+} from "@/lib/seo";
+import { toAbsoluteUrl } from "@/lib/site-url";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 
 type Props = {
@@ -23,18 +28,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 
   return {
-    title: "karotammela.fi",
+    title: t("title"),
     description: t("description"),
     alternates: getLocalizedAlternates(),
     openGraph: {
-      title: "karotammela.fi",
+      type: "website",
+      title: t("title"),
       description: t("description"),
       locale: currentLocale === "fi" ? "fi_FI" : "en_US",
+      url: toAbsoluteUrl(`/${currentLocale}`),
+      images: [getDefaultSocialImage()],
     },
     twitter: {
       card: "summary_large_image",
-      title: "karotammela.fi",
+      title: t("title"),
       description: t("description"),
+      images: [getDefaultSocialImage().url],
     },
   };
 }

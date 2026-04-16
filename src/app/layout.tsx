@@ -8,7 +8,12 @@ import {
   CookieConsentProvider,
   parseConsentFromServerCookie,
 } from "@/modules/cookie-consent";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_OWNER_NAME } from "@/lib/seo";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_OWNER_NAME,
+  getDefaultSocialImage,
+} from "@/lib/seo";
 import { getSiteUrl, toAbsoluteUrl } from "@/lib/site-url";
 
 import "./globals.css";
@@ -36,11 +41,13 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: toAbsoluteUrl("/"),
+    images: [getDefaultSocialImage()],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: [getDefaultSocialImage().url],
   },
   alternates: {
     canonical: toAbsoluteUrl("/"),
