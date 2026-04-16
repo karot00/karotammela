@@ -40,6 +40,13 @@ export default async function RootLayout({
       lang="en"
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          rel="preconnect"
+          href="https://api-gateway.umami.dev"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <CookieConsentProvider initialConsent={initialConsent}>
           {children}

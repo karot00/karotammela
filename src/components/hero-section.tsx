@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 type HeroSectionProps = {
@@ -18,9 +15,8 @@ export function HeroSection({
   body2,
   body3,
 }: HeroSectionProps) {
-  const prefersReducedMotion = useReducedMotion();
   const videoEnabled = process.env.NEXT_PUBLIC_HERO_VIDEO_ENABLED === "1";
-  const showVideo = !prefersReducedMotion && videoEnabled;
+  const showVideo = videoEnabled;
 
   return (
     <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/50 p-8 backdrop-blur-md sm:p-12">
@@ -55,12 +51,7 @@ export function HeroSection({
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/35 to-background/70" />
       </div>
 
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, ease: "easeOut" }}
-        className="relative"
-      >
+      <div className="relative">
         <div>
           <p className="text-xs font-semibold tracking-[0.24em] text-primary uppercase">
             {badge}
@@ -76,7 +67,7 @@ export function HeroSection({
             <p>{body3}</p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

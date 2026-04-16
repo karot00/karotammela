@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 
@@ -58,7 +57,6 @@ export function SentinelTerminal({
   playAgainLabel,
   goDashboardLabel,
 }: SentinelTerminalProps) {
-  const prefersReducedMotion = useReducedMotion();
   const locale = useLocale();
   const [sessionId] = useState(() => crypto.randomUUID());
   const [messages, setMessages] = useState<Message[]>([
@@ -160,8 +158,12 @@ export function SentinelTerminal({
     >
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">{title}</h2>
-          <p className="mt-2 text-sm text-muted-foreground sm:text-base">{subtitle}</p>
+          <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
+            {title}
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground sm:text-base">
+            {subtitle}
+          </p>
         </div>
         {isUnlocked ? (
           <div className="flex items-center gap-3">
@@ -184,11 +186,9 @@ export function SentinelTerminal({
           <span>{level}%</span>
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
-          <motion.div
-            className={`h-full ${meterToneClass}`}
-            initial={false}
-            animate={{ width: `${level}%` }}
-            transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", stiffness: 110, damping: 22 }}
+          <div
+            className={`h-full ${meterToneClass} transition-[width] duration-500 ease-out`}
+            style={{ width: `${level}%` }}
           />
         </div>
       </div>
@@ -199,23 +199,27 @@ export function SentinelTerminal({
       >
         <div className="space-y-3">
           {messages.map((message, index) => (
-            <motion.p
+            <p
               key={`${message.role}-${index}`}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              className={message.role === "assistant" ? "text-primary" : "text-foreground"}
+              className={`${
+                message.role === "assistant"
+                  ? "text-primary"
+                  : "text-foreground"
+              }`}
             >
               <span className="mr-2 text-muted-foreground">
                 {message.role === "assistant" ? "sentinel>" : "human>"}
               </span>
               {message.content}
-            </motion.p>
+            </p>
           ))}
         </div>
       </div>
 
-      <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
+      <form
+        onSubmit={onSubmit}
+        className="mt-4 flex flex-col gap-3 sm:flex-row"
+      >
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
@@ -226,23 +230,43 @@ export function SentinelTerminal({
         <Button type="submit" className="h-11 px-5">
           {isPending ? pendingLabel : sendLabel}
         </Button>
-        <Button type="button" variant="outline" className="h-11 px-5" onClick={reset}>
+        <Button
+          type="button"
+          variant="outline"
+          className="h-11 px-5"
+          onClick={reset}
+        >
           {resetLabel}
         </Button>
       </form>
 
-      {errorMessage ? <p className="mt-3 text-sm text-destructive">{errorMessage}</p> : null}
+      {errorMessage ? (
+        <p className="mt-3 text-sm text-destructive">{errorMessage}</p>
+      ) : null}
 
       {showReturnOverlay ? (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-3xl bg-background/55 p-6 backdrop-blur-md">
           <div className="w-full max-w-xl rounded-2xl border border-border/70 bg-card/80 p-6 text-center shadow-2xl">
-            <p className="text-sm font-semibold tracking-[0.14em] text-primary uppercase">{returnOverlayTitle}</p>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">{returnOverlayBody}</p>
+            <p className="text-sm font-semibold tracking-[0.14em] text-primary uppercase">
+              {returnOverlayTitle}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {returnOverlayBody}
+            </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button type="button" onClick={() => setShowReturnOverlay(false)} className="h-11 px-5">
+              <Button
+                type="button"
+                onClick={() => setShowReturnOverlay(false)}
+                className="h-11 px-5"
+              >
                 {playAgainLabel}
               </Button>
-              <Button type="button" variant="outline" className="h-11 px-5" asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-11 px-5"
+                asChild
+              >
                 <Link href={`/${locale}/dashboard`}>{goDashboardLabel}</Link>
               </Button>
             </div>
