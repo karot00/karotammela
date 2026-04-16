@@ -5,9 +5,9 @@
   },
   "home": {
     "phaseLabel": "Karo tammela",
-    "intro": "Welcome to my site. On this page, I test and showcase various implementations where AI is not just an assistant, but a group of active coders or rather team members whose actions I orchestrate.",
-    "body1": "For the past two years, I've been focused on how coding is changing in the agentic AI era. For example, I built this site in about three hours by orchestrating coding agents. I built the home page, the AI bouncer, connected it to the Gemini language model, set up SQLite, built the dashboard, acquired the domain, hosted it on Vercel, and published everything.",
-    "body2": "I've moved from \"vibe coding\" to systematic end-to-end software construction: I master the stacks that turn ideas into working code, GitHub repos, and Vercel deployments in the blink of an eye compared to before. The process is fast, but the quality remains consistent and secure thanks to architecture, planning, documentation, and well-organized, thoughtful agents.",
+    "intro": "Welcome to my site. This is where I test and showcase different projects where I use AI - either in the coding itself or in the final implementations. You will also find my blog here, where I share what I've learned from different projects and from the journey overall.",
+    "body1": "Over the past couple of years, I've spent a big part of my free time learning how coding is changing in the agentic AI era. For example, I built this website in about three hours by orchestrating coding agents. I built the landing page, the AI bouncer, connected it to the Gemini language model, set up SQLite, built the dashboard, acquired the domain, hosted it on Vercel, and published everything.",
+    "body2": "I've moved from \"vibe coding\" to systematic end-to-end software development: through dozens of experiments and hundreds of hours studying different technologies, I've built a workflow where ideas now turn into working code, GitHub repositories, and Vercel deployments. The process is fast, but quality stays consistent and secure thanks to solid architecture, planning, documentation, and well-organized, carefully designed agents.",
     "body3": "Try your luck with the AI Bouncer below. If you manage to talk it around and get the access code, it will open the doors to the backstage - my actual portfolio dashboard. Enjoy exploring!",
     "sentinel": {
       "title": "Talk the AI Bouncer Around",

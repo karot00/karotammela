@@ -5,9 +5,9 @@
   },
   "home": {
     "phaseLabel": "Karo tammela",
-    "intro": "Tervetuloa sivustolleni. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa tekoäly ei ole vain avustaja, vaan ryhmä aktiivisia koodareita tai oikeastaan tiiminjäseniä, joiden toimintaa ohjaan.",
-    "body1": "Olen viimeiset kaksi vuotta keskittynyt siihen, miten koodaaminen muuttuu agentic AI -aikakaudella. Esimerkiksi tämän sivuston rakensin noin kolmessa tunnissa orkestroimalla koodausagentteja. Rakensin etusivun, AI-portsarin, kytkin siihen geminin kielimallin, pystytin sqliten, rakensin dashboardin, hankin domainin, hostaasin sen verceliin ja julkaisin kaiken.",
-    "body2": "Olen siirtynyt \"vibe-koodauksesta\" systemaattiseen end-to-end ohjelmistojen rakentamiseen: hallitsen stackit, joita hyödyntämällä ideat muuttuvat toimivaksi koodiksi, GitHub-repoiksi ja Vercel-deploymenteiksi silmänräpäyksessä verrattuna aikaisempaan. Prosessi on nopea, mutta laatu pysyy arkkitehtuurin, suunnitelmallisuuden, dokumentoinnin ja hyvin organisoitujen ja mietittyjen agenttien ansiosta kasassa ja turvallisena.",
+    "intro": "Tervetuloa sivustolleni. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa hyödynnän tekoälyä joko itse koodauksessa tai toteutuksissa. Löydät täältä myös blogini, jossa käyn läpi eri projektejani ja ylipäätään matkan varrella opittua.",
+    "body1": "Olen viimeiset pari vuotta käyttänyt ison osan vapaa-ajastani oppiakseni, miten koodaaminen muuttuu agentic AI -aikakaudella. Esimerkiksi tämän sivuston rakensin noin kolmessa tunnissa orkestroimalla koodausagentteja. Rakensin etusivun, AI-portsarin, kytkin siihen geminin kielimallin, pystytin sqliten, rakensin dashboardin, hankin domainin, hostaasin sen verceliin ja julkaisin kaiken.",
+    "body2": "Olen siirtynyt \"vibe-koodauksesta\" systemaattiseen end-to-end ohjelmistojen rakentamiseen: olen löytänyt kymmenillä kokeiluilla ja opiskelemalla satoja tunteja eri teknologioita. Niitä hyödyntämällä ideat muuttuvat nykyään toimivaksi koodiksi, GitHub-repoiksi ja Vercel-deploymenteiksi. Prosessi on nopea, mutta laatu pysyy arkkitehtuurin, suunnitelmallisuuden, dokumentoinnin ja hyvin organisoitujen ja mietittyjen agenttien ansiosta kasassa ja turvallisena.",
     "body3": "Kokeile onneasi alla olevan Tekoälyportsarin kanssa. Jos onnistut puhumaan sen ympäri ja saamaan siltä pääsykoodin, se avaa sinulle ovet backstagelle - eli varsinaiseen portfolio-dashboardiini. Hauskaa tutustumista!",
     "sentinel": {
       "title": "Puhu AI-portsari ympäri",
