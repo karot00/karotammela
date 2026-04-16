@@ -26,7 +26,10 @@
       "playAgainLabel": "Pelaa uudelleen",
       "goDashboardLabel": "Siirry dashboardille"
     },
-    "privacyPolicyLink": "Tietosuojaseloste"
+    "privacyPolicyLink": "Tietosuojaseloste",
+    "shareLabel": "Jaa",
+    "shareCopiedLabel": "Linkki kopioitu.",
+    "shareErrorLabel": "Jakaminen ei ole käytettävissä."
   },
   "dashboard": {
     "badge": "Tervetuloa backstagelle",
@@ -121,6 +124,9 @@
     "blogNoPostsLabel": "Blogikirjoituksia ei ole vielä.",
     "blogMissingPostLabel": "Valittua kirjoitusta ei löytynyt.",
     "blogPlaceholder": "Valitse blogikirjoitus lukeaksesi sen.",
+    "blogShareLabel": "Jaa",
+    "blogShareCopiedLabel": "Linkki kopioitu.",
+    "blogShareErrorLabel": "Jakaminen ei ole käytettävissä.",
     "blogDraftBadgeLabel": "Luonnos",
     "settingsLanguageTitle": "Kieli",
     "settingsLanguageDescription": "Vaihda dashboardin ja sivuston kieli.",

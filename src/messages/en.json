@@ -26,7 +26,10 @@
       "playAgainLabel": "Play again",
       "goDashboardLabel": "Go to dashboard"
     },
-    "privacyPolicyLink": "Privacy Policy"
+    "privacyPolicyLink": "Privacy Policy",
+    "shareLabel": "Share",
+    "shareCopiedLabel": "Link copied.",
+    "shareErrorLabel": "Sharing unavailable."
   },
   "dashboard": {
     "badge": "Welcome to the backstage",
@@ -121,6 +124,9 @@
     "blogNoPostsLabel": "No blog posts yet.",
     "blogMissingPostLabel": "Selected post was not found.",
     "blogPlaceholder": "Choose a blog post to start reading.",
+    "blogShareLabel": "Share",
+    "blogShareCopiedLabel": "Link copied.",
+    "blogShareErrorLabel": "Sharing unavailable.",
     "blogDraftBadgeLabel": "Draft",
     "settingsLanguageTitle": "Language",
     "settingsLanguageDescription": "Change the dashboard and site language.",
