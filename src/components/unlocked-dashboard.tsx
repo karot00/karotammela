@@ -24,6 +24,7 @@ import sanitizeHtml from "sanitize-html";
 import { ContactForm } from "@/components/contact-form";
 import { CookieConsentSettingsTrigger } from "@/components/cookie-consent-settings-trigger";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { ShareButton } from "@/components/share-button";
 import { Button } from "@/components/ui/button";
 
 type DashboardStats = {
@@ -130,6 +131,9 @@ type DashboardCopy = {
   blogPageLabel: string;
   blogNoPostsLabel: string;
   blogMissingPostLabel: string;
+  blogShareLabel: string;
+  blogShareCopiedLabel: string;
+  blogShareErrorLabel: string;
   blogDraftBadgeLabel: string;
   settingsLanguageTitle: string;
   settingsLanguageDescription: string;
@@ -666,6 +670,15 @@ function BlogView({
                 {blog.selectedPost.title}
               </h2>
             </div>
+            <ShareButton
+              url={`/${locale}/blog/${blog.selectedPost.slug}`}
+              title={blog.selectedPost.title}
+              text={blog.selectedPost.description}
+              label={copy.blogShareLabel}
+              copiedLabel={copy.blogShareCopiedLabel}
+              errorLabel={copy.blogShareErrorLabel}
+              className="mt-3"
+            />
             <p className="mt-2 text-sm text-muted-foreground">
               {new Intl.DateTimeFormat(localeCode, {
                 dateStyle: "medium",

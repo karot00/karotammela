@@ -7,6 +7,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HeroSection } from "@/components/hero-section";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { ShareButton } from "@/components/share-button";
 import { SentinelTerminal } from "@/components/sentinel-terminal";
 import {
   getDefaultSocialImage,
@@ -94,6 +95,16 @@ export default function LocaleHomePage({ params }: Props) {
           playAgainLabel={t("sentinel.playAgainLabel")}
           goDashboardLabel={t("sentinel.goDashboardLabel")}
         />
+        <div className="flex justify-center">
+          <ShareButton
+            url={`/${locale}`}
+            title={t("phaseLabel")}
+            text={t("intro")}
+            label={t("shareLabel")}
+            copiedLabel={t("shareCopiedLabel")}
+            errorLabel={t("shareErrorLabel")}
+          />
+        </div>
         <div className="flex justify-center mt-8">
           <Link
             href={`/${locale}/privacy?returnTo=${encodeURIComponent(`/${locale}`)}`}

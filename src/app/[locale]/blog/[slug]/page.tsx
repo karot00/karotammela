@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { renderBlogMarkdownToSafeHtml } from "@/components/blog-post-content";
+import { ShareButton } from "@/components/share-button";
 import { routing } from "@/i18n/routing";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog";
 import {
@@ -127,6 +128,16 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         >
           {t("blogBackLabel")}
         </Link>
+
+        <ShareButton
+          url={toAbsoluteUrl(`/${currentLocale}/blog/${post.slug}`)}
+          title={post.title}
+          text={post.description}
+          label={t("blogShareLabel")}
+          copiedLabel={t("blogShareCopiedLabel")}
+          errorLabel={t("blogShareErrorLabel")}
+          className="mt-4"
+        />
 
         <h1 className="mt-4 text-3xl font-semibold text-foreground">
           {post.title}
