@@ -39,10 +39,11 @@ export function ShareButton({
 
   const onShare = async () => {
     const shareUrl = resolveShareUrl();
+    const nav = globalThis.navigator;
 
     try {
-      if (typeof navigator !== "undefined" && "share" in navigator) {
-        await navigator.share({
+      if (typeof nav?.share === "function") {
+        await nav.share({
           title,
           text,
           url: shareUrl,
@@ -51,8 +52,8 @@ export function ShareButton({
         return;
       }
 
-      if (typeof navigator !== "undefined" && navigator.clipboard) {
-        await navigator.clipboard.writeText(shareUrl);
+      if (typeof nav?.clipboard?.writeText === "function") {
+        await nav.clipboard.writeText(shareUrl);
         setStatus("copied");
         window.setTimeout(() => setStatus("idle"), 2500);
         return;
