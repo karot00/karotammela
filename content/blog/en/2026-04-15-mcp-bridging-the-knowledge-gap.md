@@ -7,9 +7,9 @@ draft: false
 tags: ["AI", "MCP", "CLI", "Kilo-Code", "Context7", "Programming"]
 ---
 
-![Context7 MCP server used from Kilo Code](/media/context7_mcp.png)
-
 For me, vibe coding was a fantastic way to start building with AI, but in my own projects I quickly ran into an invisible wall. It is the AI's limited awareness: a language model (LLM) is a sealed box whose worldview ends at the cutoff of its training data, often months or even more than a year before its public release. If you ask it about something that happened in the last year, the answer is mostly guesswork or outright hallucination. My solution has been **MCP (Model Context Protocol)**. It is the bridge that connects the AI's "brain" to real-world data.
+
+![Context7 MCP server used from Kilo Code](/media/context7_mcp.png)
 
 ### What is MCP?
 
