@@ -1,0 +1,209 @@
+{
+  "releases": [
+    {
+      "version": "v0.8",
+      "date": "2026-04-17",
+      "title": "Dashboard changelog & contact companion panel",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Dashboard Changelog tab with a curated, bilingual release history and coloured type pills."
+        },
+        {
+          "type": "added",
+          "text": "Availability and social links panel next to the Overview contact form on wide screens."
+        },
+        {
+          "type": "added",
+          "text": "Inline GitHub and LinkedIn brand icons so the companion panel does not depend on brand icons in lucide-react."
+        },
+        {
+          "type": "changed",
+          "text": "Overview contact section now uses a two-column layout on large screens and stacks cleanly on mobile."
+        },
+        {
+          "type": "changed",
+          "text": "Dashboard view query widened so ?view=changelog is preserved on reloads and deep links."
+        }
+      ]
+    },
+    {
+      "version": "v0.7",
+      "date": "2026-04-16",
+      "title": "Polish, documentation & favicon",
+      "changes": [
+        { "type": "added", "text": "Custom SVG favicon across all routes." },
+        {
+          "type": "changed",
+          "text": "Refreshed README to match current scope, security notes and ignored files."
+        },
+        {
+          "type": "fixed",
+          "text": "Share button navigator type narrowing under strict TypeScript."
+        },
+        {
+          "type": "removed",
+          "text": "Cleared out the committed .env.example to avoid stale guidance."
+        }
+      ]
+    },
+    {
+      "version": "v0.6",
+      "date": "2026-04-16",
+      "title": "Native share, privacy policy & social metadata",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Native share actions on the home page and dashboard blog."
+        },
+        {
+          "type": "added",
+          "text": "Localised privacy policy page with a cookie inventory."
+        },
+        {
+          "type": "changed",
+          "text": "Improved social metadata previews and landing copy in both locales."
+        },
+        {
+          "type": "changed",
+          "text": "Refined Finnish metadata title wording."
+        },
+        {
+          "type": "fixed",
+          "text": "Sitemap URLs now point at the production domain consistently."
+        }
+      ]
+    },
+    {
+      "version": "v0.5",
+      "date": "2026-04-16",
+      "title": "Public blog routes, cookie consent & performance",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Public localised blog routes so posts can be indexed for SEO."
+        },
+        {
+          "type": "added",
+          "text": "Localised cookie consent module, banner and settings trigger."
+        },
+        {
+          "type": "added",
+          "text": "Average-messages-to-unlock metric on the dashboard."
+        },
+        {
+          "type": "changed",
+          "text": "Reduced landing JS footprint and preconnected the analytics host."
+        },
+        {
+          "type": "fixed",
+          "text": "Cleaned up bilingual dashboard copy and theme labels."
+        },
+        {
+          "type": "fixed",
+          "text": "Robots and sitemap routes are now excluded from locale middleware."
+        }
+      ]
+    },
+    {
+      "version": "v0.4",
+      "date": "2026-04-09",
+      "title": "Dashboard blog & technologies views",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Localised dashboard blog view with markdown rendering and pagination."
+        },
+        {
+          "type": "added",
+          "text": "Localised technologies view grouped by category."
+        },
+        {
+          "type": "changed",
+          "text": "Expanded the early workflow section in the seeded blog posts."
+        },
+        {
+          "type": "changed",
+          "text": "Rewrote the README to match the current project scope."
+        },
+        {
+          "type": "fixed",
+          "text": "Corrected the Gemini version referenced in the blog posts."
+        }
+      ]
+    },
+    {
+      "version": "v0.3",
+      "date": "2026-04-08",
+      "title": "Dashboard redesign & bilingual analytics",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Redesigned the dashboard with a sidebar, overview and analytics cards."
+        },
+        {
+          "type": "added",
+          "text": "Shared dashboard stats cache powering both the UI and the stats API."
+        },
+        {
+          "type": "changed",
+          "text": "Unified bilingual labels across the dashboard surface."
+        },
+        {
+          "type": "fixed",
+          "text": "Prevented the landing hero from auto-scrolling on load."
+        },
+        {
+          "type": "fixed",
+          "text": "Tightened dashboard stats reads and improved DB failure visibility."
+        },
+        {
+          "type": "removed",
+          "text": "Cleared all environment values from the committed .env.example."
+        }
+      ]
+    },
+    {
+      "version": "v0.2",
+      "date": "2026-04-07",
+      "title": "Edge-safe middleware & Next 16 migration",
+      "changes": [
+        {
+          "type": "changed",
+          "text": "Migrated the locale middleware to the Next 16 proxy API."
+        },
+        {
+          "type": "fixed",
+          "text": "Made locale routing edge-safe to keep the middleware bundle slim."
+        },
+        {
+          "type": "fixed",
+          "text": "Inlined the i18n config in the middleware for the edge runtime."
+        }
+      ]
+    },
+    {
+      "version": "v0.1",
+      "date": "2026-04-07",
+      "title": "Initial bilingual sentinel flow",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Initial bilingual Sentinel (AI Bouncer) challenge flow with trust/compromise progression."
+        },
+        {
+          "type": "added",
+          "text": "Signed unlock cookie and protected dashboard entry."
+        },
+        {
+          "type": "added",
+          "text": "Baseline production hardening and deployment wiring."
+        },
+        {
+          "type": "changed",
+          "text": "Cleaned up contact details in the README for the public repository."
+        }
+      ]
+    }
+  ]
+}

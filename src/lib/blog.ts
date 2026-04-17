@@ -194,8 +194,17 @@ export function normalizeBlogViewQuery(input: {
   view?: string;
   page?: string;
   post?: string;
-}): { view: "overview" | "blog"; page: number; post: string | null } {
-  const view = input.view === "blog" ? "blog" : "overview";
+}): {
+  view: "overview" | "blog" | "changelog";
+  page: number;
+  post: string | null;
+} {
+  const view: "overview" | "blog" | "changelog" =
+    input.view === "blog"
+      ? "blog"
+      : input.view === "changelog"
+        ? "changelog"
+        : "overview";
   const pageValue = Number(input.page);
   const page = Number.isFinite(pageValue) ? normalizePage(pageValue) : 1;
 

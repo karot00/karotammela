@@ -1,0 +1,212 @@
+{
+  "releases": [
+    {
+      "version": "v0.8",
+      "date": "2026-04-17",
+      "title": "Dashboardin muutosloki ja yhteystietopaneeli",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Dashboardin Muutosloki-välilehti, jossa kuratoidut kaksikieliset julkaisut ja väritetyt tyyppiniput."
+        },
+        {
+          "type": "added",
+          "text": "Saatavuus- ja some-paneeli yhteydenottolomakkeen viereen leveillä näytöillä."
+        },
+        {
+          "type": "added",
+          "text": "Omat GitHub- ja LinkedIn-brändi-ikonit, jottei yhteystietopaneeli ole riippuvainen lucide-reactin brändi-ikoneista."
+        },
+        {
+          "type": "changed",
+          "text": "Yleiskatsauksen yhteydenotto-osio käyttää nyt kaksipalstaista asettelua isoilla näytöillä ja pinoutuu siististi mobiilissa."
+        },
+        {
+          "type": "changed",
+          "text": "Dashboardin näkymäkysely laajennettu niin että ?view=changelog säilyy sivun uudelleenlatauksessa ja suorissa linkeissä."
+        }
+      ]
+    },
+    {
+      "version": "v0.7",
+      "date": "2026-04-16",
+      "title": "Viimeistely, dokumentaatio ja favicon",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Räätälöity SVG-favicon kaikille sivuille."
+        },
+        {
+          "type": "changed",
+          "text": "README päivitetty vastaamaan nykyistä laajuutta, tietoturvaperiaatteita ja ignoroituja tiedostoja."
+        },
+        {
+          "type": "fixed",
+          "text": "Share-napin navigator-tyypitys korjattu strict-TypeScriptin kanssa."
+        },
+        {
+          "type": "removed",
+          "text": "Versionhallintaan tallennettu .env.example tyhjennetty vanhentuneiden ohjeiden välttämiseksi."
+        }
+      ]
+    },
+    {
+      "version": "v0.6",
+      "date": "2026-04-16",
+      "title": "Natiivi jako, tietosuojaseloste ja somemetatiedot",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Natiivit jako-toiminnot etusivulle ja dashboardin blogiin."
+        },
+        {
+          "type": "added",
+          "text": "Lokalisoitu tietosuojasivu ja evästeluettelo."
+        },
+        {
+          "type": "changed",
+          "text": "Parannetut somejaon esikatselutiedot ja laskeutumissivun tekstit molemmilla kielillä."
+        },
+        {
+          "type": "changed",
+          "text": "Suomenkielisen metatiedon otsikko hiottu."
+        },
+        {
+          "type": "fixed",
+          "text": "Sitemapin URL:t osoittavat nyt yhdenmukaisesti tuotantodomainiin."
+        }
+      ]
+    },
+    {
+      "version": "v0.5",
+      "date": "2026-04-16",
+      "title": "Julkiset blogireitit, evästesuostumus ja suorituskyky",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Julkiset lokalisoidut blogireitit hakukoneindeksointia varten."
+        },
+        {
+          "type": "added",
+          "text": "Lokalisoitu evästesuostumusmoduuli, banneri ja asetusten avaaja."
+        },
+        {
+          "type": "added",
+          "text": "Mittari viestien keskimäärälle dashboardin avaamiseen."
+        },
+        {
+          "type": "changed",
+          "text": "Pienennetty laskeutumissivun JS-kuormitus ja esikytketty analytiikkahosti."
+        },
+        {
+          "type": "fixed",
+          "text": "Dashboardin kaksikieliset tekstit ja teemaotsikot korjattu."
+        },
+        {
+          "type": "fixed",
+          "text": "Robots- ja sitemap-reitit ohitetaan locale-middlewaressa."
+        }
+      ]
+    },
+    {
+      "version": "v0.4",
+      "date": "2026-04-09",
+      "title": "Dashboardin blogi- ja teknologianäkymät",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Lokalisoitu blogi-näkymä markdown-renderöinnillä ja sivutuksella."
+        },
+        {
+          "type": "added",
+          "text": "Lokalisoitu teknologia-näkymä ryhmiteltynä kategorioittain."
+        },
+        {
+          "type": "changed",
+          "text": "Blogipostausten alkuvaiheen työnkulkuosio laajennettu."
+        },
+        {
+          "type": "changed",
+          "text": "README kirjoitettu uudelleen vastaamaan projektin laajuutta."
+        },
+        {
+          "type": "fixed",
+          "text": "Blogipostauksissa viitatun Gemini-version korjaus."
+        }
+      ]
+    },
+    {
+      "version": "v0.3",
+      "date": "2026-04-08",
+      "title": "Dashboardin uudistus ja kaksikielinen analytiikka",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Dashboard uudistettu sivupalkilla, yleiskatsauksella ja analytiikkakorteilla."
+        },
+        {
+          "type": "added",
+          "text": "Jaettu dashboardin tilastocache käyttöliittymän ja stats-APIn käyttöön."
+        },
+        {
+          "type": "changed",
+          "text": "Dashboardin kaksikieliset tekstit yhtenäistetty."
+        },
+        {
+          "type": "fixed",
+          "text": "Laskeutumissivun hero ei enää skrollaudu automaattisesti latauksessa."
+        },
+        {
+          "type": "fixed",
+          "text": "Dashboardin tilastolukujen luku- ja virhetilanteet tarkennettu."
+        },
+        {
+          "type": "removed",
+          "text": "Versionhallintaan tallennettu .env.example tyhjennetty arvoista."
+        }
+      ]
+    },
+    {
+      "version": "v0.2",
+      "date": "2026-04-07",
+      "title": "Reunan yhteensopiva middleware ja Next 16 -päivitys",
+      "changes": [
+        {
+          "type": "changed",
+          "text": "Locale-middleware siirretty Next 16:n proxy-APIin."
+        },
+        {
+          "type": "fixed",
+          "text": "Locale-reititys tehty edge-yhteensopivaksi middleware-bundlen pitämiseksi kevyenä."
+        },
+        {
+          "type": "fixed",
+          "text": "i18n-konfiguraatio upotettu middlewareen edge-ajoa varten."
+        }
+      ]
+    },
+    {
+      "version": "v0.1",
+      "date": "2026-04-07",
+      "title": "Kaksikielisen Sentinel-virran ensijulkaisu",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Kaksikielinen Sentinel (AI-portsari) -haastepolku luottamus/vaarantuminen-etenemisellä."
+        },
+        {
+          "type": "added",
+          "text": "Allekirjoitettu unlock-eväste ja suojattu dashboard-pääsy."
+        },
+        {
+          "type": "added",
+          "text": "Perustason tuotantokovennus ja julkaisuintegraatio."
+        },
+        {
+          "type": "changed",
+          "text": "README siivottu yhteystiedoista julkista repositoriota varten."
+        }
+      ]
+    }
+  ]
+}
