@@ -26,6 +26,7 @@ import { CookieConsentSettingsTrigger } from "@/components/cookie-consent-settin
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ShareButton } from "@/components/share-button";
 import { Button } from "@/components/ui/button";
+import type { ChangelogChangeType, ChangelogRelease } from "@/lib/changelog";
 
 type DashboardStats = {
   totalAttempts: number;
@@ -87,6 +88,7 @@ type DashboardCopy = {
   navProjects: string;
   navTech: string;
   navBlog: string;
+  navChangelog: string;
   navSettings: string;
   menuLabel: string;
   homeLinkLabel: string;
@@ -105,6 +107,11 @@ type DashboardCopy = {
   sourceOffline: string;
   contactTitle: string;
   contactDescription: string;
+  contactAvailabilityEyebrow: string;
+  contactAvailabilityStatus: string;
+  contactConnectLabel: string;
+  contactGithubLabel: string;
+  contactLinkedinLabel: string;
   projectsTitle: string;
   projectOneTitle: string;
   projectOneDescription: string;
@@ -152,6 +159,13 @@ type DashboardCopy = {
   contactPendingLabel: string;
   contactSuccessLabel: string;
   contactErrorLabel: string;
+  changelogTitle: string;
+  changelogLead: string;
+  changelogEmptyLabel: string;
+  changelogTypeAdded: string;
+  changelogTypeChanged: string;
+  changelogTypeFixed: string;
+  changelogTypeRemoved: string;
 };
 
 type UnlockedDashboardProps = {
@@ -159,10 +173,17 @@ type UnlockedDashboardProps = {
   copy: DashboardCopy;
   stats: DashboardStats | null;
   blog: DashboardBlogPayload;
+  changelog: ChangelogRelease[];
   initialView?: DashboardView;
 };
 
-type DashboardView = "overview" | "projects" | "tech" | "blog" | "settings";
+type DashboardView =
+  | "overview"
+  | "projects"
+  | "tech"
+  | "blog"
+  | "changelog"
+  | "settings";
 type ThemeMode = "dark" | "light";
 
 function formatDate(value: string, locale: string) {
@@ -247,6 +268,7 @@ function SidebarNav({
     { id: "projects", label: copy.navProjects },
     { id: "tech", label: copy.navTech },
     { id: "blog", label: copy.navBlog },
+    { id: "changelog", label: copy.navChangelog },
     { id: "settings", label: copy.navSettings },
   ];
 
@@ -378,26 +400,101 @@ function OverviewView({
       </section>
 
       <section className="rounded-xl border border-border bg-card p-6">
-        <h3 className="text-lg font-semibold text-foreground">
-          {copy.contactTitle}
-        </h3>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {copy.contactDescription}
-        </p>
-        <ContactForm
-          copy={{
-            nameLabel: copy.contactNameLabel,
-            emailLabel: copy.contactEmailLabel,
-            companyLabel: copy.contactCompanyLabel,
-            messageLabel: copy.contactMessageLabel,
-            submitLabel: copy.contactSubmitLabel,
-            pendingLabel: copy.contactPendingLabel,
-            successLabel: copy.contactSuccessLabel,
-            errorLabel: copy.contactErrorLabel,
-          }}
-        />
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)] lg:items-start">
+          <div>
+            <h3 className="text-lg font-semibold text-foreground">
+              {copy.contactTitle}
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {copy.contactDescription}
+            </p>
+            <ContactForm
+              copy={{
+                nameLabel: copy.contactNameLabel,
+                emailLabel: copy.contactEmailLabel,
+                companyLabel: copy.contactCompanyLabel,
+                messageLabel: copy.contactMessageLabel,
+                submitLabel: copy.contactSubmitLabel,
+                pendingLabel: copy.contactPendingLabel,
+                successLabel: copy.contactSuccessLabel,
+                errorLabel: copy.contactErrorLabel,
+              }}
+            />
+          </div>
+
+          <ContactCompanionPanel copy={copy} />
+        </div>
       </section>
     </div>
+  );
+}
+
+function GithubBrandIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.32-1.28-1.67-1.28-1.67-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.77.12 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.77 1.06.77 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+    </svg>
+  );
+}
+
+function LinkedinBrandIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.44-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
+    </svg>
+  );
+}
+
+function ContactCompanionPanel({ copy }: { copy: DashboardCopy }) {
+  return (
+    <aside className="rounded-lg border border-border bg-background/40 p-5">
+      <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+        {copy.contactAvailabilityEyebrow}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-foreground">
+        {copy.contactAvailabilityStatus}
+      </p>
+
+      <div className="my-5 h-px bg-border" aria-hidden="true" />
+
+      <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+        {copy.contactConnectLabel}
+      </p>
+      <ul className="mt-3 space-y-2">
+        <li>
+          <Link
+            href="https://github.com/karot00/karotammela"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="group flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <GithubBrandIcon className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" />
+            <span>{copy.contactGithubLabel}</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="https://www.linkedin.com/in/karo-tammela/"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="group flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <LinkedinBrandIcon className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" />
+            <span>{copy.contactLinkedinLabel}</span>
+          </Link>
+        </li>
+      </ul>
+    </aside>
   );
 }
 
@@ -703,6 +800,107 @@ function BlogView({
   );
 }
 
+function ChangelogView({
+  copy,
+  locale,
+  changelog,
+}: {
+  copy: DashboardCopy;
+  locale: string;
+  changelog: ChangelogRelease[];
+}) {
+  const localeCode = locale === "fi" ? "fi-FI" : "en-US";
+
+  const typeLabels: Record<ChangelogChangeType, string> = {
+    added: copy.changelogTypeAdded,
+    changed: copy.changelogTypeChanged,
+    fixed: copy.changelogTypeFixed,
+    removed: copy.changelogTypeRemoved,
+  };
+
+  const typeStyles: Record<ChangelogChangeType, string> = {
+    added: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    changed: "bg-sky-500/10 text-sky-400 border-sky-500/20",
+    fixed: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    removed: "bg-rose-500/10 text-rose-400 border-rose-500/20",
+  };
+
+  const formatReleaseDate = (value: string) => {
+    const parsed = new Date(value);
+
+    if (Number.isNaN(parsed.getTime())) {
+      return value;
+    }
+
+    return new Intl.DateTimeFormat(localeCode, {
+      dateStyle: "medium",
+    }).format(parsed);
+  };
+
+  return (
+    <section className="mx-auto w-full max-w-4xl space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-foreground">
+          {copy.changelogTitle}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {copy.changelogLead}
+        </p>
+      </div>
+
+      {changelog.length === 0 ? (
+        <p className="rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground">
+          {copy.changelogEmptyLabel}
+        </p>
+      ) : (
+        <div className="space-y-4">
+          {changelog.map((release) => (
+            <article
+              key={release.version}
+              className="rounded-xl border border-border bg-card p-5"
+            >
+              <div className="grid gap-4 md:grid-cols-[140px_1fr] md:items-start">
+                <div>
+                  <span className="inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">
+                    {release.version}
+                  </span>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    {formatReleaseDate(release.date)}
+                  </p>
+                </div>
+
+                <div>
+                  {release.title ? (
+                    <h3 className="text-base font-medium text-foreground">
+                      {release.title}
+                    </h3>
+                  ) : null}
+
+                  <ul className="mt-3 space-y-2">
+                    {release.changes.map((change, index) => (
+                      <li
+                        key={`${release.version}-${index}`}
+                        className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground"
+                      >
+                        <span
+                          className={`mt-0.5 inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase ${typeStyles[change.type]}`}
+                        >
+                          {typeLabels[change.type]}
+                        </span>
+                        <span>{change.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function SettingsView({
   locale,
   copy,
@@ -786,7 +984,14 @@ function SettingsView({
 }
 
 export function UnlockedDashboard(props: UnlockedDashboardProps) {
-  const { locale, copy, stats, blog, initialView = "overview" } = props;
+  const {
+    locale,
+    copy,
+    stats,
+    blog,
+    changelog,
+    initialView = "overview",
+  } = props;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -829,6 +1034,11 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
       return;
     }
 
+    if (view === "changelog") {
+      replaceQuery({ view: "changelog", page: null, post: null });
+      return;
+    }
+
     replaceQuery({ view: null, page: null, post: null });
   };
 
@@ -840,8 +1050,11 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
     replaceQuery({ view: "blog", post: slug });
   };
 
+  const viewParam = searchParams.get("view");
   const activeView: DashboardView =
-    searchParams.get("view") === "blog" ? "blog" : localView;
+    viewParam === "blog" || viewParam === "changelog"
+      ? (viewParam as DashboardView)
+      : localView;
 
   let view = <OverviewView locale={locale} copy={copy} stats={stats} />;
   if (activeView === "projects") view = <ProjectsView copy={copy} />;
@@ -856,6 +1069,9 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
         onOpenPost={onBlogOpenPost}
       />
     );
+  }
+  if (activeView === "changelog") {
+    view = <ChangelogView copy={copy} locale={locale} changelog={changelog} />;
   }
   if (activeView === "settings")
     view = (

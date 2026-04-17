@@ -10,6 +10,7 @@ import {
   normalizeBlogViewQuery,
   paginateBlogPosts,
 } from "@/lib/blog";
+import { getChangelog } from "@/lib/changelog";
 import { getCachedDashboardStats } from "@/lib/db/stats-cache";
 import { getLocaleFromSegment, getLocalizedAlternates } from "@/lib/seo";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
@@ -110,6 +111,7 @@ export default async function DashboardPage({
   const stats = await getStats();
   const posts = await getAllBlogPosts(locale === "fi" ? "fi" : "en");
   const paginatedPosts = paginateBlogPosts(posts, normalizedBlogState.page, 10);
+  const changelog = getChangelog(locale === "fi" ? "fi" : "en");
 
   const selectedPost = normalizedBlogState.post
     ? await getBlogPostBySlug(
@@ -122,6 +124,7 @@ export default async function DashboardPage({
     <UnlockedDashboard
       locale={locale}
       initialView={normalizedBlogState.view}
+      changelog={changelog}
       blog={{
         page: paginatedPosts.page,
         pageSize: paginatedPosts.pageSize,
@@ -166,6 +169,7 @@ export default async function DashboardPage({
         navProjects: t("navProjects"),
         navTech: t("navTech"),
         navBlog: t("navBlog"),
+        navChangelog: t("navChangelog"),
         navSettings: t("navSettings"),
         menuLabel: t("menuLabel"),
         homeLinkLabel: t("homeLinkLabel"),
@@ -184,6 +188,11 @@ export default async function DashboardPage({
         sourceOffline: t("sourceOffline"),
         contactTitle: t("contactTitle"),
         contactDescription: t("contactDescription"),
+        contactAvailabilityEyebrow: t("contactAvailabilityEyebrow"),
+        contactAvailabilityStatus: t("contactAvailabilityStatus"),
+        contactConnectLabel: t("contactConnectLabel"),
+        contactGithubLabel: t("contactGithubLabel"),
+        contactLinkedinLabel: t("contactLinkedinLabel"),
         projectsTitle: t("projectsTitle"),
         projectOneTitle: t("projectOneTitle"),
         projectOneDescription: t("projectOneDescription"),
@@ -271,6 +280,13 @@ export default async function DashboardPage({
         contactPendingLabel: t("contactPendingLabel"),
         contactSuccessLabel: t("contactSuccessLabel"),
         contactErrorLabel: t("contactErrorLabel"),
+        changelogTitle: t("changelogTitle"),
+        changelogLead: t("changelogLead"),
+        changelogEmptyLabel: t("changelogEmptyLabel"),
+        changelogTypeAdded: t("changelogTypeAdded"),
+        changelogTypeChanged: t("changelogTypeChanged"),
+        changelogTypeFixed: t("changelogTypeFixed"),
+        changelogTypeRemoved: t("changelogTypeRemoved"),
       }}
     />
   );
