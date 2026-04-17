@@ -7,9 +7,9 @@ draft: false
 tags: ["AI", "MCP", "CLI", "Kilo-Code", "Context7", "Programming"]
 ---
 
-![Context7 MCP -palvelin käytössä Kilo Codessa](/media/context7_mcp.png)
-
 Minulle vibe-koodaus eli vibeltäminen oli loistava tapa aloittaa ohjelmointi tekoälyn kanssa, mutta törmäsin projekteissani nopeasti näkymättömään seinään. Se on tekoälyn rajallinen tietoisuus: kielimalli (LLM) on suljettu laatikko, jonka maailmankuva päättyy sen koulutusdatan katkaisupisteeseen, joka on kuukausia tai vuodenkin ennen varsinaista julkaisupäivää. Jos kysyt siltä jotain, mikä on tapahtunut viimeisen vuoden aikana, vastauksena on pelkkää arvausta tai hallusinaatiota. Ratkaisuna itselleni on ollut **MCP (Model Context Protocol)**. Se on silta, joka kytkee tekoälyn "aivot" reaalimaailman dataan.
+
+![Context7 MCP -palvelin käytössä Kilo Codessa](/media/context7_mcp.png)
 
 ### Mikä on MCP?
 
