@@ -1,6 +1,33 @@
 {
   "releases": [
     {
+      "version": "v0.9",
+      "date": "2026-04-18",
+      "title": "AI Pulssi -välilehti dashboardiin",
+      "changes": [
+        {
+          "type": "added",
+          "text": "AI Pulssi -välilehti dashboardiin: päivittäiset top AI-uutiset Hacker Newsistä, jokainen tiivistetty Geminillä sekä suomeksi että englanniksi."
+        },
+        {
+          "type": "added",
+          "text": "Interaktiivinen vuoden osakekurssikaavio 12 tekoälyyhtiölle (NVDA, MSFT, GOOGL, META, AMD, ARM, AVGO, CRWV, PLTR, AI, SNOW, SOUN) yhtiön nimen valintatoiminnolla ja gradienttikaaviona."
+        },
+        {
+          "type": "added",
+          "text": "Vercel Cron -ajastettu tehtävä, joka päivittää trendit ja osakekurssit automaattisesti joka päivä kello 08:00 UTC."
+        },
+        {
+          "type": "added",
+          "text": "Kaksi uutta Turso-taulua: ai_trends ja ai_stocks, Drizzle-migraatioilla ja upsert-turvallisilla kyselyfunktioilla."
+        },
+        {
+          "type": "changed",
+          "text": "Osakekaaviossa akselin tekstit käyttävät nyt kiinteää väriä, jotta ne näkyvät tummalla taustalla."
+        }
+      ]
+    },
+    {
       "version": "v0.8",
       "date": "2026-04-17",
       "title": "Dashboardin muutosloki ja yhteystietopaneeli",

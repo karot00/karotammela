@@ -1,6 +1,33 @@
 {
   "releases": [
     {
+      "version": "v0.9",
+      "date": "2026-04-18",
+      "title": "AI Pulse dashboard tab",
+      "changes": [
+        {
+          "type": "added",
+          "text": "AI Pulse tab in the dashboard showing daily top AI stories from Hacker News, each summarised by Gemini in both English and Finnish."
+        },
+        {
+          "type": "added",
+          "text": "Interactive 1-year stock price chart for 12 AI companies (NVDA, MSFT, GOOGL, META, AMD, ARM, AVGO, CRWV, PLTR, AI, SNOW, SOUN) with a company name selector and gradient area chart."
+        },
+        {
+          "type": "added",
+          "text": "Vercel Cron job running daily at 08:00 UTC to refresh trends and stock data automatically."
+        },
+        {
+          "type": "added",
+          "text": "Two new Turso tables: ai_trends and ai_stocks, with Drizzle migrations and upsert-safe query functions."
+        },
+        {
+          "type": "changed",
+          "text": "Stock chart axis labels now use a hardcoded colour to stay visible on dark backgrounds."
+        }
+      ]
+    },
+    {
       "version": "v0.8",
       "date": "2026-04-17",
       "title": "Dashboard changelog & contact companion panel",
