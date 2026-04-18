@@ -4,12 +4,14 @@ type TrendsListProps = {
   trends: AiTrend[];
   lastUpdatedLabel: string;
   noTrendsLabel: string;
+  locale?: string;
 };
 
 export function TrendsList({
   trends,
   lastUpdatedLabel,
   noTrendsLabel,
+  locale,
 }: TrendsListProps): React.ReactElement {
   if (trends.length === 0) {
     return (
@@ -40,7 +42,9 @@ export function TrendsList({
               </p>
             </a>
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-              {trend.summary}
+              {locale === "fi" && trend.summaryFi
+                ? trend.summaryFi
+                : trend.summary}
             </p>
             <div className="mt-2 flex items-center gap-2">
               {trend.source ? (

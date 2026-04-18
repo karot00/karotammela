@@ -101,10 +101,17 @@ async function getAiPulseData(): Promise<AiPulseData | null> {
       availableTickers.length > 0 ? (availableTickers[0] ?? "NVDA") : "NVDA";
     const initialStockData = await getStockHistory(initialTicker, 365);
 
+    // Map ticker strings back to { ticker, name } using AI_TICKERS as source of truth
+    const tickerMap = new Map<string, string>(
+      AI_TICKERS.map((t) => [t.ticker, t.name]),
+    );
     const displayTickers =
       availableTickers.length > 0
-        ? availableTickers
-        : AI_TICKERS.map((t) => t.ticker);
+        ? availableTickers.map((t) => ({
+            ticker: t,
+            name: tickerMap.get(t) ?? t,
+          }))
+        : AI_TICKERS.map((t) => ({ ticker: t.ticker, name: t.name }));
 
     return {
       trends,

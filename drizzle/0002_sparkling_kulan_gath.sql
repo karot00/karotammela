@@ -1,0 +1,1 @@
+ALTER TABLE `ai_trends` ADD `summary_fi` text;

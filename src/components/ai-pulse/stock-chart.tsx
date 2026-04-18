@@ -18,10 +18,15 @@ type StockChartCopy = {
   loadingLabel: string;
 };
 
+type TickerOption = {
+  ticker: string;
+  name: string;
+};
+
 type StockChartProps = {
   initialTicker: string;
   initialData: AiStock[];
-  tickers: string[];
+  tickers: TickerOption[];
   copy: StockChartCopy;
 };
 
@@ -153,8 +158,8 @@ export function StockChart({
           className="rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         >
           {tickers.map((t) => (
-            <option key={t} value={t}>
-              {t}
+            <option key={t.ticker} value={t.ticker}>
+              {t.name} ({t.ticker})
             </option>
           ))}
         </select>
@@ -178,14 +183,14 @@ export function StockChart({
             <XAxis
               dataKey="date"
               tickFormatter={formatMonthLabel}
-              tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+              tick={{ fontSize: 11, fill: "#a1a1aa" }}
               tickLine={false}
               axisLine={false}
               interval="preserveStartEnd"
             />
             <YAxis
               tickFormatter={formatCompactNumber}
-              tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+              tick={{ fontSize: 11, fill: "#a1a1aa" }}
               tickLine={false}
               axisLine={false}
               width={56}
