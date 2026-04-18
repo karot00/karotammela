@@ -1,4 +1,5 @@
 import type { AiStock, AiTrend } from "@/lib/db/schema";
+import { AI_TICKERS } from "@/lib/ai/stocks-fetcher";
 
 import { StockChart } from "./stock-chart";
 import { TrendsList } from "./trends-list";
@@ -15,26 +16,33 @@ export type AiPulseCopy = {
   aiPulseLoadingLabel: string;
 };
 
+export type TickerOption = {
+  ticker: string;
+  name: string;
+};
+
 export type AiPulseData = {
   trends: AiTrend[];
   initialTicker: string;
   initialStockData: AiStock[];
-  availableTickers: string[];
+  availableTickers: TickerOption[];
 };
 
 type AiPulseShellProps = {
   data: AiPulseData;
   copy: AiPulseCopy;
+  locale: string;
 };
 
 export function AiPulseShell({
   data,
   copy,
+  locale,
 }: AiPulseShellProps): React.ReactElement {
   const displayTickers =
     data.availableTickers.length > 0
       ? data.availableTickers
-      : [data.initialTicker];
+      : (AI_TICKERS as unknown as typeof data.availableTickers);
 
   return (
     <section className="space-y-6">
@@ -57,6 +65,7 @@ export function AiPulseShell({
               trends={data.trends}
               lastUpdatedLabel={copy.aiPulseLastUpdatedLabel}
               noTrendsLabel={copy.aiPulseNoTrendsLabel}
+              locale={locale}
             />
           </div>
         </div>

@@ -1111,6 +1111,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
     view = (
       <AiPulseShell
         data={aiPulse}
+        locale={locale}
         copy={{
           aiPulseTitle: copy.aiPulseTitle,
           aiPulseDescription: copy.aiPulseDescription,

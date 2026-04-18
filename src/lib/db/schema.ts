@@ -58,6 +58,7 @@ export const aiTrends = sqliteTable(
     date: text("date").notNull(),
     title: text("title").notNull(),
     summary: text("summary").notNull(),
+    summaryFi: text("summary_fi"),
     url: text("url").notNull(),
     source: text("source"),
     createdAt: integer("created_at", { mode: "timestamp_ms" })

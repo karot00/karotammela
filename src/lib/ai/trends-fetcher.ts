@@ -18,18 +18,28 @@ function getModelName(): string {
   return process.env.AI_MODEL ?? "gemini-3.1-flash-lite-preview";
 }
 
-async function summarizeStory(title: string, url: string): Promise<string> {
+async function summarizeStory(
+  title: string,
+  url: string,
+): Promise<{ en: string; fi: string }> {
   try {
-    const { text } = await generateText({
-      model: google(getModelName()),
-      prompt: `Summarize this tech news story in 1–2 sentences for a developer audience. Be concise and factual. Title: "${title}". URL: ${url}`,
-      maxOutputTokens: 120,
-    });
+    const [enResult, fiResult] = await Promise.all([
+      generateText({
+        model: google(getModelName()),
+        prompt: `Summarize this tech news story in 1–2 sentences for a developer audience. Be concise and factual. Title: "${title}". URL: ${url}`,
+        maxOutputTokens: 120,
+      }),
+      generateText({
+        model: google(getModelName()),
+        prompt: `Tiivistä tämä teknologiauutinen 1–2 lauseeseen kehittäjäyleisölle. Ole ytimekäs ja asiallinen. Vastaa suomeksi. Otsikko: "${title}". URL: ${url}`,
+        maxOutputTokens: 120,
+      }),
+    ]);
 
-    return text.trim();
+    return { en: enResult.text.trim(), fi: fiResult.text.trim() };
   } catch (err) {
     console.warn("[trends-fetcher] Gemini summarize error", err);
-    return title;
+    return { en: title, fi: title };
   }
 }
 
@@ -77,7 +87,8 @@ export async function fetchAndSummarizeTrends(): Promise<NewAiTrend[]> {
       id: crypto.randomUUID(),
       date: today,
       title: hit.title,
-      summary,
+      summary: summary.en,
+      summaryFi: summary.fi,
       url: hit.url,
       source: "hackernews",
     });
