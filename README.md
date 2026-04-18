@@ -13,18 +13,14 @@ It combines a public-facing portfolio with an interactive AI gate and a localize
 - Public landing page with brand narrative and conversion-focused hero section
 - AI Bouncer (Sentinel) challenge flow with trust/compromise progression
 - Secure dashboard access flow with signed unlock cookie validation
-- Privacy Policy page (localized)
-- Native sharing capabilities on home and blog pages
 - Dashboard views:
   - Overview
   - Projects
   - Technologies (categorized, localized card layout)
   - Blog (markdown-backed, paginated, localized)
-  - Changelog (curated, bilingual summary of shipped improvements)
-  - Settings (language, theme, and cookie preferences)
+  - Settings (language and light/dark theme)
 - Contact form integration for inbound business inquiries
 - Bilingual UX (`fi`, `en`) using structured locale messages
-- Custom SVG favicon
 
 ## Technology Stack
 
@@ -82,33 +78,6 @@ Optional analytics:
 - `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
 
-> Note: Sensitive files, local databases (`*.sqlite`, `*.db`), environment files (`.env*`), and development-specific instructions (`AGENTS.md`, `CLAUDE.md`, `.kilo/`, `plans/`) are ignored by Git to maintain repository security.
-
-## Updating the Changelog
-
-The dashboard changelog is curated by hand in two locale files:
-
-- `src/content/changelog/en.json`
-- `src/content/changelog/fi.json`
-
-To add a release, prepend a new entry to the `releases` array in both files. Each entry takes the shape:
-
-```jsonc
-{
-  "version": "v0.8",
-  "date": "2026-05-01",
-  "title": "Short release theme",
-  "changes": [
-    { "type": "added", "text": "User-facing description of what shipped." },
-    { "type": "changed", "text": "…" },
-    { "type": "fixed", "text": "…" },
-    { "type": "removed", "text": "…" },
-  ],
-}
-```
-
-`type` must be one of `added | changed | fixed | removed`. Keep the English and Finnish files in lockstep so the locales stay aligned.
-
 ## Repository Purpose
 
-This codebase is both a production portfolio and an execution environment for testing high-velocity, agent-assisted software workflows with business-grade output quality.
+This codebase is both a production portfolio and an execution environment for testing agentic AI software and application. 

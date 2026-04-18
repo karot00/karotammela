@@ -157,7 +157,17 @@
     "changelogTypeAdded": "Added",
     "changelogTypeChanged": "Changed",
     "changelogTypeFixed": "Fixed",
-    "changelogTypeRemoved": "Removed"
+    "changelogTypeRemoved": "Removed",
+    "navAiPulse": "AI Pulse",
+    "aiPulseTitle": "AI Pulse",
+    "aiPulseDescription": "Top AI stories from Hacker News and live stock prices for leading AI companies.",
+    "aiPulseTrendsTitle": "AI Trends",
+    "aiPulseStocksTitle": "AI Stocks",
+    "aiPulseTickerLabel": "Ticker",
+    "aiPulseNoTrendsLabel": "No trend data available yet. Check back after the next data refresh.",
+    "aiPulseLastUpdatedLabel": "Last updated",
+    "aiPulseSourceLabel": "Source",
+    "aiPulseLoadingLabel": "Loading chart..."
   },
   "localeSwitcher": {
     "label": "Language",

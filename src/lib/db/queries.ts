@@ -1,8 +1,17 @@
-import { desc, eq, sql } from "drizzle-orm";
+import { asc, desc, eq, sql } from "drizzle-orm";
 
 import { getDb } from "@/lib/db/client";
 import { insertLogSchema, insertSessionSchema } from "@/lib/db/validation";
-import { logs, sessions } from "@/lib/db/schema";
+import {
+  aiStocks,
+  aiTrends,
+  logs,
+  sessions,
+  type AiStock,
+  type AiTrend,
+  type NewAiStock,
+  type NewAiTrend,
+} from "@/lib/db/schema";
 
 type PersistSentinelTurnInput = {
   sessionId: string;
@@ -48,6 +57,82 @@ export async function persistSentinelTurn(input: PersistSentinelTurnInput) {
   });
 
   await db.insert(logs).values(logPayload);
+}
+
+export async function getLatestTrends(date?: string): Promise<AiTrend[]> {
+  const db = getDb();
+  const targetDate = date ?? new Date().toISOString().slice(0, 10);
+
+  const rows = await db
+    .select()
+    .from(aiTrends)
+    .where(eq(aiTrends.date, targetDate))
+    .orderBy(asc(aiTrends.createdAt));
+
+  if (rows.length > 0) {
+    return rows;
+  }
+
+  // Fallback: return the most recent day that has rows
+  const [latest] = await db
+    .select({ date: aiTrends.date })
+    .from(aiTrends)
+    .orderBy(desc(aiTrends.date))
+    .limit(1);
+
+  if (!latest) {
+    return [];
+  }
+
+  return db
+    .select()
+    .from(aiTrends)
+    .where(eq(aiTrends.date, latest.date))
+    .orderBy(asc(aiTrends.createdAt));
+}
+
+export async function getStockHistory(
+  ticker: string,
+  days = 365,
+): Promise<AiStock[]> {
+  const db = getDb();
+
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+
+  return db
+    .select()
+    .from(aiStocks)
+    .where(
+      sql`${aiStocks.ticker} = ${ticker} AND ${aiStocks.date} >= ${cutoffStr}`,
+    )
+    .orderBy(asc(aiStocks.date));
+}
+
+export async function getAvailableTickers(): Promise<string[]> {
+  const db = getDb();
+
+  const rows = await db
+    .selectDistinct({ ticker: aiStocks.ticker })
+    .from(aiStocks)
+    .orderBy(asc(aiStocks.ticker));
+
+  return rows.map((r) => r.ticker);
+}
+
+export async function upsertTrends(rows: NewAiTrend[]): Promise<void> {
+  if (rows.length === 0) return;
+  const db = getDb();
+
+  await db.insert(aiTrends).values(rows).onConflictDoNothing();
+}
+
+export async function upsertStocks(rows: NewAiStock[]): Promise<void> {
+  if (rows.length === 0) return;
+  const db = getDb();
+
+  await db.insert(aiStocks).values(rows).onConflictDoNothing();
 }
 
 export async function getDashboardStats() {
