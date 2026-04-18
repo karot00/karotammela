@@ -34,8 +34,10 @@ async function summarizeStory(title: string, url: string): Promise<string> {
 }
 
 export async function fetchAndSummarizeTrends(): Promise<NewAiTrend[]> {
-  const yesterday = Math.floor(Date.now() / 1000) - 86400;
-  const hnUrl = `https://hn.algolia.com/api/v1/search?query=AI+machine+learning&tags=story&numericFilters=created_at_i>${yesterday}&hitsPerPage=7`;
+  // Fetch top AI stories by points — no date filter (numericFilters is unreliable
+  // on the Algolia HN API). We use search_by_date endpoint and sort client-side.
+  const hnUrl =
+    "https://hn.algolia.com/api/v1/search_by_date?query=AI+LLM+language+model+machine+learning&tags=story&hitsPerPage=50";
 
   let hits: HnHit[] = [];
 
@@ -60,16 +62,15 @@ export async function fetchAndSummarizeTrends(): Promise<NewAiTrend[]> {
 
   const today = new Date().toISOString().slice(0, 10);
 
-  // Sort by points descending and take top 7
+  // Sort by points descending, take top 7 with a valid URL
   const sorted = [...hits]
+    .filter((h) => h.title && h.url)
     .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
     .slice(0, 7);
 
   const trends: NewAiTrend[] = [];
 
   for (const hit of sorted) {
-    if (!hit.title || !hit.url) continue;
-
     const summary = await summarizeStory(hit.title, hit.url);
 
     trends.push({
