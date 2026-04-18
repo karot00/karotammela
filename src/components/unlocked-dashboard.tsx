@@ -21,6 +21,10 @@ import {
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 
+import {
+  AiPulseShell,
+  type AiPulseData,
+} from "@/components/ai-pulse/ai-pulse-shell";
 import { ContactForm } from "@/components/contact-form";
 import { CookieConsentSettingsTrigger } from "@/components/cookie-consent-settings-trigger";
 import { LocaleSwitcher } from "@/components/locale-switcher";
@@ -166,6 +170,16 @@ type DashboardCopy = {
   changelogTypeChanged: string;
   changelogTypeFixed: string;
   changelogTypeRemoved: string;
+  navAiPulse: string;
+  aiPulseTitle: string;
+  aiPulseDescription: string;
+  aiPulseTrendsTitle: string;
+  aiPulseStocksTitle: string;
+  aiPulseTickerLabel: string;
+  aiPulseNoTrendsLabel: string;
+  aiPulseLastUpdatedLabel: string;
+  aiPulseSourceLabel: string;
+  aiPulseLoadingLabel: string;
 };
 
 type UnlockedDashboardProps = {
@@ -174,6 +188,7 @@ type UnlockedDashboardProps = {
   stats: DashboardStats | null;
   blog: DashboardBlogPayload;
   changelog: ChangelogRelease[];
+  aiPulse: AiPulseData | null;
   initialView?: DashboardView;
 };
 
@@ -183,7 +198,8 @@ type DashboardView =
   | "tech"
   | "blog"
   | "changelog"
-  | "settings";
+  | "settings"
+  | "ai-pulse";
 type ThemeMode = "dark" | "light";
 
 function formatDate(value: string, locale: string) {
@@ -269,6 +285,7 @@ function SidebarNav({
     { id: "tech", label: copy.navTech },
     { id: "blog", label: copy.navBlog },
     { id: "changelog", label: copy.navChangelog },
+    { id: "ai-pulse", label: copy.navAiPulse },
     { id: "settings", label: copy.navSettings },
   ];
 
@@ -990,6 +1007,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
     stats,
     blog,
     changelog,
+    aiPulse,
     initialView = "overview",
   } = props;
   const router = useRouter();
@@ -1039,6 +1057,11 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
       return;
     }
 
+    if (view === "ai-pulse") {
+      replaceQuery({ view: "ai-pulse", page: null, post: null });
+      return;
+    }
+
     replaceQuery({ view: null, page: null, post: null });
   };
 
@@ -1052,7 +1075,9 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
 
   const viewParam = searchParams.get("view");
   const activeView: DashboardView =
-    viewParam === "blog" || viewParam === "changelog"
+    viewParam === "blog" ||
+    viewParam === "changelog" ||
+    viewParam === "ai-pulse"
       ? (viewParam as DashboardView)
       : localView;
 
@@ -1082,6 +1107,24 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
         onThemeChange={onThemeChange}
       />
     );
+  if (activeView === "ai-pulse" && aiPulse) {
+    view = (
+      <AiPulseShell
+        data={aiPulse}
+        copy={{
+          aiPulseTitle: copy.aiPulseTitle,
+          aiPulseDescription: copy.aiPulseDescription,
+          aiPulseTrendsTitle: copy.aiPulseTrendsTitle,
+          aiPulseStocksTitle: copy.aiPulseStocksTitle,
+          aiPulseTickerLabel: copy.aiPulseTickerLabel,
+          aiPulseNoTrendsLabel: copy.aiPulseNoTrendsLabel,
+          aiPulseLastUpdatedLabel: copy.aiPulseLastUpdatedLabel,
+          aiPulseSourceLabel: copy.aiPulseSourceLabel,
+          aiPulseLoadingLabel: copy.aiPulseLoadingLabel,
+        }}
+      />
+    );
+  }
 
   return (
     <main className="flex min-h-screen bg-background">

@@ -37,6 +37,13 @@ yarn-error.log*
 # local tooling
 .kilo/
 /plans/
+AGENTS.md
+CLAUDE.md
+
+# local databases
+*.sqlite
+*.sqlite3
+*.db
 
 # vercel
 .vercel

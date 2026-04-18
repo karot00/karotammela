@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { UnlockedDashboard } from "@/components/unlocked-dashboard";
+import type { AiPulseData } from "@/components/ai-pulse/ai-pulse-shell";
 import {
   getAllBlogPosts,
   getBlogPostBySlug,
@@ -12,9 +13,15 @@ import {
 } from "@/lib/blog";
 import { getChangelog } from "@/lib/changelog";
 import { getCachedDashboardStats } from "@/lib/db/stats-cache";
+import {
+  getAvailableTickers,
+  getLatestTrends,
+  getStockHistory,
+} from "@/lib/db/queries";
 import { getLocaleFromSegment, getLocalizedAlternates } from "@/lib/seo";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 import { trackServerEvent } from "@/lib/telemetry/events";
+import { AI_TICKERS } from "@/lib/ai/stocks-fetcher";
 
 type DashboardPageProps = {
   params: Promise<{ locale: string }>;
@@ -79,6 +86,38 @@ async function getStats(): Promise<StatsResponse | null> {
   }
 }
 
+async function getAiPulseData(): Promise<AiPulseData | null> {
+  if (!process.env.TURSO_DATABASE_URL) {
+    return null;
+  }
+
+  try {
+    const [trends, availableTickers] = await Promise.all([
+      getLatestTrends(),
+      getAvailableTickers(),
+    ]);
+
+    const initialTicker =
+      availableTickers.length > 0 ? (availableTickers[0] ?? "NVDA") : "NVDA";
+    const initialStockData = await getStockHistory(initialTicker, 365);
+
+    const displayTickers =
+      availableTickers.length > 0
+        ? availableTickers
+        : AI_TICKERS.map((t) => t.ticker);
+
+    return {
+      trends,
+      initialTicker,
+      initialStockData,
+      availableTickers: displayTickers,
+    };
+  } catch (err) {
+    console.error("[dashboard] Failed to fetch AI Pulse data", err);
+    return null;
+  }
+}
+
 export default async function DashboardPage({
   params,
   searchParams,
@@ -112,6 +151,8 @@ export default async function DashboardPage({
   const posts = await getAllBlogPosts(locale === "fi" ? "fi" : "en");
   const paginatedPosts = paginateBlogPosts(posts, normalizedBlogState.page, 10);
   const changelog = getChangelog(locale === "fi" ? "fi" : "en");
+  const aiPulse =
+    normalizedBlogState.view === "ai-pulse" ? await getAiPulseData() : null;
 
   const selectedPost = normalizedBlogState.post
     ? await getBlogPostBySlug(
@@ -125,6 +166,7 @@ export default async function DashboardPage({
       locale={locale}
       initialView={normalizedBlogState.view}
       changelog={changelog}
+      aiPulse={aiPulse}
       blog={{
         page: paginatedPosts.page,
         pageSize: paginatedPosts.pageSize,
@@ -287,6 +329,16 @@ export default async function DashboardPage({
         changelogTypeChanged: t("changelogTypeChanged"),
         changelogTypeFixed: t("changelogTypeFixed"),
         changelogTypeRemoved: t("changelogTypeRemoved"),
+        navAiPulse: t("navAiPulse"),
+        aiPulseTitle: t("aiPulseTitle"),
+        aiPulseDescription: t("aiPulseDescription"),
+        aiPulseTrendsTitle: t("aiPulseTrendsTitle"),
+        aiPulseStocksTitle: t("aiPulseStocksTitle"),
+        aiPulseTickerLabel: t("aiPulseTickerLabel"),
+        aiPulseNoTrendsLabel: t("aiPulseNoTrendsLabel"),
+        aiPulseLastUpdatedLabel: t("aiPulseLastUpdatedLabel"),
+        aiPulseSourceLabel: t("aiPulseSourceLabel"),
+        aiPulseLoadingLabel: t("aiPulseLoadingLabel"),
       }}
     />
   );

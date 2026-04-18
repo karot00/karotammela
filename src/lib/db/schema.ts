@@ -1,5 +1,13 @@
 import { sql } from "drizzle-orm";
-import { check, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  check,
+  index,
+  integer,
+  real,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 
 export const sessions = sqliteTable("sessions", {
   sessionId: text("session_id").primaryKey(),
@@ -31,7 +39,10 @@ export const logs = sqliteTable(
     success: integer("success", { mode: "boolean" }).notNull().default(false),
   },
   (table) => [
-    check("logs_level_range", sql`${table.levelReached} >= 0 and ${table.levelReached} <= 100`),
+    check(
+      "logs_level_range",
+      sql`${table.levelReached} >= 0 and ${table.levelReached} <= 100`,
+    ),
   ],
 );
 
@@ -39,3 +50,49 @@ export type Session = typeof sessions.$inferSelect;
 export type NewSession = typeof sessions.$inferInsert;
 export type Log = typeof logs.$inferSelect;
 export type NewLog = typeof logs.$inferInsert;
+
+export const aiTrends = sqliteTable(
+  "ai_trends",
+  {
+    id: text("id").primaryKey(),
+    date: text("date").notNull(),
+    title: text("title").notNull(),
+    summary: text("summary").notNull(),
+    url: text("url").notNull(),
+    source: text("source"),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (table) => [
+    uniqueIndex("ai_trends_date_title_idx").on(table.date, table.title),
+    index("ai_trends_date_idx").on(table.date),
+  ],
+);
+
+export const aiStocks = sqliteTable(
+  "ai_stocks",
+  {
+    id: text("id").primaryKey(),
+    date: text("date").notNull(),
+    ticker: text("ticker").notNull(),
+    companyName: text("company_name").notNull(),
+    open: real("open").notNull(),
+    high: real("high").notNull(),
+    low: real("low").notNull(),
+    close: real("close").notNull(),
+    volume: integer("volume"),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (table) => [
+    uniqueIndex("ai_stocks_ticker_date_idx").on(table.ticker, table.date),
+    index("ai_stocks_ticker_date_desc_idx").on(table.ticker, table.date),
+  ],
+);
+
+export type AiTrend = typeof aiTrends.$inferSelect;
+export type NewAiTrend = typeof aiTrends.$inferInsert;
+export type AiStock = typeof aiStocks.$inferSelect;
+export type NewAiStock = typeof aiStocks.$inferInsert;
