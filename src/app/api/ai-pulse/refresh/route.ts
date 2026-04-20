@@ -6,7 +6,7 @@ import { upsertStocks, upsertTrends } from "@/lib/db/queries";
 
 export const runtime = "nodejs";
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+async function handleRefresh(req: NextRequest): Promise<NextResponse> {
   const authHeader = req.headers.get("authorization");
   const expectedToken = process.env.CRON_SECRET;
 
@@ -34,4 +34,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       { status: 500 },
     );
   }
+}
+
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  return handleRefresh(req);
+}
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
+  return handleRefresh(req);
 }
