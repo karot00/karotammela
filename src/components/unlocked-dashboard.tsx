@@ -35,6 +35,7 @@ import type { ChangelogChangeType, ChangelogRelease } from "@/lib/changelog";
 type DashboardStats = {
   totalAttempts: number;
   unlockedCount: number;
+  directUnlockCount: number;
   highestLevel: number;
   avgMessagesToUnlock: number;
   latestUnlockAt: string | null;
@@ -105,6 +106,7 @@ type DashboardCopy = {
   analyticsTitle: string;
   totalAttemptsLabel: string;
   unlockedCountLabel: string;
+  directUnlockCountLabel: string;
   avgMessagesToUnlockLabel: string;
   latestUnlockLabel: string;
   latestUnlockNever: string;
@@ -373,7 +375,7 @@ function OverviewView({
           {copy.analyticsTitle}
         </h3>
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
           <article className="rounded-xl border border-border bg-card p-4">
             <p className="text-xs text-muted-foreground">
               {copy.totalAttemptsLabel}
@@ -389,6 +391,15 @@ function OverviewView({
             </p>
             <p className="mt-2 text-2xl font-semibold text-foreground">
               {stats?.unlockedCount ?? 0}
+            </p>
+          </article>
+
+          <article className="rounded-xl border border-border bg-card p-4">
+            <p className="text-xs text-muted-foreground">
+              {copy.directUnlockCountLabel}
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-foreground">
+              {stats?.directUnlockCount ?? 0}
             </p>
           </article>
 
@@ -520,10 +531,12 @@ function ProjectsView({ copy }: { copy: DashboardCopy }) {
     {
       title: copy.projectOneTitle,
       description: copy.projectOneDescription,
+      href: "https://levifinland.fi",
     },
     {
       title: copy.projectTwoTitle,
       description: copy.projectTwoDescription,
+      href: "https://greenfee.levifinland.fi",
     },
     {
       title: copy.projectThreeTitle,
@@ -544,29 +557,51 @@ function ProjectsView({ copy }: { copy: DashboardCopy }) {
       </h2>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {projects.map((project) => (
-          <article
-            key={project.title}
-            className="rounded-xl border border-border bg-card p-5"
-          >
-            <h3 className="font-semibold text-foreground">{project.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {project.description}
-            </p>
+        {projects.map((project) => {
+          const cardContent = (
+            <>
+              <h3 className="font-semibold text-foreground">{project.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {project.description}
+              </p>
 
-            {project.githubHref ? (
-              <Button asChild size="sm" variant="outline" className="mt-4">
-                <Link
-                  href={project.githubHref}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {project.githubLabel}
-                </Link>
-              </Button>
-            ) : null}
-          </article>
-        ))}
+              {project.githubHref ? (
+                <Button asChild size="sm" variant="outline" className="mt-4">
+                  <Link
+                    href={project.githubHref}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {project.githubLabel}
+                  </Link>
+                </Button>
+              ) : null}
+            </>
+          );
+
+          if (project.href) {
+            return (
+              <Link
+                key={project.title}
+                href={project.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="group block rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {cardContent}
+              </Link>
+            );
+          }
+
+          return (
+            <article
+              key={project.title}
+              className="rounded-xl border border-border bg-card p-5"
+            >
+              {cardContent}
+            </article>
+          );
+        })}
       </div>
     </section>
   );

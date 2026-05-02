@@ -3,7 +3,7 @@ title: "Näin rakensin agentic AI:ta hyödyntäen alustan Levi Golfin pelilippuj
 description: "Miten manuaalinen viestien ja osakkeiden hallinta muuttui täysin automatisoiduksi alustaksi modernin tech stackin ja tekoälytiimin avulla."
 publishedAt: "2026-05-01"
 slug: "whatsapp-viestittelysta-automaatioon-green-fee"
-draft: false
+draft: true
 tags: ["koodaus", "ai", "golf", "automaatio", "liiketoiminta"]
 ---
 

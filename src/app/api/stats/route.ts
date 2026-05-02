@@ -10,6 +10,7 @@ const querySchema = z.object({
 const responseSchema = z.object({
   totalAttempts: z.number().int().nonnegative(),
   unlockedCount: z.number().int().nonnegative(),
+  directUnlockCount: z.number().int().nonnegative(),
   highestLevel: z.number().int().min(0).max(100),
   avgMessagesToUnlock: z.number().nonnegative(),
   latestUnlockAt: z.union([z.date(), z.null()]),
