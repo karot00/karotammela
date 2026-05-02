@@ -11,7 +11,7 @@ For anyone who has managed a high-demand service, the manual era is a familiar n
 
 The risk of double-booking was real, the administrative stress was massive. I wanted a system where customers could do everything themselves: choose a date, pay securely, and receive confirmation instantly, with almost zero manual work on my side.
 
-This is how I built the Levi Golf Green Fee application using an Agentic AI workflow.
+This is how I built the [Levi Golf Green Fee application](https://greenfee.levifinland.fi) using an Agentic AI workflow.
 
 ### The Core Challenge: Share-Based Allocation Logic
 
@@ -41,7 +41,7 @@ Levi Golf serves an international audience, so the application is fully localize
 
 ### The Build Method: Agentic AI and Model Orchestration
 
-The most interesting part of this project is how it was built. I used Agentic AI coding with Kilo Code.
+The most interesting part of this project is how it was built. I used Agentic AI coding with [Kilo Code](https://kilo.ai).
 
 Unlike traditional chat-based coding, the agent operates like a software engineer: it reads the codebase, follows plans, updates files, runs checks, and iterates on fixes. That changed both implementation speed and reliability.
 
