@@ -2,6 +2,7 @@ import { asc, desc, eq, sql } from "drizzle-orm";
 
 import { getDb } from "@/lib/db/client";
 import { insertLogSchema, insertSessionSchema } from "@/lib/db/validation";
+import { getAccessCode } from "@/lib/ai/sentinel";
 import {
   aiStocks,
   aiTrends,
@@ -137,11 +138,13 @@ export async function upsertStocks(rows: NewAiStock[]): Promise<void> {
 
 export async function getDashboardStats() {
   const db = getDb();
+  const accessCode = getAccessCode();
 
   const [totals] = await db
     .select({
       totalAttempts: sql<number>`count(*)`,
       unlockedCount: sql<number>`sum(case when ${logs.success} = 1 then 1 else 0 end)`,
+      directUnlockCount: sql<number>`sum(case when ${logs.success} = 1 and upper(trim(${logs.userInput})) = ${accessCode} then 1 else 0 end)`,
       highestLevel: sql<number>`max(${logs.levelReached})`,
     })
     .from(logs);
@@ -176,6 +179,7 @@ export async function getDashboardStats() {
   return {
     totalAttempts: totals?.totalAttempts ?? 0,
     unlockedCount: totals?.unlockedCount ?? 0,
+    directUnlockCount: totals?.directUnlockCount ?? 0,
     highestLevel: totals?.highestLevel ?? 0,
     avgMessagesToUnlock: Number(averages?.avgMessagesToUnlock ?? 0),
     latestUnlockAt: latest[0]?.timestamp ?? null,

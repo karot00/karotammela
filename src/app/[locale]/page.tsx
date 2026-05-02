@@ -15,6 +15,7 @@ import {
   getLocalizedAlternates,
 } from "@/lib/seo";
 import { toAbsoluteUrl } from "@/lib/site-url";
+import { getAccessCode } from "@/lib/ai/sentinel";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 
 type Props = {
@@ -94,6 +95,13 @@ export default function LocaleHomePage({ params }: Props) {
           returnOverlayBody={t("sentinel.returnOverlayBody")}
           playAgainLabel={t("sentinel.playAgainLabel")}
           goDashboardLabel={t("sentinel.goDashboardLabel")}
+          bypassInstructions={t("sentinel.bypassInstructions")}
+          revealPasscodeLabel={t("sentinel.revealPasscodeLabel")}
+          passcodeLabel={t("sentinel.passcodeLabel")}
+          copyPasscodeLabel={t("sentinel.copyPasscodeLabel")}
+          copiedPasscodeLabel={t("sentinel.copiedPasscodeLabel")}
+          directUnlockMessage={t("sentinel.directUnlockMessage")}
+          accessCode={getAccessCode()}
         />
         <div className="flex justify-center">
           <ShareButton

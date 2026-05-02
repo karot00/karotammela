@@ -111,6 +111,69 @@ export async function POST(request: Request) {
     [...messages].reverse().find((message) => message.role === "user")
       ?.content ?? "";
 
+  const inputCode = latestUserInput.trim().toUpperCase();
+  const secretCode = getAccessCode().toUpperCase();
+
+  if (inputCode === secretCode) {
+    const unlocked = true;
+    const level = 100;
+    const message =
+      locale === "fi"
+        ? "Tunnistettu. Suora avaus hyväksytty."
+        : "Recognized. Direct unlock accepted.";
+
+    trackServerEvent("sentinel.turn", {
+      locale,
+      sessionId,
+      previousLevel: currentLevel,
+      parsedLevel: null,
+      finalLevel: level,
+      unlocked,
+    });
+
+    const response = NextResponse.json({
+      message,
+      level,
+      unlocked,
+      accessCode: getAccessCode(),
+    });
+
+    if (process.env.UNLOCK_COOKIE_SECRET) {
+      const cookieValue = createUnlockCookieValue(
+        { sessionId, locale, unlockedAt: Date.now() },
+        process.env.UNLOCK_COOKIE_SECRET,
+      );
+
+      response.cookies.set({
+        name: "karot_unlock",
+        value: cookieValue,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 14,
+      });
+    }
+
+    if (process.env.TURSO_DATABASE_URL) {
+      try {
+        await runMigrationsIfNeeded();
+        await persistSentinelTurn({
+          sessionId,
+          locale,
+          userInput: latestUserInput,
+          assistantOutput: message,
+          levelReached: level,
+          success: true,
+        });
+      } catch (error) {
+        console.error("[api/sentinel] Failed to persist sentinel turn", error);
+      }
+    }
+
+    return response;
+  }
+
   try {
     const result = streamText({
       model: google(getModelName()),

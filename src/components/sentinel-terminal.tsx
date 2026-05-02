@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
+import { Check, Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -36,6 +37,13 @@ type SentinelTerminalProps = {
   returnOverlayBody: string;
   playAgainLabel: string;
   goDashboardLabel: string;
+  bypassInstructions: string;
+  revealPasscodeLabel: string;
+  passcodeLabel: string;
+  copyPasscodeLabel: string;
+  copiedPasscodeLabel: string;
+  directUnlockMessage: string;
+  accessCode: string;
 };
 
 export function SentinelTerminal({
@@ -56,6 +64,13 @@ export function SentinelTerminal({
   returnOverlayBody,
   playAgainLabel,
   goDashboardLabel,
+  bypassInstructions,
+  revealPasscodeLabel,
+  passcodeLabel,
+  copyPasscodeLabel,
+  copiedPasscodeLabel,
+  directUnlockMessage,
+  accessCode,
 }: SentinelTerminalProps) {
   const locale = useLocale();
   const [sessionId] = useState(() => crypto.randomUUID());
@@ -66,6 +81,8 @@ export function SentinelTerminal({
   const [level, setLevel] = useState(0);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [showReturnOverlay, setShowReturnOverlay] = useState(hasUnlockedBefore);
+  const [isPasscodeVisible, setIsPasscodeVisible] = useState(false);
+  const [isPasscodeCopied, setIsPasscodeCopied] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -142,6 +159,18 @@ export function SentinelTerminal({
     }
   };
 
+  const onCopyPasscode = async () => {
+    try {
+      await navigator.clipboard.writeText(accessCode);
+      setIsPasscodeCopied(true);
+      setTimeout(() => {
+        setIsPasscodeCopied(false);
+      }, 1200);
+    } catch {
+      setErrorMessage(errorLabel);
+    }
+  };
+
   const reset = () => {
     setMessages([{ role: "assistant", content: initialMessage }]);
     setInput("");
@@ -180,7 +209,7 @@ export function SentinelTerminal({
         ) : null}
       </div>
 
-      <div className="mt-6">
+        <div className="mt-6">
         <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-muted-foreground">
           <span>{meterLabel}</span>
           <span>{level}%</span>
@@ -191,6 +220,48 @@ export function SentinelTerminal({
             style={{ width: `${level}%` }}
           />
         </div>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-border/70 bg-background/60 p-4">
+        <p className="text-sm text-muted-foreground">{bypassInstructions}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            className="h-10"
+            onClick={() => {
+              setIsPasscodeVisible(true);
+              setIsPasscodeCopied(false);
+            }}
+          >
+            {revealPasscodeLabel}
+          </Button>
+
+          {isPasscodeVisible ? (
+            <div className="inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2">
+              <span className="text-xs text-muted-foreground">{passcodeLabel}</span>
+              <code className="text-xs font-semibold tracking-[0.08em] text-foreground">
+                {accessCode}
+              </code>
+              <button
+                type="button"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:text-foreground"
+                onClick={onCopyPasscode}
+                aria-label={isPasscodeCopied ? copiedPasscodeLabel : copyPasscodeLabel}
+                title={isPasscodeCopied ? copiedPasscodeLabel : copyPasscodeLabel}
+              >
+                {isPasscodeCopied ? (
+                  <Check className="size-4" aria-hidden="true" />
+                ) : (
+                  <Copy className="size-4" aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          ) : null}
+        </div>
+        {isPasscodeVisible ? (
+          <p className="mt-2 text-xs text-muted-foreground">{directUnlockMessage}</p>
+        ) : null}
       </div>
 
       <div

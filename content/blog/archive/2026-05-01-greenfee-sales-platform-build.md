@@ -3,7 +3,7 @@ title: "From WhatsApp Chaos to Automation: How I Built the Sales Platform for Le
 description: "How manual messaging and share management evolved into a fully automated platform powered by a modern tech stack and an AI-driven dev team."
 publishedAt: "2026-05-01"
 slug: "from-whatsapp-chaos-to-automation-green-fee"
-draft: false
+draft: true
 tags: ["coding", "ai", "golf", "automation", "business"]
 ---
 
