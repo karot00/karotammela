@@ -11,7 +11,7 @@ Jos on hallinnoinut kovalla kysynnällä toimivaa palvelua, ovat manuaaliset ty�
 
 Tuplabuukkauksen riski oli todellinen, ja hallinnollinen säätäminen oli lähes päivittäistä. Halusin järjestelmän, jossa asiakas voi hoitaa kaiken itse: valita päivän, maksaa turvallisesti ja saada vahvistuksen heti ilman, että minun täytyy tehdä juuri lainkaan manuaalista työtä.
 
-Näin rakensin Levi Golfin Green Fee -sovelluksen Agentic AI -työnkululla.
+Näin rakensin [Levi Golfin Green Fee -sovelluksen](https://greenfee.levifinland.fi) Agentic AI -työnkululla.
 
 ### Ydinhaaste: osakepohjainen allokointilogiikka
 
@@ -41,7 +41,7 @@ Levi Golf palvelee kansainvälistä asiakaskuntaa, joten sovellus on lokalisoitu
 
 ### Rakennusmetodi: Agentic AI ja mallien orkestrointi
 
-Projektin kiinnostavin osa oli tapa, jolla se rakennettiin. Käytin Agentic AI -koodausta Kilo Coden kanssa.
+Projektin kiinnostavin osa oli tapa, jolla se rakennettiin. Koodasin sivuston Agentic AI -menetelmällä [Kilo Coden](https://kilo.ai):n avulla.
 
 Perinteiseen chat-pohjaiseen koodaukseen verrattuna agentti toimii kuin ohjelmistoinsinööri: se lukee koodikantaa, seuraa suunnitelmia, päivittää tiedostoja, ajaa tarkistuksia ja iteroi korjauksia. Tämä paransi sekä toteutusnopeutta että luotettavuutta.
 
