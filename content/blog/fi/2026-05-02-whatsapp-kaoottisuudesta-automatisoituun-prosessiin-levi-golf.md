@@ -41,7 +41,7 @@ Levi Golf palvelee kansainvälistä asiakaskuntaa, joten sovellus on lokalisoitu
 
 ### Rakennusmetodi: Agentic AI ja mallien orkestrointi
 
-Projektin kiinnostavin osa oli tapa, jolla se rakennettiin. Koodasin sivuston Agentic AI -menetelmällä [Kilo Coden](https://kilo.ai):n avulla.
+Projektin kiinnostavin osa oli tapa, jolla sen rakensin. Koodasin sivuston Agentic AI -menetelmällä [Kilo Coden](https://kilo.ai) avulla.
 
 Perinteiseen chat-pohjaiseen koodaukseen verrattuna agentti toimii kuin ohjelmistoinsinööri: se lukee koodikantaa, seuraa suunnitelmia, päivittää tiedostoja, ajaa tarkistuksia ja iteroi korjauksia. Tämä paransi sekä toteutusnopeutta että luotettavuutta.
 
@@ -51,12 +51,12 @@ Suurin hyöty tulee mallien orkestroinnista. Käytin eri malleja eri vastuualuei
 2. **Auditoija (Opus 4.6 & 4.7):** validointi tietoturvakriittiseen logiikkaan, transaktioiden eheyteen ja webhook-idempotenssin reunatapauksiin. Opus on erinomainen ja luotettava työjuhta, mutta kustannus on selvästi korkeampi kuin lähes millään muulla kielimallilla.
 3. **Copywriter (Gemini 3.1 Flash Lite Preview):** monikielinen sisällöntuotanto ja sävyn hienosäätö viidelle kielelle. Malli on nopea, edullinen ja sopii tehtäviin, jotka eivät vaadi syvää teknistä ymmärrystä.
 
-Tämä roolipohjainen toimintamalli tuottaa parempia tuloksia kuin yhden mallin pakottaminen kaikkeen ja hyödynnän sitä muissakin projekteissani.
+Tämä roolipohjainen toimintamalli tuottaa parempia tuloksia kuin yhden mallin pakottaminen kaikkeen ja hyödynnän sitä muissakin projekteissani. 
 
 ### Lopputulos: manuaalisen työn loppu
 
 Operatiivinen ero on dramaattinen. Tehtävät, jotka aiemmin veivät tunteja manuaalista koordinointia, hoituvat nyt automaattisesti: saatavuustarkistukset, maksun vahvistus, lipun allokointi, asiakasviestintä ja myyjätason seuranta.
 
-En enää käytä aikaa taulukoiden ja viestiketjujen täsmäyttämiseen. Alusta on nyt turvallinen, skaalautuva ja omavarainen.
+En enää käytä aikaa taulukoiden ja viestiketjujen täsmäyttämiseen. Alusta on nyt turvallinen, skaalautuva ja omavarainen. En pitänyt kirjaa tähän projektiin käytetyistä työtunneista, sillä se on ollut osa laajempaa [levifinland.fi](https://levifinland.fi) -projektia. Tämä green fee myyntialusta on yksi applikaatio neljästä, jotka olen tähän samaan Turborepo-projektiin rakentanut. Se esimerkiksi jakaa saman hallintapaneelin kuin mökkien vuokrausalusta. Olin jo vuonna 2025 rakentanut ensimmäisen version green fee myyntialustasta. Silloin vasta harjoittelin agentic AI ohjelmointia, eikä minulla ollut vielä kokemusta Next.js:stä, libSQL:stä tai monorepostakaan. Se oli toimiva järjestelmä, mutta tämä nykyinen versio on nykyaikainen, tietoturvallisempi ja sen skaalaaminen on helpompaa.
 
 Manuaalinen aikakausi lippujen myymiseksi on osaltani virallisesti ohi.
