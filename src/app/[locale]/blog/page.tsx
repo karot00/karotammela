@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { ArrowLeft } from "lucide-react";
 
 import { routing } from "@/i18n/routing";
 import { getAllBlogPosts } from "@/lib/blog";
@@ -12,6 +13,7 @@ import {
   getLocalizedAlternates,
 } from "@/lib/seo";
 import { toAbsoluteUrl } from "@/lib/site-url";
+import { Button } from "@/components/ui/button";
 
 type BlogIndexPageProps = {
   params: Promise<{ locale: string }>;
@@ -72,6 +74,15 @@ export default async function BlogIndexPage({ params }: BlogIndexPageProps) {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
       <section className="w-full space-y-6">
+        <div className="flex items-center justify-between">
+          <Link href={`/${currentLocale}`} className="inline-flex">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <ArrowLeft className="size-4" />
+              <span>{t("blogBackLabel")}</span>
+            </Button>
+          </Link>
+        </div>
+
         <header className="space-y-2">
           <h1 className="text-3xl font-semibold text-foreground">
             {t("navBlog")}
