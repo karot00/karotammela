@@ -3,13 +3,15 @@ title: "Suomalaiset jupisevat korpimajoissaan, kun Piilaakso koodaa agenttien av
 description: "VTT:n tutkijoiden blogi väittää, että agenttien käyttö aiheuttaa ymmärrysvelkaa. Minä väitän päinvastaista."
 publishedAt: "2026-05-17"
 slug: "vastaus-vtt-tutkijoiden-blogiin"
-draft: false
+draft: true
 tags: ["koodaus", "ai", "tekoäly", "agentit", "automaatio"]
 ---
 
-VTT:n tutkijat Maaria Nuutinen ja Arto Wallin nostivat hiljattain esiin kriittisen huolen "ymmärrysvelasta" (comprehension debt) agenttipohjaisessa ohjelmistokehityksessä. Huoli on validi: riski siitä, että tekoälyagentit tuottavat koodia nopeammin kuin tiimit ehtivät sitä sisäistää, on todellinen. Olen osittain samaa mieltä tästä, mutta mielestäni tutkijat ovat jättäneet tärkeitä näkökulmia huomiotta.  
+VTT:n tutkijat Maaria Nuutinen ja Arto Wallin nostivat hiljattain esiin kriittisen huolen "ymmärrysvelasta" (comprehension debt) agenttipohjaisessa ohjelmistokehityksessä. Huoli on validi: riski siitä, että tekoälyagentit tuottavat koodia nopeammin kuin tiimit ehtivät sitä sisäistää, on todellinen. Olen osittain samaa mieltä tästä, mutta mielestäni tutkijat ovat jättäneet tärkeitä näkökulmia huomiotta. Ja itse asiassa heidän hahmottelemansa uudet työtavat ovat agenttikoodauksessa jo arkipäivää.
 
-VTT:n blogi kuvaa mielestäni pitkälti niin kutsuttua "vibe codingia", ei harkittua ja ammattimaista agenttikehitystä. Tietenkin ihmiset koodaavat nyt vibeltämällä ja ymmärtämättä riviäkään koodia. Se on osa oppimispolkua ja nostaa miljoonien ihmisten ymmärrystä ohjelmistojen rakentamisesta, jota he eivät ilman laajojen kielimallien kyvykkyyksiä olisi koskaan edes halunneet alkaa opetella. Ymmärrysvelka ei ole mielestäni tekoälyn aiheuttama ongelma. Se on vanha ongelma koodauksessa. Siihen tekoäly on nimenomaan ratkaisu. 
+ Tietenkin ihmiset koodaavat tällä hetkellä paljon ymmärtämättä riviäkään koodia. Se on osa oppimispolkua ja nostaa miljoonien ihmisten ymmärrystä ohjelmistojen rakentamisesta, jota he eivät ilman laajojen kielimallien kyvykkyyksiä olisi koskaan edes halunneet alkaa opetella. Tekoälylle ja agenteille annetaan tarkoituksenmukaisesti niin paljon autonomiaa kuin mahdollista, kunnes todetaan että nyt homma ei enää toimi. Tämä on täysin luonnollista oppimista matkalla kohti kyvykkäämpiä agenttiarmeijoita. Siinä kohtaa koodari tai tiimi tarkastelee, mikä meni koodissa pieleen, mikä agenttien ohjeistuksessa aiheutti ongelman ja sen jälkeen korjaavat asian ja jatkavat. 
+
+Tutkijat kysyvätkin osuvasti, onko tekoäly ajattelun tuki vai ajattelun korvike. Jos se on korvike, ymmärrysvelka kasvaa. Ymmärrysvelka ei ole kuitenkaan tekoälyn aiheuttama ongelma. Se on vanha ongelma koodauksessa. Siihen tekoäly on nimenomaan ratkaisu. 
 
 Ohjelmistoalalla tunnetaan useita käsitteitä, jotka kuvaavat tätä ilmiötä jo vuosikymmenten takaa:
 
@@ -19,13 +21,15 @@ Ohjelmistoalalla tunnetaan useita käsitteitä, jotka kuvaavat tätä ilmiötä 
 
 Empiirinen data vahvistaa riskin: Fischer ym. (*IEEE Symposium on Security and Privacy*, 2017) analysoivat 1,3 miljoonaa Android-sovellusta ja havaitsivat, että 15,4 % niistä sisälsi Stack Overflow -koodinpätkiä. Näistä snippetteistä **97,9 %** sisälsi vähintään yhden tietoturvahaavoittuvan koodinpätkän.
 
-Ymmärrysvelka on ollut olemassa ennen tekoälyä. Koodin kopioiminen ilman ymmärrystä on ollut riski jo kauan. Ero on, että nyt prosessi on nopeampi. Nyt se on kuitenkin helpommin havaittavissa, hallittavissa ja korjattavissa, kun hyödynnämme tekoälyagentteja ja käytetämme oikeanlaista työnkulkua niiden kanssa.
+Ymmärrysvelka on siis ollut olemassa jo pitkään ennen tekoälyä. Koodin kopioiminen ilman ymmärrystä on ollut riski jo kauan. Ero on, että agenttien kanssa prosessi on nopeampi ja siihen on tullut uusia elementtejä. Nyt virheet ovat kuitenkin helpommin havaittavissa, hallittavissa ja korjattavissa, kun hyödynnämme tekoälyagentteja ja käytämme oikeanlaisia työnkulkuja niiden kanssa.
 
-Olen rakentanut kymmeniä sovelluksia hyödyntäen agenttipohjaista koodausta kymmenillä eri kielimalleilla. Se on luonut minulle ymmärryksen rakenteellisesta ja vaiheistetusta työnkulusta, joka säilyttää minun ymmärryksen prosessin jokaisessa vaiheessa, jos niin haluan. Haluan vielä tähdentää, että ohjelmointi ei ole minun leipätyöni. Olen oppinut itsenäisesti tekemällä, käymällä avoimia ohjelmointikursseja, syventämällä taitojani kysymällä generatiiviselta tekoälyltä, sekä ehdottomasti tärkeimpänä: agenttipohjaisen koodauksen kautta. 
+Olen rakentanut kymmeniä sovelluksia hyödyntäen agenttipohjaista koodausta kymmenillä eri kielimalleilla. Se on luonut minulle ymmärryksen rakenteellisesta ja vaiheistetusta työnkulusta, joka säilyttää minun ymmärryksen prosessin jokaisessa vaiheessa, jos niin haluan. 
+
+Haluan vielä tähdentää, että ohjelmointi ei ole minun leipätyöni. Olen oppinut itsenäisesti tekemällä, käymällä avoimia ohjelmointikursseja, syventämällä taitojani kysymällä generatiiviselta tekoälyltä, sekä ehdottomasti tärkeimpänä: agenttipohjaisen koodauksen kautta. 
 
 ## 1. Kaikki koodi ei ole samanarvoista
 
-Ennen kuin alan kirjoittamaan koodia, teen nykyään arvion projektin eri osa-alueista: mikä on minkäkin tehtävän kriittisyys? VTT:n tutkijoiden pelko ymmärryksen katoamisesta pitäisi mielestäni olla suoraan verrannollinen siihen, kuinka vakavat seuraukset virheellä voi olla. Tämä seuraava riskianalyysi ei ole mikään validoitu tai tutkittu tapa toteuttaa riskiarviota, mutta kuvaa karkeasti omaa tapaani lähestyä asiaa.
+Ennen kuin alan nykyään kirjoittamaan koodia agenttiavusteisesti, teen arvion projektin eri osa-alueista: mikä on minkäkin tehtävän kriittisyys? VTT:n tutkijoiden pelko ymmärryksen katoamisesta pitäisi mielestäni olla suoraan verrannollinen siihen, kuinka vakavat seuraukset virheellä voi olla.  Tämä seuraava riskianalyysi ei ole mikään validoitu tai tutkittu tapa toteuttaa riskiarviota, mutta kuvaa karkeasti omaa tapaani lähestyä asiaa.
 
 **Taso 1:** Avustettu luovuus (Matala riski)
 
@@ -33,7 +37,7 @@ Ennen kuin alan kirjoittamaan koodia, teen nykyään arvion projektin eri osa-al
 - Agentin rooli: Autonominen tekijä. Saa generoida kokonaisia tiedostoja.
 - Ihmisen rooli: Kuraattori ja varmistaa, että esimerkiksi tyylittely on toteutettu siten, että se on helposti muokattavissa myöhemmin.
 
-Autonomisuus: Agentilla on 90 % valta toteuttaa muutokset.
+Autonomisuus: Agentilla on 90-100 % valta toteuttaa muutokset.
 
 **Taso 2:** Operatiivinen tuki (Keskisuuri riski)
 
@@ -55,15 +59,23 @@ Autonomisuus: Agentilla on 30 % valta. Koodi syntyy tiiviissä dialogissa. Se on
 
 - Esimerkki: Maksuliikenne, tietoturvakriittinen koodi, GDPR-arkaluonteinen data.
 - Agentin rooli: Syväasiantuntija. Tuottaa ehdotuksia ja koodia, mutta joutuu perustelemaan jokaisen valinnan ja hylätyn vaihtoehdon.
-- Ihmisen rooli: Kriittinen tarkastaja. Ei hyväksy koodia ennen kuin on haastanut agentin ("Miksi et käyttänyt kirjastoa X?", "Miten tämä käsittelee kilpailutilanteen?"). Ihminen vastaa järjestelmän logiikan hallinnasta.
+- Ihmisen rooli: Kriittinen tarkastaja. Ei hyväksy koodia ennen kuin on haastanut agentin ("Miksi et käyttänyt kirjastoa X?", "Miten tämä käsittelee kilpailutilanteen?"). Ihminen vastaa järjestelmän logiikan hallinnasta. Tarve koodin ymmärtämiseksi on korkea.
 
 Autonomisuus: Agentilla on 15 % valta. Se tekee raskaan työn, mutta ihminen pitää ohjat tiukasti käsissään jatkuvan dialogin ja koodin yksityiskohtaisen tarkastelun kautta.
 
-## 2. Vibe Coding vs. järjestelmällinen agenttikoodauksen hyödyntäminen
+Korostan, että tämä "riskiarvio" on minulle matkan varrella sisäänrakentunut tapa toimia. Monissa tapauksissa agenteille voi antaa paljon autonomisuutta, kunhan vain tunnistaa ne kohdat, joissa se on mahdollista. 
 
-VTT:n artikkeli hyvin pitkälle olettaa, että agenttipohjainen kehitys tarkoittaa: *"anna agentille tehtävä, paina enteriä, saa valmis koodi."* Tämä on vibe codingia — tekoälyn antamista suorittaa vapaana ilman kunnollista valvontaa. Tämä vibeltäminen kuuluu myös agenttipohjaisen koodauksen opiskeluun. Tätä minäkin toteutin aluksi, kun aloin käyttämään agenttipohjaista koodausta projekteissa. Katsoin kun agentit rakensivat sivuston muutamassa minuutissa ja lähes kaikki toimi kuten pitikin. Nälkäni tietenkin kasvoi ja kun testasin isompia kokonaisuuksia, niin kävi kuten oletettua... projekti ei edes rakentunut ja kaatui virheeseen heti ensimmäisessä mutkassa. Siitä aloinkin kehittämään omaa ymmärrystäni siitä, että mitkä ovat eri kielimallien rajat koodauksessa, mihin ne kykenevät, missä ne loistavat ja mikä on ihmisen eli minun itseni rooli tässä kokonaisuudessa. Nyt, noin 2 miljardia tokenia myöhemmin, ymmärrykseni tästä työnkulusta on aivan toinen kuin aloittaessani tämän parissa työskentelyn/harjoittelun.
+Antaa siis agenttien touhuta ja koodata, jos se ei ole vaarana aiheuttaa merkittävää vahinkoa. Itsenäisillä agenteilla saattaa kuitenkin olla merkittävä vaikutus tuottavuuteen. Jos tavaraa osuu tuulettimeen, niin se on erinomainen oppimisen paikka. 
 
-Väitän, että työnkulkuni on nykyään vibeltämisen täysi vastakohta:
+## 2. Järjestelmällinen agenttikoodauksen hyödyntäminen
+
+VTT:n artikkelissa puhutaan siitä, että lihaa ja verta olevien koodareiden sijaan ollaan siirtymässä vähitellen agenttien omiin suljettuihin silmukoihin, joissa ne koodaavat itsenäisesti, tarkistavat koodin, muokkaavat ja parantavat sitä. Jokainen joka on agenttipohjaisen koodaamisen kanssa tehnyt pidempään työtä tai kokeiluja, tietää, että se on täysin mahdollista, mutta myös sen, että se on vaatii huomattavan määrän ymmärrystä kielimallien kyvyistä, rajoitteista, projektien logiikasta ja ihmisen roolista tässä kokonaisuudessa. 
+
+Kun itse aloin käyttämään agenttipohjaista koodausta projekteissa, näin, miten agentit rakensivat sivuston muutamassa minuutissa ja lähes kaikki toimi kuten pitikin. Nälkäni tietenkin kasvoi ja kun testasin isompia kokonaisuuksia, niin kävi kuten oletettua... projekti ei edes rakentunut ja kaatui virheeseen heti ensimmäisessä mutkassa. 
+
+Siitä aloinkin kehittämään omaa ymmärrystäni, mitkä ovat eri kielimallien rajat koodauksessa, mihin ne kykenevät, missä ne loistavat ja mikä on ihmisen eli minun itseni rooli tässä kokonaisuudessa. 
+
+Nyt, noin 2 miljardia tokenia myöhemmin, ymmärrykseni tästä työnkulusta on aivan toinen kuin aloittaessani tämän parissa työskentelyn/harjoittelun:
 
 1. **Projekti- Arkkitehtitason suunnitelma** — Määritän projektin tavoitteet, kriittiset työnkulut, teknologia stackin, MVP-vaiheen valmiuden, turvallisuustarkistukset, selkeät vaiheet ja jokaiselle vaiheelle läpäisyvaatimukset. Käytän tässäkin vaiheessa tekoälyä apuna ja yleensä ensimmäisen vaiheen teen Gemini 3.1 pron kanssa keskustellen.
 2. **Dialogi useamman mallin kanssa** — Käyn läpi lähestymistavan ja rakennan projektin vaiheistusta pidemmälle 2-3 kyvykkään mallin (Opus 4.6 tai 4.7 ja Codex 5.3) kanssa ennen kuin aloitan varsinaisen projektin.
@@ -73,21 +85,20 @@ Väitän, että työnkulkuni on nykyään vibeltämisen täysi vastakohta:
 
 Noudatan tätä melko orjallisesti merkittävissä projekteissa. Pienemmissä tai vain omaksi iloksi tehdyissä hommissa voin oikoa mutkia suoriksi.
 
-Väitän, että tällä työnkululla ymmärrykseni koodista on korkeammalla tasolla kuin perinteisellä koodauksella ja dokumentaatio on huikeasti parempaa kuin siinä tapauksessa, että koodari on kirjoittanut hampaat irvessä pari riviä dokumentaatiota viikon päätteeksi. En usko, että dokumentaation kirjoittaminen on yhdenkään ammattidevaajan huippuhetkiä työviikossa, vaan pakollinen paha, jonka tärkeys ymmärretään, mutta joka on todella tylsää puuhaa. 
+Väitän, että tällä työnkululla ymmärrykseni koodista on korkeammalla tasolla kuin perinteisellä koodauksella ja dokumentaatio on huikeasti parempaa kuin siinä tapauksessa, että koodari on kirjoittanut hampaat irvessä pari riviä dokumentaatiota viikon tai sprintin päätteeksi. En usko, että dokumentaation kirjoittaminen on yhdenkään ammattidevaajan huippuhetkiä työviikossa, vaan pakollinen paha, jonka tärkeys ymmärretään, mutta joka on myös todella tylsää puuhaa.
 
 
-## 3. MEMORY.md — Organisaation jaetut aivot
+## 3. MEMORY.md — Organisaation jaettu ymmärrys
 
-Suurin lääke ymmärrysvelkaan on **jatkuvasti päivittyvä MEMORY.md**. Se tallentaa sen, mikä muuten katoaa, kun tiimin jäsen vaihtuu tai projekti jatkuu kuukausia myöhemmin.
+Tutkijat ehdottavat viiden kohdan listassaan siirtymistä "näkymättömästä näkyvään osaamiseen" sekä "delegoinnista oppimiseen". Minun yksi keskeisimmistä ratkaisuista tähän ja parantava lääke ymmärrysvelkaan on **jatkuvasti päivittyvä MEMORY.md** -tiedosto, joka toimii projektin muistina. Se tallentaa sen, mikä muuten katoaa, kun tiimin jäsen vaihtuu tai projekti jatkuu kuukausia myöhemmin.
 
 MEMORY.md:ssä on kolme kriittistä osaa:
 
-- **Projektin eteneminen:** Mitkä vaiheet projektista on suoritettu?
-- **Konteksti:** Miksi valitsimme tämän lähestymistavan, tämän kirjaston, tämän arkkitehtuurin?
+- **Projektin eteneminen:** Mitkä vaiheet projektista on suoritettu ja miten ne toteutettu? 
+- **Konteksti:** Miksi valitsimme tämän lähestymistavan, tämän kirjaston, tämän arkkitehtuurin, mitkä ovat riippuuvuudet?
 - **Vaihtoehdot:** Mitä muita tapoja harkittiin ja miksi ne hylättiin?
-- **Rajoitteet:** Mitkä ovat järjestelmän tunnetut heikkoudet ja missä tilanteissa se voi mennä pieleen?
 
-Tämä tiedosto on kultaa: jos uusi kehittäjä tulisi tiimiin tai kun palaan koodiin pitkän ajan kuluttua, historia ei ole kadonnut tekoälyn chatti-ikkunaan. Tämä on tapa, jolla voitan ymmärrysvelan — ei vähentämällä tekoälyn käyttöä, vaan rakentamalla sen käytölle selkeät säännöt ja ymmärtämällä sen mahdollisuudet ja heikkoudet. Muistitiedosto myös täydentyy siinä vaiheessa, kun ohjelmasta löytyy se tuotantoon päässyt bugi ja se korjataan - tekoälyn avustamana. Projektille luodaan tietenkin myös tekninen dokumentaatio, mutta se on korkeamman tason dokumentointi kuin projektin muisti.
+Tämä tiedosto on kultaa: jos uusi kehittäjä tulisi tiimiin tai kun palaan koodiin pitkän ajan kuluttua, historia ei ole kadonnut tekoälyn chatti-ikkunaan. Tämä on tapa, jolla voitan ymmärrysvelan — ei vähentämällä tekoälyn käyttöä, vaan rakentamalla sen käytölle selkeät säännöt ja ymmärtämällä sen mahdollisuudet ja heikkoudet. Muistitiedosto täydentyy myös siinä vaiheessa, kun ohjelmasta löytyy se tuotantoon päässyt bugi ja se korjataan - tekoälyn avustamana. Projektille luodaan tietenkin myös tekninen dokumentaatio, mutta se on korkeamman tason dokumentointi kuin projektin muisti.
 
 ## 6. FoSW-projektisivuston koodi on elävä varoitusmerkki tutkijoiden pelkäämästä ymmärrysvelasta
 
@@ -102,7 +113,7 @@ Tarkastelin sivustoa ja sen lähdekoodia GitHub-repositoriosta — ja löysin ai
 - **Kehittäjä + Claude:** Kaikki commitit ovat Arton tai Arton ja Claude coden tekemiä.
 - **Pelkkä silmäys riittää:** Sivusto on hyvin pitkälti juuri sen näköistä, mitä AI tuottaa. Eikä siinä mitään, jos se on tavoiteltua. Omilla sivuillani tämä ei haittaa, koska se ei sinänsä ole mikään virhe. En ole itsekään UI designer + haluan, että AI myös näkyy ja tuntuu omalla sivustollani.
 
-Toisaalta nämä kaikki ovat ns. matalan riskin asioita ja projektin kuvauksessahan myös mainitaan, että kokeilut kuuluvat tähän tutkimusprojektiin. Sivusto ei kerää tietoa käyttäjistä, se ei kerää evästeitä, ei käsittele maksuliikennettä tai muutakaan arkaluontoista tietoa. Jos sivun on tarkoitus pysyä tällaisena matalan riskin projektina, niin sehän on ihan ok :) 
+Toisaalta projektisivusto on matalan riskin sivusto ja projektin kuvauksessahan myös mainitaan, että kokeilut kuuluvat tähän tutkimusprojektiin. Sivusto ei kerää tietoa käyttäjistä, se ei kerää evästeitä, ei käsittele maksuliikennettä tai muutakaan arkaluontoista tietoa. Jos sivun on tarkoitus pysyä tällaisena matalan riskin projektina, niin sehän on ihan ok :) 
 
 Ehkä läpinäkyvyyden vuoksi voisi AI-Signaleista mainita, että ne on tekoälyautomaation luomia .json-tiedostoja, jotka mahdollisesti sivuston ylläpitäjä on tarkistanut ja muuttanut niiden statuksen draftista --> published -muotoon tai ainakin hän on joutunut ne committoimaan, jolloin ne vasta deployautuu GitHub pagesiin. Julkisen rahoituksen projekteissa olisi mielestäni kohtuullista, että lukijalle kerrotaan tämä kaikki hyvin eksplisiittisesti heti sivuston alussa.
 
@@ -116,12 +127,12 @@ Ilman tekoälyä en olisi jaksanut — enkä ehtinyt — perehtyä näin perinpo
 
 ## Yhteenveto ja loppusanat
 
-Tekoälyagentit eivät ole ongelma. Ongelma syntyy, jos niiden käyttöönotto nähdään vain **tuottavuushyppynä** eikä muutoksena organisaation (tai henkilön ja agenttien välisessä) osaamisjärjestelmässä.
+Tekoälyagentit eivät aiheuta ymmärrysvelkaa. Meillä ehtii tulla ymmärrysvelkaa agenttien hyödyntämisestä, jos emme lähde kokeilemaan ja testaamaan niitä ennakkoluulottomasti. Se tarkoittaa myös aluksi sitä, että emme välttämättä ymmärrä kaikkea, mitä agentit tekevät, mutta ei meidän tarvitsekaan. Agenttipohjaisen koodaamisen opettelu on melkoisen kaoottista ja sen kanssa tehdessä vastaan tulee erityisesti aluksi hengästyttävän paljon uutta tietoa, jotka tekee mieli ottaa haltuun. Oppimisprosessi sisältää paljon käytännön harjoittelua sekä jatkuvaa asioihin perehtymistä. Agenttipohjainen koodaus, ja kielimallit ylipäätään, ovat uutta teknologiaa, josta ei ole vielä juurikaan olemassa kattavia opetuskokonaisuuksia ja jos onkin, niin ne ovat luultavasti jo vanhentuneita. 
 
-Vastaus löytyy työnkulusta, joka luo ymmärrystä koodin mukana. Kriittisissä järjestelmissä meillä ei ole varaa pelkkään "vibe-koodaukseen". Me tarvitsemme rakenteellista agenttikehitystä, joka kasvattaa ihmisen ymmärrystä projektista. Vastuuta emme voi ulkoistaa tekoälylle tai koodin alkuperäiselle kirjoittajalle, jolta olemme sen kopioineet. 
+Tekoäly pitää pystyä Suomessakin näkemään mahdollisuutena. Virheellistä ja haavoittuvuuksia sisältävää koodia on aina kopioitu projekteihin eikä kukaan esimerkiksi tilaajan päässä ole kysynyt, että mistä tämä skripti on tullut ja pyytänyt selittämään sen juurta jaksaen. Agenttien luoman dokumentaation pohjalta, myös tilaajalla on mahdollisuus ymmärtää paremmin mitä koodi tekee. Ihminen ei todellakaan ole vastaus virheiden välttämiseen vaan uuden teknologian täysimittainen hyödyntäminen. Rakennetaan sellaisia työnkulkuja agenttien avulla, että ne nostavat meidän ymmärryksemme ihan uudelle tasolle.
 
-Tekoäly pitää pystyä Suomessakin näkemään mahdollisuutena. Virheellistä ja haavoittuvuuksia sisältävää koodia on aina kopioitu projekteihin eikä kukaan tilaajan päässä ole kysynyt, että mistä tämä skripti on tullut ja pyytänyt selittämään sen juurta jaksaen. Ihminen ei todellakaan ole vastaus virheiden välttämiseen vaan uuden teknologian täysimittainen hyödyntäminen. 
+Viimeisen parin vuoden aikana kielimallit ovat ottaneet huikeita harppauksia eteenpäin. Ne ovat nyt jo erittäin kyvykkäitä, eikä tälle kehitykselle ole vielä näköpiirissä suurta hidastumista. Kielimallit kuten Anthropicin Mythos löytävät ja korjaavat ohjelmistoissa olevia ihmisten sinne tekemiä bugeja vauhdilla, jotka ihmiselle olisivat mahdottomia.
 
-Kritisoin vielä lyhyesti sitä, että Suomessa keskitytään mielestäni liikaa tekoälyn negatiivisiin asioihin ja ollaan lähtökohtaisesti kriittisiä sen sijaan, että voisimme tarkastella sen mahdollisuuksia. Ehkä me olemme Suomessa kuitenkin tällainen kehityksen takapajula, että kun emme saa itse kehitettyä skaalautuvaa teknologiaa, niin meidän rooliksemme jää mutista korpimajoissamme ja huudella taustalta tekoälyn haitallisuudesta ihmisille tai esimerkiksi ympäristölle.
+Kritisoin vielä lyhyesti sitä, että Suomessa keskitytään mielestäni liikaa tekoälyn negatiivisiin asioihin ja ollaan lähtökohtaisesti kriittisiä sen sijaan, että voisimme tarkastella sen mahdollisuuksia. Nyt on aika polttaa tokeneita, tehdä virheitä ja oppia niistä. Ymmärrys tulee siinä mukana, kun huomaamme, että agentit eivät olekaan kaikkivoipaisia, vielä. 
 
 What an amazing time to be alive! (Let's not ruin it)
