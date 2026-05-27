@@ -4,12 +4,15 @@ import { getDb } from "@/lib/db/client";
 import { insertLogSchema, insertSessionSchema } from "@/lib/db/validation";
 import { getAccessCode } from "@/lib/ai/sentinel";
 import {
+  aiRepos,
   aiStocks,
   aiTrends,
   logs,
   sessions,
+  type AiRepo,
   type AiStock,
   type AiTrend,
+  type NewAiRepo,
   type NewAiStock,
   type NewAiTrend,
 } from "@/lib/db/schema";
@@ -134,6 +137,59 @@ export async function upsertStocks(rows: NewAiStock[]): Promise<void> {
   const db = getDb();
 
   await db.insert(aiStocks).values(rows).onConflictDoNothing();
+}
+
+export async function getRecentTrendUrls(days = 7): Promise<Set<string>> {
+  const db = getDb();
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+
+  const rows = await db
+    .select({ url: aiTrends.url })
+    .from(aiTrends)
+    .where(sql`${aiTrends.date} >= ${cutoffStr}`);
+
+  return new Set(rows.map((r) => r.url));
+}
+
+export async function getLatestRepos(date?: string): Promise<AiRepo[]> {
+  const db = getDb();
+  const targetDate = date ?? new Date().toISOString().slice(0, 10);
+
+  const rows = await db
+    .select()
+    .from(aiRepos)
+    .where(eq(aiRepos.date, targetDate))
+    .orderBy(asc(aiRepos.createdAt));
+
+  if (rows.length > 0) {
+    return rows;
+  }
+
+  // Fallback: return the most recent day that has rows
+  const [latest] = await db
+    .select({ date: aiRepos.date })
+    .from(aiRepos)
+    .orderBy(desc(aiRepos.date))
+    .limit(1);
+
+  if (!latest) {
+    return [];
+  }
+
+  return db
+    .select()
+    .from(aiRepos)
+    .where(eq(aiRepos.date, latest.date))
+    .orderBy(asc(aiRepos.createdAt));
+}
+
+export async function upsertRepos(rows: NewAiRepo[]): Promise<void> {
+  if (rows.length === 0) return;
+  const db = getDb();
+
+  await db.insert(aiRepos).values(rows).onConflictDoNothing();
 }
 
 export async function getDashboardStats() {

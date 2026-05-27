@@ -182,6 +182,9 @@ type DashboardCopy = {
   aiPulseLastUpdatedLabel: string;
   aiPulseSourceLabel: string;
   aiPulseLoadingLabel: string;
+  aiPulseReposTitle: string;
+  aiPulseNoReposLabel: string;
+  aiPulseStarsTodayLabel: string;
 };
 
 type UnlockedDashboardProps = {
@@ -1157,6 +1160,9 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
           aiPulseLastUpdatedLabel: copy.aiPulseLastUpdatedLabel,
           aiPulseSourceLabel: copy.aiPulseSourceLabel,
           aiPulseLoadingLabel: copy.aiPulseLoadingLabel,
+          aiPulseReposTitle: copy.aiPulseReposTitle,
+          aiPulseNoReposLabel: copy.aiPulseNoReposLabel,
+          aiPulseStarsTodayLabel: copy.aiPulseStarsTodayLabel,
         }}
       />
     );

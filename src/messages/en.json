@@ -167,14 +167,17 @@
     "changelogTypeRemoved": "Removed",
     "navAiPulse": "AI Pulse",
     "aiPulseTitle": "AI Pulse",
-    "aiPulseDescription": "Top AI stories from Hacker News and live stock prices for leading AI companies.",
+    "aiPulseDescription": "Top AI stories, trending AI repositories on GitHub, and live stock prices for leading AI companies.",
     "aiPulseTrendsTitle": "AI Trends",
     "aiPulseStocksTitle": "AI Stocks",
     "aiPulseTickerLabel": "Ticker",
     "aiPulseNoTrendsLabel": "No trend data available yet. Check back after the next data refresh.",
     "aiPulseLastUpdatedLabel": "Last updated",
     "aiPulseSourceLabel": "Source",
-    "aiPulseLoadingLabel": "Loading chart..."
+    "aiPulseLoadingLabel": "Loading chart...",
+    "aiPulseReposTitle": "Trending AI Repositories",
+    "aiPulseNoReposLabel": "No repository data available yet. Check back after the next data refresh.",
+    "aiPulseStarsTodayLabel": "stars today"
   },
   "localeSwitcher": {
     "label": "Language",

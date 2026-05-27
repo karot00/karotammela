@@ -1,8 +1,9 @@
-import type { AiStock, AiTrend } from "@/lib/db/schema";
+import type { AiStock, AiTrend, AiRepo } from "@/lib/db/schema";
 import { AI_TICKERS } from "@/lib/ai/stocks-fetcher";
 
 import { StockChart } from "./stock-chart";
 import { TrendsList } from "./trends-list";
+import { ReposList } from "./repos-list";
 
 export type AiPulseCopy = {
   aiPulseTitle: string;
@@ -14,6 +15,9 @@ export type AiPulseCopy = {
   aiPulseLastUpdatedLabel: string;
   aiPulseSourceLabel: string;
   aiPulseLoadingLabel: string;
+  aiPulseReposTitle: string;
+  aiPulseNoReposLabel: string;
+  aiPulseStarsTodayLabel: string;
 };
 
 export type TickerOption = {
@@ -23,6 +27,7 @@ export type TickerOption = {
 
 export type AiPulseData = {
   trends: AiTrend[];
+  repos: AiRepo[];
   initialTicker: string;
   initialStockData: AiStock[];
   availableTickers: TickerOption[];
@@ -56,21 +61,38 @@ export function AiPulseShell({
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
-            {copy.aiPulseTrendsTitle}
-          </h3>
-          <div className="mt-4">
-            <TrendsList
-              trends={data.trends}
-              lastUpdatedLabel={copy.aiPulseLastUpdatedLabel}
-              noTrendsLabel={copy.aiPulseNoTrendsLabel}
-              locale={locale}
-            />
+        <div className="space-y-6">
+          <div className="rounded-xl border border-border bg-card p-5">
+            <h3 className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
+              {copy.aiPulseTrendsTitle}
+            </h3>
+            <div className="mt-4">
+              <TrendsList
+                trends={data.trends}
+                lastUpdatedLabel={copy.aiPulseLastUpdatedLabel}
+                noTrendsLabel={copy.aiPulseNoTrendsLabel}
+                locale={locale}
+              />
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card p-5">
+            <h3 className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
+              {copy.aiPulseReposTitle}
+            </h3>
+            <div className="mt-4">
+              <ReposList
+                repos={data.repos}
+                lastUpdatedLabel={copy.aiPulseLastUpdatedLabel}
+                noReposLabel={copy.aiPulseNoReposLabel}
+                starsTodayLabel={copy.aiPulseStarsTodayLabel}
+                locale={locale}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-5">
+        <div className="rounded-xl border border-border bg-card p-5 h-fit">
           <h3 className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
             {copy.aiPulseStocksTitle}
           </h3>

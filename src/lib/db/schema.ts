@@ -97,3 +97,29 @@ export type AiTrend = typeof aiTrends.$inferSelect;
 export type NewAiTrend = typeof aiTrends.$inferInsert;
 export type AiStock = typeof aiStocks.$inferSelect;
 export type NewAiStock = typeof aiStocks.$inferInsert;
+
+export const aiRepos = sqliteTable(
+  "ai_repos",
+  {
+    id: text("id").primaryKey(),
+    date: text("date").notNull(),
+    repoFullName: text("repo_full_name").notNull(),
+    url: text("url").notNull(),
+    description: text("description"),
+    descriptionFi: text("description_fi"),
+    language: text("language"),
+    stars: integer("stars").notNull(),
+    starsToday: integer("stars_today").notNull(),
+    source: text("source").notNull().default("github-trending"),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (table) => [
+    uniqueIndex("ai_repos_date_repo_idx").on(table.date, table.repoFullName),
+    index("ai_repos_date_idx").on(table.date),
+  ],
+);
+
+export type AiRepo = typeof aiRepos.$inferSelect;
+export type NewAiRepo = typeof aiRepos.$inferInsert;

@@ -16,6 +16,7 @@ import { getCachedDashboardStats } from "@/lib/db/stats-cache";
 import {
   getAvailableTickers,
   getLatestTrends,
+  getLatestRepos,
   getStockHistory,
 } from "@/lib/db/queries";
 import { getLocaleFromSegment, getLocalizedAlternates } from "@/lib/seo";
@@ -93,8 +94,9 @@ async function getAiPulseData(): Promise<AiPulseData | null> {
   }
 
   try {
-    const [trends, availableTickers] = await Promise.all([
+    const [trends, repos, availableTickers] = await Promise.all([
       getLatestTrends(),
+      getLatestRepos(),
       getAvailableTickers(),
     ]);
 
@@ -116,6 +118,7 @@ async function getAiPulseData(): Promise<AiPulseData | null> {
 
     return {
       trends,
+      repos,
       initialTicker,
       initialStockData,
       availableTickers: displayTickers,
@@ -348,6 +351,9 @@ export default async function DashboardPage({
         aiPulseLastUpdatedLabel: t("aiPulseLastUpdatedLabel"),
         aiPulseSourceLabel: t("aiPulseSourceLabel"),
         aiPulseLoadingLabel: t("aiPulseLoadingLabel"),
+        aiPulseReposTitle: t("aiPulseReposTitle"),
+        aiPulseNoReposLabel: t("aiPulseNoReposLabel"),
+        aiPulseStarsTodayLabel: t("aiPulseStarsTodayLabel"),
       }}
     />
   );

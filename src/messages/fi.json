@@ -167,14 +167,17 @@
     "changelogTypeRemoved": "Poistettu",
     "navAiPulse": "AI Pulssi",
     "aiPulseTitle": "AI Pulssi",
-    "aiPulseDescription": "Hacker Newsin top AI-uutiset ja reaaliaikaiset osakekurssit johtaville tekoälyyhtiöille.",
+    "aiPulseDescription": "Suosituimmat AI-uutiset, GitHubin nousevat AI-repot ja reaaliaikaiset osakekurssit johtaville tekoälyyhtiöille.",
     "aiPulseTrendsTitle": "AI-trendit",
     "aiPulseStocksTitle": "AI-osakkeet",
     "aiPulseTickerLabel": "Osake",
     "aiPulseNoTrendsLabel": "Trendidataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen.",
     "aiPulseLastUpdatedLabel": "Päivitetty viimeksi",
     "aiPulseSourceLabel": "Lähde",
-    "aiPulseLoadingLabel": "Ladataan kaaviota..."
+    "aiPulseLoadingLabel": "Ladataan kaaviota...",
+    "aiPulseReposTitle": "Pinnalla olevat AI-repot",
+    "aiPulseNoReposLabel": "Repo-dataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen.",
+    "aiPulseStarsTodayLabel": "tähteä tänään"
   },
   "localeSwitcher": {
     "label": "Kieli",
