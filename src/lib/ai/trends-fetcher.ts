@@ -15,7 +15,7 @@ type HnSearchResponse = {
 };
 
 function getModelName(): string {
-  return process.env.AI_MODEL ?? "gemini-3.1-flash-lite-preview";
+  return process.env.AI_MODEL ?? "gemini-3.1-flash-lite";
 }
 
 async function summarizeStory(

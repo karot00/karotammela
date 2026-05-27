@@ -37,7 +37,7 @@ export const runtime = "nodejs";
 export const maxDuration = 30;
 
 function getModelName() {
-  return process.env.AI_MODEL || "gemini-3.1-flash-lite-preview";
+  return process.env.AI_MODEL || "gemini-3.1-flash-lite";
 }
 
 export async function POST(request: Request) {
