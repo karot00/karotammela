@@ -50,6 +50,7 @@ export async function fetchAndSummarizeTrends(
   stats: { windowHours: number; candidatePool: number; dedupedOut: number };
 }> {
   const windows = [24, 48, 72, 168]; // 24h, 48h, 72h, 7d
+  const searchQueries = ["AI", "LLM", "machine learning", "GPT", "Claude", "Gemini"];
   let trends: NewAiTrend[] = [];
   let finalWindowHours = 24;
   let finalCandidatePool = 0;
@@ -60,25 +61,31 @@ export async function fetchAndSummarizeTrends(
     const nowSecs = Math.floor(Date.now() / 1000);
     const minTimestamp = nowSecs - windowHours * 3600;
 
-    const hnUrl = `https://hn.algolia.com/api/v1/search_by_date?query=AI+LLM+language+model+machine+learning&tags=story&numericFilters=created_at_i>${minTimestamp}&hitsPerPage=50`;
+    const fetchResults = await Promise.allSettled(
+      searchQueries.map((q) => {
+        const url = `https://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(
+          q,
+        )}&tags=story&numericFilters=created_at_i>${minTimestamp}&hitsPerPage=30`;
+        return fetch(url, { next: { revalidate: 0 } }).then((res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json() as Promise<HnSearchResponse>;
+        });
+      }),
+    );
 
-    let hits: HnHit[] = [];
+    const allHitsMap = new Map<string, HnHit>();
 
-    try {
-      const res = await fetch(hnUrl, { next: { revalidate: 0 } });
-
-      if (!res.ok) {
-        console.warn(`[trends-fetcher] HN API HTTP ${res.status} for ${windowHours}h window`);
-        continue;
+    for (const res of fetchResults) {
+      if (res.status === "fulfilled" && res.value.hits) {
+        for (const hit of res.value.hits) {
+          if (hit.title && hit.url) {
+            allHitsMap.set(hit.url, hit);
+          }
+        }
       }
-
-      const data = (await res.json()) as HnSearchResponse;
-      hits = data.hits ?? [];
-    } catch (err) {
-      console.warn(`[trends-fetcher] HN API fetch error for ${windowHours}h window`, err);
-      continue;
     }
 
+    const hits = Array.from(allHitsMap.values());
     if (hits.length === 0) {
       continue;
     }
@@ -89,9 +96,7 @@ export async function fetchAndSummarizeTrends(
     const uniqueHits: HnHit[] = [];
     const seenUrlsInBatch = new Set<string>();
 
-    const sortedHits = [...hits]
-      .filter((h) => h.title && h.url)
-      .sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
+    const sortedHits = hits.sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
 
     let localDedupedCount = 0;
 

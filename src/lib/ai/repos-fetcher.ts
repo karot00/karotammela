@@ -89,7 +89,14 @@ async function translateDescription(description: string): Promise<string> {
   try {
     const result = await generateText({
       model: google(getModelName()),
-      prompt: `Käännä tämä GitHub-repositorion kuvaus suomeksi ytimekkäästi ja luontevasti kehittäjille sopivalla kielellä. Maksimipituus 1 lause: "${description}"`,
+      prompt: `Käännä seuraava GitHub-repositorion kuvaus suomeksi.
+
+Ohjeet:
+- Anna suoraan vain se yksi lopullinen käännös.
+- ÄLÄ missään tapauksessa anna useita vaihtoehtoja tai selityksiä (kuten "Tässä muutama vaihtoehto:").
+- Pidä käännös erittäin ytimekkäänä (maksimissaan 1 lause) ja kehittäjille luontevana.
+
+Kuvaus: "${description}"`,
       maxOutputTokens: 60,
     });
     return result.text.trim();
