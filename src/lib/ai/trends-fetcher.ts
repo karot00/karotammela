@@ -51,7 +51,7 @@ export async function fetchAndSummarizeTrends(
 }> {
   const windows = [24, 48, 72, 168]; // 24h, 48h, 72h, 7d
   const searchQueries = ["AI", "LLM", "machine learning", "GPT", "Claude", "Gemini"];
-  let trends: NewAiTrend[] = [];
+  const trends: NewAiTrend[] = [];
   let finalWindowHours = 24;
   let finalCandidatePool = 0;
   let finalDedupedOut = 0;

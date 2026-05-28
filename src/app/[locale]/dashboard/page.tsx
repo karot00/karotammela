@@ -248,6 +248,8 @@ export default async function DashboardPage({
         contactGithubLabel: t("contactGithubLabel"),
         contactLinkedinLabel: t("contactLinkedinLabel"),
         projectsTitle: t("projectsTitle"),
+        projectsProductionSubtitle: t("projectsProductionSubtitle"),
+        projectsShowcaseSubtitle: t("projectsShowcaseSubtitle"),
         projectOneTitle: t("projectOneTitle"),
         projectOneDescription: t("projectOneDescription"),
         projectTwoTitle: t("projectTwoTitle"),
@@ -256,6 +258,8 @@ export default async function DashboardPage({
         projectThreeDescription: t("projectThreeDescription"),
         projectFourTitle: t("projectFourTitle"),
         projectFourDescription: t("projectFourDescription"),
+        projectFiveTitle: t("projectFiveTitle"),
+        projectFiveDescription: t("projectFiveDescription"),
         projectGithubLabel: t("projectGithubLabel"),
         techTitle: t("techTitle"),
         techCategories: {

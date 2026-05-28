@@ -72,6 +72,8 @@
     "contactGithubLabel": "GitHub",
     "contactLinkedinLabel": "LinkedIn",
     "projectsTitle": "Built applications",
+    "projectsProductionSubtitle": "Production solutions and client projects",
+    "projectsShowcaseSubtitle": "Experiments, prototypes, and showcases",
     "projectOneTitle": "levifinland.fi",
     "projectOneDescription": "Travel portal and cabin booking website.",
     "projectTwoTitle": "Green Fee system",
@@ -80,6 +82,8 @@
     "projectThreeDescription": "Wholesale web store for custom-made lenses.",
     "projectFourTitle": "karotammela.fi (This site)",
     "projectFourDescription": "Portfolio and test lab built with agent architecture.",
+    "projectFiveTitle": "Digital Postcard",
+    "projectFiveDescription": "Real-time custom postcard generator and sender (Sydänliitto POC).",
     "projectGithubLabel": "GitHub: karot00/karotammela",
     "techTitle": "Primary technology stack",
     "techCategories": {
@@ -253,6 +257,38 @@
       "rejectNonEssential": "Reject non-essential",
       "acceptAll": "Accept all",
       "savePreferences": "Save preferences"
+    }
+  },
+  "postcard": {
+    "title": "Digital Postcard Generator",
+    "description": "Create and personalize your own digital postcard in real-time. You can download it to your device or send it directly to the recipient's email.",
+    "selectTemplate": "Select Template",
+    "templates": {
+      "ystava": "Friendship Card",
+      "kalja": "Beer Card",
+      "apina": "Monkey Card"
+    },
+    "form": {
+      "senderName": "Sender Name",
+      "senderNamePlaceholder": "Matti Meikäläinen",
+      "recipientEmail": "Recipient Email",
+      "recipientEmailPlaceholder": "recipient@example.com",
+      "greeting": "Greeting Message",
+      "greetingPlaceholder": "Warm holiday wishes to you! Best, Matti",
+      "charLimit": "{count} / {max} characters",
+      "validation": {
+        "email": "Please enter a valid email address",
+        "sender": "Name is required (min 2 chars)",
+        "greeting": "Greeting message is required"
+      }
+    },
+    "actions": {
+      "download": "Download Card",
+      "send": "Send via Email",
+      "sending": "Sending...",
+      "success": "Postcard successfully sent to {email}!",
+      "error": "Sending failed: {error}",
+      "rateLimit": "Rate limit exceeded. Please try again shortly."
     }
   }
 }

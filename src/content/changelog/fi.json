@@ -1,6 +1,44 @@
 {
   "releases": [
     {
+      "version": "v1.2",
+      "date": "2026-05-28",
+      "title": "Postikorttien päivitys ja väärinkäytösten estäminen",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Kolme uutta hienoa korttipohjaa: Ystävänpäiväkortti, Kaljakortti ja Apinakortti tarkasti säädetyillä asetteluilla ja fonteilla."
+        },
+        {
+          "type": "added",
+          "text": "Monitasoinen lähetysturva: integroitu edistynyt selainkäyttäytymisen varmistus, automaattinen linkkien suodatus ja mukautuvat vastaanottajakohtaiset rajoitukset."
+        },
+        {
+          "type": "removed",
+          "text": "Poistettu kolme vanhaa sesonkikorttipohjaa."
+        }
+      ]
+    },
+    {
+      "version": "v1.1",
+      "date": "2026-05-27",
+      "title": "Digitaalinen postikorttigeneraattori",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Uusi digitaalisten postikorttien personointi- ja lähetystyökalu, joka toimii reaaliaikaisena HTML5 Canvas -esikatseluna ja mahdollistaa kuvan lataamisen tai lähettämisen sähköpostitse Resendin kautta."
+        },
+        {
+          "type": "added",
+          "text": "Kolme tyylikästä ja kevyttä postikorttipohjaa eri sesonkeihin (talvi, kesä, minimalistinen)."
+        },
+        {
+          "type": "added",
+          "text": "Automaattinen URL-parametrien haku (?name= ja ?email=) lomakekenttien esitäyttämiseksi."
+        }
+      ]
+    },
+    {
       "version": "v1.0",
       "date": "2026-05-27",
       "title": "AI Pulssin tuoreuspäivitys ja GitHub-trendit",

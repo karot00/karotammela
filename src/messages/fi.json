@@ -72,6 +72,8 @@
     "contactGithubLabel": "GitHub",
     "contactLinkedinLabel": "LinkedIn",
     "projectsTitle": "Rakennetut applikaatiot",
+    "projectsProductionSubtitle": "Tuotantovalmiit ratkaisut ja asiakasprojektit",
+    "projectsShowcaseSubtitle": "Kokeilut, prototyypit ja esittelyt",
     "projectOneTitle": "levifinland.fi",
     "projectOneDescription": "Matkailuportaali ja mökin varaussivusto.",
     "projectTwoTitle": "Green Fee -myyntialusta",
@@ -80,6 +82,8 @@
     "projectThreeDescription": "Lasitukkuliikkeen verkkokauppa mittatilauslaseille.",
     "projectFourTitle": "karotammela.fi (Tämä sivusto)",
     "projectFourDescription": "Kilo Coden avulla rakennettu portfolio ja testilaboratorio.",
+    "projectFiveTitle": "Digitaalinen postikortti",
+    "projectFiveDescription": "Reaaliaikainen personoitujen postikorttien luonti- ja lähetystyökalu (Sydänliitto POC).",
     "projectGithubLabel": "GitHub: karot00/karotammela",
     "techTitle": "Pääasiallinen teknologia-stack",
     "techCategories": {
@@ -253,6 +257,38 @@
       "rejectNonEssential": "Hylkää ei-välttämättömät",
       "acceptAll": "Hyväksy kaikki",
       "savePreferences": "Tallenna valinnat"
+    }
+  },
+  "postcard": {
+    "title": "Digitaalinen postikortti",
+    "description": "Luo ja personoi oma digitaalinen postikorttisi reaaliajassa. Voit ladata sen laitteellesi tai lähettää suoraan vastaanottajan sähköpostiin.",
+    "selectTemplate": "Valitse pohja",
+    "templates": {
+      "ystava": "Ystävänpäiväkortti",
+      "kalja": "Kaljakortti",
+      "apina": "Apinakortti"
+    },
+    "form": {
+      "senderName": "Lähettäjän nimi",
+      "senderNamePlaceholder": "Matti Meikäläinen",
+      "recipientEmail": "Vastaanottajan sähköposti",
+      "recipientEmailPlaceholder": "vastaanottaja@esimerkki.fi",
+      "greeting": "Tervehdysteksti",
+      "greetingPlaceholder": "Hyvää ja rauhallista joulua! t. Matti",
+      "charLimit": "{count} / {max} merkkiä",
+      "validation": {
+        "email": "Anna voimassa oleva sähköpostiosoite",
+        "sender": "Nimi vaaditaan (väh. 2 merkkiä)",
+        "greeting": "Tervehdysteksti vaaditaan"
+      }
+    },
+    "actions": {
+      "download": "Lataa kortti",
+      "send": "Lähetä sähköpostilla",
+      "sending": "Lähetetään...",
+      "success": "Postikortti lähetetty onnistuneesti osoitteeseen {email}!",
+      "error": "Lähetys epäonnistui: {error}",
+      "rateLimit": "Lähetysraja ylittynyt. Yritä hetken kuluttua uudelleen."
     }
   }
 }

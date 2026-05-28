@@ -1,6 +1,44 @@
 {
   "releases": [
     {
+      "version": "v1.2",
+      "date": "2026-05-28",
+      "title": "Postcard updates & anti-abuse hardening",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Three brand new custom postcard templates: Ystävänpäiväkortti, Kaljakortti, and Apinakortti with tuned typography and positions."
+        },
+        {
+          "type": "added",
+          "text": "Multi-layered delivery security: integrated advanced client behavior validation, automated link scrubbing, and adaptive recipient-protection rate limiting."
+        },
+        {
+          "type": "removed",
+          "text": "Removed three legacy holiday postcard templates."
+        }
+      ]
+    },
+    {
+      "version": "v1.1",
+      "date": "2026-05-27",
+      "title": "Digital Postcard Generator",
+      "changes": [
+        {
+          "type": "added",
+          "text": "A brand new interactive digital postcard customizer utilizing HTML5 Canvas for real-time preview, supporting local PNG download or emailing via Resend SDK."
+        },
+        {
+          "type": "added",
+          "text": "Three clean, lightweight holiday card templates (Winter Warmth, Summer Sunset, and Elegant Minimalist)."
+        },
+        {
+          "type": "added",
+          "text": "Automated query parameter checking (?name= and ?email=) to prefill customized postcard forms."
+        }
+      ]
+    },
+    {
       "version": "v1.0",
       "date": "2026-05-27",
       "title": "AI Pulse freshness & GitHub Trending",

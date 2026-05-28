@@ -119,6 +119,8 @@ type DashboardCopy = {
   contactGithubLabel: string;
   contactLinkedinLabel: string;
   projectsTitle: string;
+  projectsProductionSubtitle: string;
+  projectsShowcaseSubtitle: string;
   projectOneTitle: string;
   projectOneDescription: string;
   projectTwoTitle: string;
@@ -127,6 +129,8 @@ type DashboardCopy = {
   projectThreeDescription: string;
   projectFourTitle: string;
   projectFourDescription: string;
+  projectFiveTitle: string;
+  projectFiveDescription: string;
   projectGithubLabel: string;
   techTitle: string;
   techCategories: Record<TechnologyCategoryId, string>;
@@ -530,7 +534,7 @@ function ContactCompanionPanel({ copy }: { copy: DashboardCopy }) {
 }
 
 function ProjectsView({ copy }: { copy: DashboardCopy }) {
-  const projects = [
+  const productionProjects = [
     {
       title: copy.projectOneTitle,
       description: copy.projectOneDescription,
@@ -553,58 +557,88 @@ function ProjectsView({ copy }: { copy: DashboardCopy }) {
     },
   ];
 
+  const showcaseProjects = [
+    {
+      title: copy.projectFiveTitle,
+      description: copy.projectFiveDescription,
+      href: "/postikortti",
+      isInternal: true,
+    },
+  ];
+
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "fi";
+
+  const renderProjectCard = (project: typeof productionProjects[number] | typeof showcaseProjects[number]) => {
+    const cardContent = (
+      <>
+        <h3 className="font-semibold text-foreground">{project.title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {project.description}
+        </p>
+
+        {"githubHref" in project && project.githubHref ? (
+          <Button asChild size="sm" variant="outline" className="mt-4">
+            <Link
+              href={project.githubHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {"githubLabel" in project ? project.githubLabel : ""}
+            </Link>
+          </Button>
+        ) : null}
+      </>
+    );
+
+    if (project.href) {
+      const isInternal = "isInternal" in project && project.isInternal;
+      const targetHref = isInternal ? `/${locale}${project.href}` : project.href;
+      return (
+        <Link
+          key={project.title}
+          href={targetHref}
+          target={isInternal ? undefined : "_blank"}
+          rel={isInternal ? undefined : "noreferrer noopener"}
+          className="group block rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          {cardContent}
+        </Link>
+      );
+    }
+
+    return (
+      <article
+        key={project.title}
+        className="rounded-xl border border-border bg-card p-5"
+      >
+        {cardContent}
+      </article>
+    );
+  };
+
   return (
-    <section className="space-y-4">
+    <section className="space-y-6">
       <h2 className="text-xl font-semibold text-foreground">
         {copy.projectsTitle}
       </h2>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        {projects.map((project) => {
-          const cardContent = (
-            <>
-              <h3 className="font-semibold text-foreground">{project.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {project.description}
-              </p>
+      <div className="space-y-3">
+        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+          {copy.projectsProductionSubtitle}
+        </h3>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {productionProjects.map(renderProjectCard)}
+        </div>
+      </div>
 
-              {project.githubHref ? (
-                <Button asChild size="sm" variant="outline" className="mt-4">
-                  <Link
-                    href={project.githubHref}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {project.githubLabel}
-                  </Link>
-                </Button>
-              ) : null}
-            </>
-          );
-
-          if (project.href) {
-            return (
-              <Link
-                key={project.title}
-                href={project.href}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="group block rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {cardContent}
-              </Link>
-            );
-          }
-
-          return (
-            <article
-              key={project.title}
-              className="rounded-xl border border-border bg-card p-5"
-            >
-              {cardContent}
-            </article>
-          );
-        })}
+      <div className="space-y-3 pt-4">
+        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+          {copy.projectsShowcaseSubtitle}
+        </h3>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {showcaseProjects.map(renderProjectCard)}
+        </div>
       </div>
     </section>
   );

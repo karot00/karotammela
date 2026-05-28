@@ -18,10 +18,10 @@ async function handleRefresh(req: NextRequest): Promise<NextResponse> {
   const url = new URL(req.url);
   const isDebug = url.searchParams.get("debug") === "1";
 
-  const results: Record<string, any> = {
-    trends: { ok: false, inserted: 0, skippedDup: 0, windowHours: 24, error: null },
-    repos: { ok: false, inserted: 0, error: null },
-    stocks: { ok: false, inserted: 0, error: null },
+  const results = {
+    trends: { ok: false, inserted: 0, skippedDup: 0, windowHours: 24, error: null as string | null },
+    repos: { ok: false, inserted: 0, error: null as string | null },
+    stocks: { ok: false, inserted: 0, error: null as string | null },
   };
 
   try {

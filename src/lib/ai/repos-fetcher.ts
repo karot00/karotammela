@@ -44,9 +44,18 @@ export function isAiMlRelated(title: string, description: string): boolean {
   });
 }
 
-export function parseGitHubTrending(html: string): any[] {
+export interface GitHubRepo {
+  repoFullName: string;
+  url: string;
+  description: string;
+  language: string | null;
+  stars: number;
+  starsToday: number;
+}
+
+export function parseGitHubTrending(html: string): GitHubRepo[] {
   const $ = cheerio.load(html);
-  const repos: any[] = [];
+  const repos: GitHubRepo[] = [];
 
   $("article.Box-row").each((_, element) => {
     const $el = $(element);
@@ -128,7 +137,7 @@ export async function fetchAndSummarizeRepos(): Promise<NewAiRepo[]> {
     ),
   );
 
-  const allReposMap = new Map<string, any>();
+  const allReposMap = new Map<string, GitHubRepo>();
 
   for (const res of fetchResults) {
     if (res.status === "fulfilled") {
