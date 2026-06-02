@@ -71,6 +71,10 @@ export const model = {
           throw new Error(`No deployments found for project: ${projectId}`);
         }
 
+        context.logger.info("Found deployments: {deployments}", { 
+          deployments: JSON.stringify(deployments.map((d: any) => ({id: d.uid || d.id, state: d.state})))
+        });
+        
         // Find the latest deployment. By default, Vercel returns them sorted by creation time descending.
         // We'll prioritize READY state if available.
         const latestDeployment = deployments.find((d: any) => d.state === "READY") || deployments[0];
