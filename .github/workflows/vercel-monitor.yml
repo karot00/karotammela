@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Swamp
         run: |
-          curl -fsSL https://raw.githubusercontent.com/systeminit/swamp/main/install.sh | sh
+          curl -fsSL https://swamp.club/install.sh | sh
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Initialize Vault and Run Monitor
