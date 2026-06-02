@@ -1,7 +1,24 @@
 {
   "releases": [
     {
-      "version": "v1.2",
+      "version": "v1.3",
+      "date": "2026-06-02",
+      "title": "Swamp integration & automated log monitoring",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Integrated Swamp automation platform for project management and workflow automation."
+        },
+        {
+          "type": "added",
+          "text": "Automated Vercel production log monitoring: a new Swamp extension that periodically inspects deployment logs for errors and dispatches alerts via Resend."
+        },
+        {
+          "type": "added",
+          "text": "GitHub Actions workflow configured to run the monitor automatically every hour."
+        }
+      ]
+    },
       "date": "2026-05-28",
       "title": "Postcard updates & anti-abuse hardening",
       "changes": [

@@ -1,7 +1,24 @@
 {
   "releases": [
     {
-      "version": "v1.2",
+      "version": "v1.3",
+      "date": "2026-06-02",
+      "title": "Swamp-integraatio ja automaattinen virhevalvonta",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Integroitu Swamp-automaatioalusta projektin hallintaan ja työnkulkujen automatisointiin."
+        },
+        {
+          "type": "added",
+          "text": "Automaattinen Vercel-tuotantolokin valvonta: uusi Swamp-laajennus, joka tarkistaa säännöllisesti uusimmat lokit virheiden varalta ja lähettää hälytyssähköpostin Resendin kautta."
+        },
+        {
+          "type": "added",
+          "text": "GitHub Actions -työnkulku virheiden automaattiseen seurantaan kerran tunnissa."
+        }
+      ]
+    },
       "date": "2026-05-28",
       "title": "Postikorttien päivitys ja väärinkäytösten estäminen",
       "changes": [
