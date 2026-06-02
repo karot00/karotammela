@@ -1,0 +1,6 @@
+manifestVersion: 1
+name: "@local/vercel-monitor"
+version: "2026.06.02.1"
+description: "Vercel production logs monitoring and Resend email alerting."
+models:
+  - extensions/models/vercel_monitor.ts

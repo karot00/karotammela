@@ -1,0 +1,38 @@
+name: Vercel Log Monitor
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Run hourly
+  workflow_dispatch: # Allow triggering manually via GitHub UI
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Install Swamp
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/systeminit/swamp/main/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Initialize Vault and Run Monitor
+        run: |
+          # Add swamp to path for this step
+          export PATH="$HOME/.local/bin:$PATH"
+
+          # Re-create the vault locally on the fresh CI runner
+          swamp vault create local_encryption vercel-monitor-secrets --json
+          
+          # Populate the vault with GitHub Repository Secrets
+          swamp vault put vercel-monitor-secrets VERCEL_TOKEN="${{ secrets.VERCEL_TOKEN }}" --json
+          swamp vault put vercel-monitor-secrets RESEND_API_KEY="${{ secrets.RESEND_API_KEY }}" --json
+          
+          # Execute the log check and email alert
+          swamp model method run vercel-log-alert check

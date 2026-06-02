@@ -1,0 +1,13 @@
+id: "ad102f4a-985b-4c75-aef8-d8237df6a04d"
+name: "vercel-log-alert"
+version: 1
+tags: {}
+globalArguments:
+  vercelToken: '${{ vault.get("vercel-monitor-secrets", "VERCEL_TOKEN") }}'
+  projectId: "karotammela"
+  resendApiKey: '${{ vault.get("vercel-monitor-secrets", "RESEND_API_KEY") }}'
+  notificationEmail: "karo@staffbite.fi"
+  # teamId: "your-vercel-team-id-or-slug" # uncomment and set if using a team account
+methods:
+  check:
+    arguments: {}

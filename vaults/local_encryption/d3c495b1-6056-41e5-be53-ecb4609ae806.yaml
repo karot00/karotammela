@@ -1,0 +1,7 @@
+id: d3c495b1-6056-41e5-be53-ecb4609ae806
+name: vercel-monitor-secrets
+type: local_encryption
+config:
+  auto_generate: true
+  base_dir: /home/staffbite/Documents/Projects/karotammela
+createdAt: '2026-06-02T19:25:35.010Z'
