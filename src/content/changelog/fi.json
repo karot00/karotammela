@@ -19,6 +19,8 @@
         }
       ]
     },
+    {
+      "version": "v1.2",
       "date": "2026-05-28",
       "title": "Postikorttien päivitys ja väärinkäytösten estäminen",
       "changes": [

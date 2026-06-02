@@ -19,6 +19,8 @@
         }
       ]
     },
+    {
+      "version": "v1.2",
       "date": "2026-05-28",
       "title": "Postcard updates & anti-abuse hardening",
       "changes": [
