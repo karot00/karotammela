@@ -238,4 +238,65 @@
     content: "";
     margin-top: 0.55rem;
   }
+
+  /* Style pre and code block elements within blog posts.
+     Fenced blocks get a faux terminal-window chrome: a title bar with
+     three macOS-style traffic-light dots, for a high-contrast editor feel. */
+  .blog-prose pre {
+    position: relative;
+    background-color: #0d0f16;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 2.85rem 1.15rem 1.15rem;
+    margin: 1.6rem 0;
+    overflow-x: auto;
+    box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Title bar */
+  .blog-prose pre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.05rem;
+    background: linear-gradient(180deg, #1b1f2a, #14171f);
+    border-bottom: 1px solid var(--border);
+    border-radius: 0.75rem 0.75rem 0 0;
+  }
+
+  /* Traffic-light dots (red / amber / green) */
+  .blog-prose pre::after {
+    content: "";
+    position: absolute;
+    top: 0.72rem;
+    left: 1.1rem;
+    width: 0.66rem;
+    height: 0.66rem;
+    border-radius: 50%;
+    background: #ff5f56;
+    box-shadow:
+      1.15rem 0 0 #ffbd2e,
+      2.3rem 0 0 #27c93f;
+  }
+
+  .blog-prose code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--primary);
+    background-color: rgba(0, 210, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+
+  .blog-prose pre code {
+    color: #ededed;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.825rem;
+    line-height: 1.55;
+    display: block;
+  }
 }
