@@ -7,7 +7,7 @@ draft: false
 tags: ["AI", "Agentic-AI", "MDX", "Next.js", "Kilo-Code", "Web-Development"]
 ---
 
-We have crossed a fundamental threshold in how software, websites, and content are built. In 2026, the transition from simple generative AI (chatbots that respond to queries) to fully **agentic AI** (autonomous systems that reason, plan, and take real actions) is complete.
+We have crossed a fundamental threshold in how software, websites, and content are built. In 2026, the transition from simple generative AI (chatbots that respond to queries) to fully **agentic AI** (autonomous systems that reason, plan, and take real actions) looks nothing like it did in 2025. I am amazed at the speed of progress in both language models and tooling.
 
 This very website was scaffolded and deployed in a matter of hours, but as the project grew, so did the need for a robust and developer-centric way to manage content. Enter file-based Markdown and MDX. Instead of logging into a heavy, siloed database or a complex headless CMS, modern developers are managing their content right alongside their codebase.
 

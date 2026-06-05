@@ -1,5 +1,5 @@
 ---
-title: "Agenttisen tekoälyn aikakausi: näin kirjoitan ja julkaisen blogit Markdownilla"
+title: "Agenttivetoisen koodauksen aikakausi: näin kirjoitan ja julkaisen blogit Markdownilla"
 description: "Miten siirtymä generatiivisista chateista autonomisiin agentteihin muuttaa sisällön hallintaa, paikallisia Markdown-tiedostoja ja tuotannon työnkulkuja vuonna 2026."
 publishedAt: "2026-06-05"
 slug: "agenttisen-tekoalyn-aikakausi-blogit-markdownilla"
@@ -7,7 +7,7 @@ draft: false
 tags: ["AI", "Agentic-AI", "MDX", "Next.js", "Kilo-Code", "Web-Development"]
 ---
 
-Olemme ylittäneet merkittävän rajapyykin siinä, miten ohjelmistoja, sivustoja ja sisältöä rakennetaan. Vuonna 2026 siirtymä on valmis. Olemme menneet yksinkertaisesta generatiivisesta tekoälystä kohti aitoa **agenttista tekoälyä**. Generatiivinen tekoäly vastaa kysymyksiin. Agenttinen tekoäly päättelee, suunnittelee ja tekee oikeita toimenpiteitä itsenäisesti.
+Olemme ylittäneet merkittävän rajapyykin siinä, miten ohjelmistoja, sivustoja ja sisältöä rakennetaan. Vuosi 2026 on jo aivan erinäköinen kuin 2025. Kehitys on huimaa niin kielimalleissa kuin työkaluissa. Olemme menneet yksinkertaisesta generatiivisesta tekoälystä kohti aitoa **agenttista tekoälyä**. Generatiivinen tekoäly vastaa kysymyksiin. Agenttinen tekoäly päättelee, suunnittelee ja tekee oikeita toimenpiteitä itsenäisesti.
 
 Tämä sivusto pystytettiin ja julkaistiin muutamassa tunnissa. Kun projekti kasvoi, tarvitsin selkeän ja kehittäjäystävällisen tavan hallita sisältöä. Ratkaisu oli tiedostopohjainen Markdown. Raskaan tietokannan tai monimutkaisen headless-järjestelmän sijaan sisältö elää suoraan koodin vieressä.
 
