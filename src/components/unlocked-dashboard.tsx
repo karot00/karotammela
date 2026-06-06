@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Cloud,
   Code2,
@@ -737,6 +737,18 @@ function BlogView({
   onOpenPost: (slug: string) => void;
 }) {
   const localeCode = locale === "fi" ? "fi-FI" : "en-US";
+  const activeSlug = blog.selectedPost?.slug ?? blog.requestedPost;
+  const readerRef = useRef<HTMLElement | null>(null);
+
+  // On narrow screens the reader renders below the title cards, so the view
+  // does not appear to change when a post is opened. Scroll it into view so
+  // the user sees the selected post they clicked.
+  useEffect(() => {
+    if (!blog.selectedPost) return;
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(max-width: 1023px)").matches) return;
+    readerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [blog.selectedPost?.slug, blog.selectedPost]);
 
   if (blog.total === 0) {
     return (
@@ -757,17 +769,28 @@ function BlogView({
               dateStyle: "medium",
             }).format(new Date(post.publishedAt));
 
+            const isActive = post.slug === activeSlug;
+
             return (
               <article
                 key={post.slug}
-                className="rounded-lg border border-border bg-background p-3"
+                className={`rounded-lg border p-3 transition-colors ${
+                  isActive
+                    ? "border-primary bg-primary/5 ring-1 ring-primary"
+                    : "border-border bg-background hover:bg-muted/40"
+                }`}
               >
                 <button
                   type="button"
                   onClick={() => onOpenPost(post.slug)}
+                  aria-current={isActive ? "true" : undefined}
                   className="w-full text-left"
                 >
-                  <p className="text-sm font-semibold text-foreground">
+                  <p
+                    className={`text-sm font-semibold ${
+                      isActive ? "text-primary" : "text-foreground"
+                    }`}
+                  >
                     {post.title}
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
@@ -812,7 +835,10 @@ function BlogView({
         </div>
       </div>
 
-      <article className="min-w-0 rounded-xl border border-border bg-card p-6">
+      <article
+        ref={readerRef}
+        className="min-w-0 scroll-mt-20 rounded-xl border border-border bg-card p-6"
+      >
         {blog.selectedPost ? (
           <div className="mx-auto w-full min-w-0 max-w-3xl">
             <div className="flex items-center gap-3">
