@@ -3,13 +3,13 @@ title: "Agenttivetoisen koodauksen aikakausi: näin kirjoitan ja julkaisen blogi
 description: "Miten siirtymä generatiivisista chateista autonomisiin agentteihin muuttaa sisällön hallintaa, paikallisia Markdown-tiedostoja ja tuotannon työnkulkuja vuonna 2026."
 publishedAt: "2026-06-05"
 slug: "agenttisen-tekoalyn-aikakausi-blogit-markdownilla"
-draft: false
+draft: true
 tags: ["AI", "Agentic-AI", "MDX", "Next.js", "Kilo-Code", "Web-Development"]
 ---
 
 Olemme ylittäneet merkittävän rajapyykin siinä, miten ohjelmistoja, sivustoja ja sisältöä rakennetaan. Vuosi 2026 on jo aivan erinäköinen kuin 2025. Kehitys on huimaa niin kielimalleissa kuin työkaluissa. Olemme menneet yksinkertaisesta generatiivisesta tekoälystä kohti aitoa **agenttista tekoälyä**. Generatiivinen tekoäly vastaa kysymyksiin. Agenttinen tekoäly päättelee, suunnittelee ja tekee oikeita toimenpiteitä itsenäisesti.
 
-Tämä sivusto pystytettiin ja julkaistiin muutamassa tunnissa. Kun projekti kasvoi, tarvitsin selkeän ja kehittäjäystävällisen tavan hallita sisältöä. Ratkaisu oli tiedostopohjainen Markdown. Raskaan tietokannan tai monimutkaisen headless-järjestelmän sijaan sisältö elää suoraan koodin vieressä.
+Tämä sivusto pystytettiin ja julkaistiin muutamassa tunnissa. Kun projekti kasvoi, tarvitsin selkeän ja kehittäjäystävällisen tavan hallita sisältöä. Ratkaisu oli tiedostopohjainen Markdown. Raskaan tietokannan tai monimutkaisen headless-järjestelmän sijaan sisältö elää koodin rinnalla.
 
 ![Kilo Code suorittaa tehtäviä työtilassa](/media/karo-tammela-agentic-ai.png)
 
@@ -17,7 +17,7 @@ Tämä sivusto pystytettiin ja julkaistiin muutamassa tunnissa. Kun projekti kas
 
 Chatbottien aikaan pyysit tekoälyä kirjoittamaan kappaleen. Sitten kopioit sen, avasit editorin, muotoilit tekstin käsin ja teit commitin. Agenttisella aikakaudella kuvaat vain tavoitteen. Esimerkiksi: *"Kirjoita tekninen blogiteksti agenttisesta pinosta. Muotoile se projektin frontmatter-skeeman mukaan. Tarkista, että koodiesimerkit toimivat. Valmistele teksti commitia varten."*
 
-Agentti ei ainoastaan kirjoita tekstiä. Se tutkii tiedostojärjestelmää. Se lukee validointiskeemat, kuten Zod-tiedostot ja gray-matter-lataajat. Se tarkistaa kuvapolut ja muokkaa työtilaa suoraan.
+Agentti ei ainoastaan kirjoita tekstiä. Se tutkii tiedostojärjestelmää. Se lukee validointiskeemat, kuten Zod-tiedostot ja gray-matter-lataajat. Se tarkistaa kuvapolut ja muokkaa työtilaa suoraan. Tuo yllä oleva promptiesimerkki helpottuu vielä lisää, kun toimit esimerkiksi VS Codessa ja agentti lukee ensiksi AGENTS.md tiedoston, jonka avulla se löytää ohjeistukset blogien kirjoittamiseen. Kun tätä hioo riittävän pitkälle, niin agentti voisi kirjoittaa blogitekstejä itsenäisesti. 
 
 Vertaillaan ominaisuuksia:
 
@@ -25,7 +25,7 @@ Vertaillaan ominaisuuksia:
 | :--- | :--- | :--- |
 | **Vuorovaikutus** | Yksittäiset kysymykset ja vastaukset | Tavoitelähtöinen ja toistuva silmukka |
 | **Tehtävän vaativuus** | Perusluonnokset ja ehdotukset | Monivaiheinen päättely ja työnkulku |
-| **Työkalut** | Ei mitään tai rajatut chat-liitännäiset | Suora tiedostojärjestelmä, paikallinen CLI ja verkkohaku |
+| **Työkalut** | Ei mitään tai rajatut chat-liitännäiset | Suora tiedostojärjestelmä, paikallinen CLI, MCP:t ja verkkohaku |
 | **Suoritus** | Ihmisen pakko kopioida ja liittää | Agentti kirjoittaa, testaa ja varmistaa koodin |
 
 ### Miksi tämä blogi toimii Markdownilla, ei MDX:llä
@@ -131,3 +131,15 @@ Vuonna 2026 sisältö ei ole staattista. Agenttinen tekoäly voi ajaa automaatti
 3. **Varmista rajapintojen ajantasaisuus.** Agentti huomaa juuri päivittyneen kirjaston importin, tarkistaa muutoslokin, korjaa koodilohkon ja kääntää sen paikallisesti.
 
 Tämä työnkulku muuttaa yksinkertaisen blogikansion eläväksi ja itseään korjaavaksi tietopankiksi. Kilo Coden kaltaisten työkalujen avulla kehittäjä voi keskittyä ominaisuuksien rakentamiseen. Autonominen silmukka hoitaa muotoilun, ulkoasun tarkistuksen ja repositorion hallinnan.
+
+## Miksi minä ja tekoälyt rakastan markdownia?
+
+Ei ole kovinkaan montaa kuukautta, kun keskustellessani tekoälyn kanssa eteeni tuli .md -tiedostot. Aloin kiinnostua niistä ja syvensin ymmärrystäni niiden kanssa. Se on itselleni täydellisen ihana formaatti. Se on ymmärrettävä ihmiselle ja tekoälylle samanaikaisesti. 
+
+Tekoälylle markdown on karkkia:
+
+- **Rakenne** on selkeä, ja se sisältää otsikoita, listoja ja koodilohkoja.
+- **Sisältö** on tekstiä, joka on helposti käsiteltävissä. Se ei sisällä mitään ylimääräistä koodia tai painolastia.
+- **Säästö** on yksinkertaisuutta. Koska markdown ei sisällä mitään turhaa, kielimallin on halpaa sitä käsitellä. Jokainen säästetty token tarkoittaa pienempää sähkönkulutusta ja pienempää laskua (jos sillä sinulle on merkitystä).
+
+Jos et ole vielä tutustunut marksdowniin, niin tee se nyt. Tarjoa sitä vaikkapa Microsoft copilot kevytagentillesi, niin hämmästyt miten paljon paremmin se ymmärtää sitä kuin vaikkapa exceliä tai powerpointia. Muista käyttää copilotia myös parsimaan powerpoint markdowniksi. Ai niin ja kun teet lite agentin, joka muuttaa powerpointit ja muut Microsoft Office tiedostot markdowniksi, niin muista käyttää copilota kirjoittamaan prompti, jota voit käyttää agentillasi. Älä herran tähden ala itse kirjoittamaan ainakaan alusta yhtäkään promptia. Teet sen huonommin kuin tekoäly. 

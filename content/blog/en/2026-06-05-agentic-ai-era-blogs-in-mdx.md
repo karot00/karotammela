@@ -3,7 +3,7 @@ title: "The Agentic AI Era: Writing, Running, and Hosting Blogs in MDX"
 description: "How the shift from generative chatbots to autonomous agentic systems is redefining the content management lifecycle, local file-based Markdown, and production workflows in 2026."
 publishedAt: "2026-06-05"
 slug: "agentic-ai-era-blogs-in-mdx"
-draft: false
+draft: true
 tags: ["AI", "Agentic-AI", "MDX", "Next.js", "Kilo-Code", "Web-Development"]
 ---
 
@@ -25,7 +25,7 @@ Let's compare the capabilities:
 | :--- | :--- | :--- |
 | **Interaction Model** | Single-turn prompts & answers | Goal-driven iterative loop |
 | **Task Complexity** | Basic drafting & suggestions | Multi-step reasoning & workflow |
-| **Tool Access** | None or restricted chat plugins | Direct filesystem, local CLI, web searching |
+| **Tool Access** | None or restricted chat plugins | Direct filesystem, local CLI, MCP's, web searching |
 | **Execution** | Human must copy-paste | Agent writes, tests, and verifies code |
 
 ### Why This Blog Runs on Plain Markdown, Not MDX
