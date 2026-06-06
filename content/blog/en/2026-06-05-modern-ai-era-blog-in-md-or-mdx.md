@@ -33,7 +33,7 @@ I still get beautiful typography using a small custom `.blog-prose` stylesheet (
 
 ### Architectural Breakdown: Traditional CMS vs. Static MD/MDX
 
-| Feature | Traditional Database / CMS | My Static Setup |
+| Feature | Traditional Database / CMS | Markdown / MDX |
 | :--- | :--- | :--- |
 | **Hosting Cost** | Server + Database fees ($/mo) | $0 (Static hosting on Vercel/Netlify) |
 | **Maintenance** | Security patches, plugin updates | Zero maintenance (It's just files and Git) |

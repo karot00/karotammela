@@ -7,9 +7,9 @@ draft: false
 tags: ["nextjs", "markdown", "mdx", "seo", "webdev"]
 ---
 
-Agenttisen tekoälyn aikakaudella blogin rakentaminen ei vaadi monimutkaisia julkaisujärjestelmiä, raskaita tietokantoja tai loputonta tietoturvapaikkailua. Tässä oppaassa käyn läpi, miten rakennat erittäin suorituskykyisen, hakukoneoptimoidun ja monikielisen blogin Next.js:llä ja staattisilla tiedostoilla – hyödyntäen oikeita arkkitehtuureja, jotka olen vienyt tuotantoon Levi Finlandille ja omalle portfoliolleni täällä osoitteessa karotammela.fi.
+Agenttisen tekoälyn aikakaudella blogin rakentaminen ei vaadi monimutkaisia julkaisujärjestelmiä, raskaita tietokantoja tai loputonta tietoturvapaikkailua. Tässä oppaassa käyn läpi, miten rakennat erittäin suorituskykyisen, hakukoneoptimoidun ja monikielisen blogin Next.js:llä ja staattisilla tiedostoilla – hyödyntäen oikeita arkkitehtuureja, jotka olen vienyt tuotantoon [levifinland.fi-sivustolla](https://www.levifinland.fi) ja täällä omassa blogissani.
 
-Ja parasta? Tämä arkkitehtuuri käsittelee sisältöä koodina, mikä tekee siitä täydellisen optimoidun niin ihmiskehittäjille kuin tekoälyagenteillekin.
+Ja mikä parasta? Tämä arkkitehtuuri käsittelee sisältöä koodina, mikä tekee siitä täydellisen optimoidun niin ihmiskehittäjille kuin tekoälyagenteillekin.
 
 ### Pragmaattinen arkkitehti: MDX vai puhdas Markdown
 
@@ -17,30 +17,30 @@ Ennen kuin sukellan koodiin, meidän on käsiteltävä tärkeä arkkitehtuurival
 
 Ylläpidän kahta eri blogialustaa tällä staattisella arkkitehtuurilla, ja valitsin kummallekin eri työkalut niiden erityistarpeiden perusteella:
 
-#### Tapaus 1: MDX levifinland.fi:lle
+#### MDX levifinland.fi:ssä
 
-Kaupallisella, runsasliikenteisellä alueportaalilla kuten Levi Finland konversio ja käyttäjän vuorovaikutus ovat keskeisiä mittareita. Blogin täytyy tehdä muutakin kuin näyttää vain tekstiä. Sen pitää konvertoida varauksia golfin green fee -lippuihin ja mökkivuokraukseen.
+Kaupallisella, runsasliikenteisellä sivustolla kuten levifinland.fi, konversio ja käyttäjän vuorovaikutus ovat tärkeitä mittareita. Blogin täytyy tehdä muutakin kuin näyttää vain tekstiä. Sen pitää konvertoida varauksia green fee -pelilippuihin Levi Golfiin sekä mökkivuokraukseen.
 
-Tähän MDX on kätevä valinta. Se mahdollistaa monimutkaisten, interaktiivisten React-komponenttien (kuten dynaamisten varauswidgettien, interaktiivisten reittikarttojen tai tehokkaiden toimintakehotepainikkeiden) upottamisen suoraan tavalliseen toimitukselliseen sisältöön.
+Tähän MDX on kätevä valinta. Se mahdollistaa monimutkaisten, interaktiivisten React-komponenttien (kuten dynaamisten varauswidgettien, interaktiivisten reittikarttojen tai tehokkaiden toimintakehotepainikkeiden) upottamisen suoraan tavalliseen tekstisisältöön.
 
-#### Tapaus 2: Puhdas Markdown (.md) karotammela.fi:lle
+#### Puhdas Markdown (.md) tässä blogissa
 
-Henkilökohtaisella portfoliollani ensisijainen tavoitteeni oli yksinkertaisuus. Halusin keskittyä täysin kirjoittamiseen ilman huolta monimutkaisten React-komponenttien kääntämisestä tai rikkinäisten JSX-tagien debuggaamisesta sisällössäni.
+Henkilökohtaisella portfoliollani ensisijainen tavoitteeni oli yksinkertaisuus. Halusin keskittyä täysin kirjoittamiseen ilman huolta monimutkaisten React-komponenttien kääntämisestä tai rikkinäisten JSX-tagien debuggaamisesta sisällössäni. Haluan tässä kohtaa huomauttaa, että Markdown oli minulle vielä muutama kuukausi sitten täysin vieras. Keskustellen tekoälyn kanssa ja opiskellen sen antamien ideoiden pohjalta, minusta on tullut täysin .md-uskovainen. 
 
-Valitsemalla puhtaan Markdownin (`.md`) pidän kirjoittamiseni täysin irrallaan frontend-frameworkista. Jos päätän viiden vuoden kuluttua siirtää tämän sivuston Next.js:stä Astroon, Hugoon tai itse tehtyyn Rust-generaattoriin, `.md`-tiedostoni jäsentyvät vaivattomasti missä tahansa suoraan ulos laatikosta. [Astro](https://astro.build/) on jälleen yksi uusi teknologia, johon haluan syventyä tarkemmin seuraavina kuukausina.
+Valitsemalla puhtaan Markdownin (`.md`) pidän kirjoittamiseni täysin irrallaan frontend-frameworkista. Jos päätän viiden vuoden kuluttua siirtää tämän sivuston Next.js:stä Astroon, Hugoon tai itse tehtyyn Rust-generaattoriin, `.md`-tiedostoni jäsentyvät vaivattomasti missä tahansa - out-of-the-box. [Astro](https://astro.build/) on jälleen yksi uusi teknologia, johon haluan syventyä tarkemmin seuraavina kuukausina.
 
-Saan silti kauniin typografian pienellä omalla `.blog-prose`-tyylitiedostolla (sen sijaan että ottaisin käyttöön Tailwind Typography -lisäosan), mutta ilman lainkaan selaimen puolen JavaScript-kuormaa ja äärimmäisen helpolla ylläpidettävyydellä.
+Saan silti kauniin typografian pienellä omalla `.blog-prose`-tyylitiedostolla (sen sijaan että ottaisin käyttöön Tailwind Typography -lisäosan), mutta ilman selaimen puolen JavaScript-kuormaa ja äärimmäisen helpolla ylläpidettävyydellä.
 
 ### Arkkitehtuurin vertailu: perinteinen CMS vs. staattinen MD/MDX
 
-| Ominaisuus | Perinteinen tietokanta / CMS | Meidän staattinen ratkaisu |
+| Ominaisuus | Perinteinen tietokanta / CMS | Markdown/MDX |
 | :--- | :--- | :--- |
 | **Hostauskustannus** | Palvelin- + tietokantamaksut ($/kk) | 0 € (Hostaus Vercelissä) |
 | **Ylläpito** | Tietoturvapaikat, liitännäispäivitykset | Ei ylläpitoa (pelkkiä tiedostoja ja Gitiä) |
 | **Tekoälyvalmius** | Monimutkaiset API-skeemat tai UI-klikkailu | Täydellinen. LLM:t lukevat/kirjoittavat Markdownia natiivisti |
 | **Suorituskyky** | Tietokantakyselyt ja palvelinpuolen renderöinti | Salamannopea esirenderöity staattinen HTML |
 
-### Mitä MDX (ja MD) on?
+### Mikä MDX (ja MD) on?
 
 Markdown on kevyt merkintäkieli, jossa on tekstipohjainen muotoilusyntaksi. MDX on tehokas Markdownin laajennos, joka antaa sinun kirjoittaa JSX:ää (React-komponentteja) suoraan sisältösi sisään.
 
@@ -70,9 +70,9 @@ Ylhäällä `---`-merkkien sisään käärittyä metatietoa kutsutaan frontmatte
 
 Rakentaakseni moottorin näiden staattisten tiedostojen ympärille käytän joukkoa eri kirjastoja:
 
-- **Next.js (App Router):** React-framework, joka hoitaa tiedostojärjestelmäpohjaisen reitityksen, kuvaoptimoinnin ja staattisen renderöinnin.
+- **Next.js (App Router):** React-framework, joka hoitaa tiedostopohjaisen reitityksen, kuvaoptimoinnin ja staattisen renderöinnin.
 - **gray-matter:** Jäsennin, joka erottaa frontmatter-metatiedon leipätekstistä.
-- **Zod:** TypeScript-ensimmäinen skeemavalidointikirjasto, jolla taataan frontmatterin eheys käännösaikana.
+- **Zod:** TypeScript-ensimmäinen skeemavalidointikirjasto, jolla taataan frontmatterin eheys käännösaikana. Zod on käytössä lähes kaikissa projekteissani.
 - **next-mdx-remote (tai marked puhtaalle .md:lle):** Kevyt apuväline tiedostojen turvalliseen kääntämiseen HTML-elementeiksi.
 - **next-intl:** Vankka lokalisointireitityskirjasto saumattomaan monikielisyyteen.
 
@@ -295,4 +295,4 @@ Valitsetpa Markdownin tai MDX:n, siirtyminen graafisesta tietokantanäkymästä 
 
 Jos rakennat kaupallista tuotetta tai sivustoa, joka vaatii erittäin mukautettuja interaktiivisia suppiloita, toimintakehotteita tai interaktiivisia kaavioita, MDX on valintasi. Tämä antaa sinulle erinomaisen tasapainon staattisen sisällön ja dynaamisten sovellusten välillä.
 
-Mutta jos rakennat henkilökohtaista sivustoa tai teknistä päiväkirjaa, älä tee liian hienoa. Puhdas Markdown on kehittäjän ja tekoälyn paras ystävä. Se antaa sinulle siirrettävyyttä, absoluuttista yksinkertaisuutta ja häikäisevää suorituskykyä ilman monimutkaisten käännösketjujen painolastia. Tekoäly rakastaa Markdownia ja se ymmärtää sitä paremmin kuin MDX:ää.
+Mutta jos rakennat henkilökohtaista sivustoa tai teknistä päiväkirjaa, älä tee liian hienoa. Puhdas Markdown on kehittäjän ja tekoälyn paras ystävä. Se antaa sinulle helpon siirrettävyyden, yksinkertaisuuden ja erinomaisen suorituskyvyn ilman monimutkaisten käännösketjujen painolastia. Tekoäly rakastaa Markdownia ja se ymmärtää sitä paremmin kuin MDX:ää.
