@@ -750,7 +750,7 @@ function BlogView({
 
   return (
     <section className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
-      <div className="rounded-xl border border-border bg-card p-4">
+      <div className="min-w-0 rounded-xl border border-border bg-card p-4">
         <div className="space-y-3">
           {blog.items.map((post) => {
             const publishedAt = new Intl.DateTimeFormat(localeCode, {
@@ -812,9 +812,9 @@ function BlogView({
         </div>
       </div>
 
-      <article className="rounded-xl border border-border bg-card p-6">
+      <article className="min-w-0 rounded-xl border border-border bg-card p-6">
         {blog.selectedPost ? (
-          <div className="mx-auto w-full max-w-3xl">
+          <div className="mx-auto w-full min-w-0 max-w-3xl">
             <div className="flex items-center gap-3">
               <h2 className="text-xl font-semibold text-foreground">
                 {blog.selectedPost.title}
@@ -1232,7 +1232,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
           ) : null}
         </header>
 
-        <section className="flex-1 px-4 py-6 sm:px-6">{view}</section>
+        <section className="min-w-0 flex-1 px-4 py-6 sm:px-6">{view}</section>
       </div>
     </main>
   );

@@ -171,6 +171,8 @@
     color: var(--foreground);
     font-size: 0.95rem;
     line-height: 1.75;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .blog-prose h1,

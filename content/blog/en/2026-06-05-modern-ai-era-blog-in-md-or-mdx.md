@@ -13,7 +13,7 @@ Best of all? This architecture treats content as code, making it perfectly optim
 
 ### The Pragmatic Architect: MDX vs. Pure Markdown Simplicity
 
-Before we dive into the code, we must address an important architectural choice: Do you actually need MDX, or is pure Markdown (`.md`) the better choice?
+Before I dive into the code, I must address an important architectural choice: Do you actually need MDX, or is pure Markdown (`.md`) the better choice?
 
 I maintain two different blogging platforms using this static architecture, and I chose different tools for each based on their specific requirements:
 
@@ -33,7 +33,7 @@ I still get beautiful typography using a small custom `.blog-prose` stylesheet (
 
 ### Architectural Breakdown: Traditional CMS vs. Static MD/MDX
 
-| Feature | Traditional Database / CMS | Our Static Setup |
+| Feature | Traditional Database / CMS | My Static Setup |
 | :--- | :--- | :--- |
 | **Hosting Cost** | Server + Database fees ($/mo) | $0 (Static hosting on Vercel/Netlify) |
 | **Maintenance** | Security patches, plugin updates | Zero maintenance (It's just files and Git) |
@@ -64,11 +64,11 @@ It's finally time to hit the greens. [Book your tee time now](https://greenfee.l
 <CTAButton href="https://greenfee.levifinland.fi">Book Green Fees</CTAButton>
 ```
 
-The metadata at the top wrapped in `---` is called frontmatter. If we are using pure Markdown (`.md`) on a site like karotammela.fi, we write the exact same frontmatter and Markdown, but omit custom React elements like `<CTAButton />` to ensure maximum simplicity.
+The metadata at the top wrapped in `---` is called frontmatter. When I use pure Markdown (`.md`) on a site like karotammela.fi, I write the exact same frontmatter and Markdown, but omit custom React elements like `<CTAButton />` to keep things simple.
 
 ### The Tech Stack
 
-To build a production-grade engine around these static files, we use a concise set of libraries:
+To build a production-grade engine around these static files, I use a concise set of libraries:
 
 - **Next.js (App Router):** The React framework handling file-system routing, image optimization, and static rendering.
 - **gray-matter:** A parser to separate frontmatter metadata from the body text.
@@ -80,7 +80,7 @@ To build a production-grade engine around these static files, we use a concise s
 
 #### 1. The File Structure
 
-We separate our raw content files from the Next.js routing logic. Content lives in a dedicated root directory, organized by slug and locale:
+I separate my raw content files from the Next.js routing logic. Content lives in a dedicated root directory, organized by slug and locale:
 
 ```text
 content/blog/
@@ -91,13 +91,13 @@ content/blog/
     fi.md
 ```
 
-The actual dynamic routing happens inside the Next.js App Router. We create a dynamic folder structure at `app/[locale]/blog/[slug]/page.tsx`. This file acts as the compile-time shell that fetches, validates, and renders the files based on the URL parameters.
+The actual dynamic routing happens inside the Next.js App Router. I create a dynamic folder structure at `app/[locale]/blog/[slug]/page.tsx`. This file acts as the compile-time shell that fetches, validates, and renders the files based on the URL parameters.
 
 #### 2. Reading and Validating Content with Zod
 
-To ensure that human authors or AI writers don't break the production build by forgetting a required field (like a missing cover image or publication date), we enforce a strict schema runtime check using Zod.
+To ensure that human authors or AI writers don't break the production build by forgetting a required field (like a missing cover image or publication date), I enforce a strict schema runtime check using Zod.
 
-Here is how our data-fetching utility (`src/lib/blog.ts`) handles reading and validation:
+Here is how my data-fetching utility (`src/lib/blog.ts`) handles reading and validation:
 
 ```typescript
 import fs from 'fs';
@@ -116,7 +116,7 @@ const BlogFrontmatterSchema = z.object({
 });
 
 export function getPost(slug: string, locale: string) {
-  // We check for both .md and .mdx extensions to support hybrid setups
+  // Check for both .md and .mdx extensions to support hybrid setups
   const baseDir = `content/blog/${slug}`;
   const mdxPath = `${baseDir}/${locale}.mdx`;
   const mdPath = `${baseDir}/${locale}.md`;
@@ -130,7 +130,7 @@ export function getPost(slug: string, locale: string) {
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  // Safely parse and validate frontmatter against our schema
+  // Safely parse and validate frontmatter against the schema
   const validatedFrontmatter = BlogFrontmatterSchema.parse(data);
 
   return {
@@ -143,9 +143,9 @@ export function getPost(slug: string, locale: string) {
 
 #### 3. Static Site Generation (SSG)
 
-To get perfect performance scores, we want Next.js to pre-render every single blog post combination into raw HTML at build time. We achieve this using `generateStaticParams`.
+To get perfect performance scores, I want Next.js to pre-render every single blog post combination into raw HTML at build time. I achieve this using `generateStaticParams`.
 
-Instead of hardcoding supported languages, we import our active locales directly from our `next-intl` routing configuration to maintain a single source of truth:
+Instead of hardcoding supported languages, I import my active locales directly from my `next-intl` routing configuration to maintain a single source of truth:
 
 ```typescript
 import { routing } from '@/i18n/routing';
@@ -170,7 +170,7 @@ In the evolving landscape of AI search engines (like Perplexity and Google's AI 
 
 #### Structured Data (JSON-LD)
 
-To make it incredibly straightforward for web crawlers and LLM parsers to index our content accurately, we inject a semantic `BlogPosting` schema directly into the document head.
+To make it incredibly straightforward for web crawlers and LLM parsers to index my content accurately, I inject a semantic `BlogPosting` schema directly into the document head.
 
 ```tsx
 export default async function BlogPostPage({ params }: Props) {
@@ -207,7 +207,7 @@ export default async function BlogPostPage({ params }: Props) {
 
 #### Hreflang and Internationalization
 
-Search engine crawlers penalize poorly mapped localized content. By using Next.js Metadata generation, we declare explicit language alternates, ensuring the correct version is served based on regional intent.
+Search engine crawlers penalize poorly mapped localized content. By using Next.js Metadata generation, I declare explicit language alternates, ensuring the correct version is served based on regional intent.
 
 ```typescript
 export async function generateMetadata({ params }: Props) {
@@ -227,13 +227,13 @@ export async function generateMetadata({ params }: Props) {
 }
 ```
 
-### How We Render Content: MDX vs. Pure MD
+### How I Render Content: MDX vs. Pure MD
 
-Depending on whether the file is an `.md` or `.mdx` file, we compile the content differently:
+Depending on whether the file is an `.md` or `.mdx` file, I compile the content differently:
 
 #### Under the Hood of MDX (used for Levi Finland)
 
-For MDX files, we pass a collection of custom React components into our remote renderer shell so authors can write `<CTAButton>` directly in the text editor:
+For MDX files, I pass a collection of custom React components into my remote renderer shell so authors can write `<CTAButton>` directly in the text editor:
 
 ```tsx
 import Link from 'next/link';
@@ -257,7 +257,7 @@ export default function PostBody({ content }: { content: string }) {
 
 #### Under the Hood of Pure MD (used for karotammela.fi)
 
-For pure Markdown files, we don't need any complex dynamic hydration shells or React context. We parse the file with a simple markdown parser (`marked`), then run the output through `sanitize-html` with an explicit allowlist before injecting it inside our custom `.blog-prose` styles. Even though the content is author-trusted, sanitizing is the single source of truth that keeps the markup safe and predictable:
+For pure Markdown files, I don't need any complex dynamic hydration shells or React context. I parse the file with a simple markdown parser (`marked`), then run the output through `sanitize-html` with an explicit allowlist before injecting it inside my custom `.blog-prose` styles. Even though the content is author-trusted, sanitizing is the single source of truth that keeps the markup safe and predictable:
 
 ```tsx
 import { marked } from 'marked';

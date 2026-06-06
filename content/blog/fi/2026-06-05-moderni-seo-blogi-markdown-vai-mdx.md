@@ -13,7 +13,7 @@ Ja parasta? Tämä arkkitehtuuri käsittelee sisältöä koodina, mikä tekee si
 
 ### Pragmaattinen arkkitehti: MDX vai puhdas Markdown
 
-Ennen kuin sukellamme koodiin, meidän on käsiteltävä tärkeä arkkitehtuurivalinta: tarvitsetko todella MDX:ää, vai onko puhdas Markdown (`.md`) parempi valinta?
+Ennen kuin sukellan koodiin, meidän on käsiteltävä tärkeä arkkitehtuurivalinta: tarvitsetko todella MDX:ää, vai onko puhdas Markdown (`.md`) parempi valinta?
 
 Ylläpidän kahta eri blogialustaa tällä staattisella arkkitehtuurilla, ja valitsin kummallekin eri työkalut niiden erityistarpeiden perusteella:
 
@@ -27,7 +27,7 @@ Tähän MDX on kätevä valinta. Se mahdollistaa monimutkaisten, interaktiiviste
 
 Henkilökohtaisella portfoliollani ensisijainen tavoitteeni oli yksinkertaisuus. Halusin keskittyä täysin kirjoittamiseen ilman huolta monimutkaisten React-komponenttien kääntämisestä tai rikkinäisten JSX-tagien debuggaamisesta sisällössäni.
 
-Valitsemalla puhtaan Markdownin (`.md`) pidän kirjoittamiseni täysin irrallaan frontend-frameworkista. Jos päätän viiden vuoden kuluttua siirtää tämän sivuston Next.js:stä Astroon, Hugoon tai itse tehtyyn Rust-generaattoriin, `.md`-tiedostoni jäsentyvät vaivattomasti missä tahansa suoraan ulos laatikosta. [Astro](https://astro.build/) on jälleen yksi uusi teknologia, johon haluan syventyä tarkemmin seuraavina kuukausina. [/As]
+Valitsemalla puhtaan Markdownin (`.md`) pidän kirjoittamiseni täysin irrallaan frontend-frameworkista. Jos päätän viiden vuoden kuluttua siirtää tämän sivuston Next.js:stä Astroon, Hugoon tai itse tehtyyn Rust-generaattoriin, `.md`-tiedostoni jäsentyvät vaivattomasti missä tahansa suoraan ulos laatikosta. [Astro](https://astro.build/) on jälleen yksi uusi teknologia, johon haluan syventyä tarkemmin seuraavina kuukausina.
 
 Saan silti kauniin typografian pienellä omalla `.blog-prose`-tyylitiedostolla (sen sijaan että ottaisin käyttöön Tailwind Typography -lisäosan), mutta ilman lainkaan selaimen puolen JavaScript-kuormaa ja äärimmäisen helpolla ylläpidettävyydellä.
 
@@ -64,11 +64,11 @@ Vihdoin on aika suunnata viheriölle. [Varaa peliaikasi nyt](https://greenfee.le
 <CTAButton href="https://greenfee.levifinland.fi">Varaa green fee</CTAButton>
 ```
 
-Ylhäällä `---`-merkkien sisään käärittyä metatietoa kutsutaan frontmatteriksi. Jos käytämme puhdasta Markdownia (`.md`) sivustolla kuten karotammela.fi, kirjoitamme täsmälleen saman frontmatterin ja Markdownin, mutta jätämme pois mukautetut React-elementit kuten `<CTAButton />` taataksemme maksimaalisen yksinkertaisuuden.
+Ylhäällä `---`-merkkien sisään käärittyä metatietoa kutsutaan frontmatteriksi. Jos käytän puhdasta Markdownia (`.md`) sivustolla kuten karotammela.fi, kirjoitan täsmälleen saman frontmatterin ja Markdownin, mutta jätän pois mukautetut React-elementit kuten `<CTAButton />` pitääkseni homman yksinkertaisena.
 
 ### Teknologiapino
 
-Rakentaaksemme tuotantotason moottorin näiden staattisten tiedostojen ympärille käytämme tiivistä joukkoa kirjastoja:
+Rakentaakseni moottorin näiden staattisten tiedostojen ympärille käytän joukkoa eri kirjastoja:
 
 - **Next.js (App Router):** React-framework, joka hoitaa tiedostojärjestelmäpohjaisen reitityksen, kuvaoptimoinnin ja staattisen renderöinnin.
 - **gray-matter:** Jäsennin, joka erottaa frontmatter-metatiedon leipätekstistä.
@@ -80,7 +80,7 @@ Rakentaaksemme tuotantotason moottorin näiden staattisten tiedostojen ympärill
 
 #### 1. Tiedostorakenne
 
-Erotamme raa'at sisältötiedostot Next.js:n reitityslogiikasta. Sisältö asuu omistetussa juurihakemistossa, järjestettynä slugin ja kielen mukaan:
+Erotan raa'at sisältötiedostot Next.js:n reitityslogiikasta. Sisältö asuu juurihakemistossa, järjestettynä slugin ja kielen mukaan:
 
 ```text
 content/blog/
@@ -91,13 +91,13 @@ content/blog/
     fi.md
 ```
 
-Varsinainen dynaaminen reititys tapahtuu Next.js App Routerin sisällä. Luomme dynaamisen kansiorakenteen polkuun `app/[locale]/blog/[slug]/page.tsx`. Tämä tiedosto toimii käännösaikaisena kuorena, joka hakee, validoi ja renderöi tiedostot URL-parametrien perusteella.
+Varsinainen dynaaminen reititys tapahtuu Next.js App Routerin sisällä. Luon dynaamisen kansiorakenteen polkuun `app/[locale]/blog/[slug]/page.tsx`. Tämä tiedosto toimii käännösaikaisena kuorena, joka hakee, validoi ja renderöi tiedostot URL-parametrien perusteella.
 
 #### 2. Sisällön lukeminen ja validointi Zodilla
 
-Varmistaaksemme, etteivät ihmiskirjoittajat tai tekoälykirjoittajat riko tuotantokäännöstä unohtamalla pakollisen kentän (kuten puuttuvan kansikuvan tai julkaisupäivän), pakotamme tiukan skeematarkistuksen ajonaikaisesti Zodilla.
+Varmistaakseni etteivät ihmiskirjoittajat tai tekoälykirjoittajat riko tuotantokäännöstä unohtamalla pakollisen kentän (kuten puuttuvan kansikuvan tai julkaisupäivän), pakotan tiukan skeematarkistuksen ajonaikaisesti Zodilla.
 
-Näin datanhakuapuvälineemme (`src/lib/blog.ts`) hoitaa lukemisen ja validoinnin:
+Näin datanhakuapuväline (`src/lib/blog.ts`) hoitaa lukemisen ja validoinnin:
 
 ```typescript
 import fs from 'fs';
@@ -116,7 +116,7 @@ const BlogFrontmatterSchema = z.object({
 });
 
 export function getPost(slug: string, locale: string) {
-  // Tarkistamme sekä .md- että .mdx-päätteet tukeaksemme hybridiratkaisuja
+  // Tarkistetaan sekä .md- että .mdx-päätteet
   const baseDir = `content/blog/${slug}`;
   const mdxPath = `${baseDir}/${locale}.mdx`;
   const mdPath = `${baseDir}/${locale}.md`;
@@ -130,7 +130,7 @@ export function getPost(slug: string, locale: string) {
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  // Jäsennetään ja validoidaan frontmatter turvallisesti skeemaamme vasten
+  // Jäsennetään ja validoidaan frontmatter turvallisesti skeemaa vasten
   const validatedFrontmatter = BlogFrontmatterSchema.parse(data);
 
   return {
@@ -143,9 +143,9 @@ export function getPost(slug: string, locale: string) {
 
 #### 3. Staattinen sivugenerointi (SSG)
 
-Saadaksemme täydelliset suorituskykypisteet haluamme Next.js:n esirenderöivän jokaisen blogipostausyhdistelmän raa'aksi HTML:ksi käännösaikana. Saavutamme tämän käyttämällä `generateStaticParams`-funktiota.
+Saadakseni täydelliset suorituskykypisteet haluan Next.js:n esirenderöivän jokaisen blogipostausyhdistelmän raa'aksi HTML:ksi käännösaikana. Saavutan tämän käyttämällä `generateStaticParams`-funktiota.
 
-Sen sijaan että kovakoodaisimme tuetut kielet, tuomme aktiiviset kielet suoraan `next-intl`-reititysasetuksistamme yhden totuuden lähteen ylläpitämiseksi:
+Sen sijaan että kovakoodaisin tuetut kielet, tuon aktiiviset kielet suoraan `next-intl`-reititysasetuksista yhden totuuden lähteen ylläpitämiseksi:
 
 ```typescript
 import { routing } from '@/i18n/routing';
@@ -162,15 +162,15 @@ export async function generateStaticParams() {
 }
 ```
 
-Kun vierailija osuu blogireitille, edge-verkko tarjoilee kevyen, täysin valmiin HTML-tiedoston välittömästi. Ei tietokantahakuja, ei kylmäkäynnistyksiä.
+Kun vierailija tulee blogiin, edge-verkko tarjoilee kevyen, täysin valmiin HTML-tiedoston välittömästi. Ei tietokantahakuja, ei kylmäkäynnistyksiä.
 
 ### SEO ja GEO (generatiivisten hakukoneiden optimointi)
 
-Tekoälyhakukoneiden (kuten Perplexityn ja Googlen AI Overviews'n) kehittyvässä maisemassa selkeä semantiikka ja eksplisiittinen datan kartoitus ovat elintärkeitä.
+Tekoälyhakukoneille (kuten Perplexityn ja Googlen AI Overviews'n) selkeä semantiikka ja eksplisiittinen datan kartoitus ovat elintärkeitä.
 
 #### Strukturoitu data (JSON-LD)
 
-Tehdäksemme verkkohakuroboteille ja LLM-jäsentimille uskomattoman helpoksi indeksoida sisältömme tarkasti, injektoimme semanttisen `BlogPosting`-skeeman suoraan dokumentin headiin.
+Tehdäkseni indeksoinnin helpoksi verkkohakuroboteille ja tekoälylle, injektoin semanttisen `BlogPosting`-skeeman suoraan dokumentin headiin.
 
 ```tsx
 export default async function BlogPostPage({ params }: Props) {
@@ -207,7 +207,7 @@ export default async function BlogPostPage({ params }: Props) {
 
 #### Hreflang ja kansainvälistäminen
 
-Hakukonerobotit rankaisevat huonosti kartoitetusta lokalisoidusta sisällöstä. Käyttämällä Next.js:n metatietogenerointia ilmoitamme eksplisiittiset kielivaihtoehdot ja varmistamme, että oikea versio tarjoillaan alueellisen tarkoituksen perusteella.
+Hakukonerobotit rankaisevat huonosti kartoitetusta lokalisoidusta sisällöstä. Käyttämällä Next.js:n metatietogenerointia ilmoitan eksplisiittiset kielivaihtoehdot ja varmistan, että oikea versio tarjoillaan käyttäjälle.
 
 ```typescript
 export async function generateMetadata({ params }: Props) {
@@ -227,13 +227,13 @@ export async function generateMetadata({ params }: Props) {
 }
 ```
 
-### Miten renderöimme sisällön: MDX vs. puhdas MD
+### Miten renderöin sisällön: MDX vs. puhdas MD
 
-Riippuen siitä, onko tiedosto `.md`- vai `.mdx`-tiedosto, käännämme sisällön eri tavalla:
+Riippuen siitä, onko tiedosto `.md`- vai `.mdx`-tiedosto, käännän sisällön eri tavalla:
 
 #### MDX:n konepellin alla (käytössä Levi Finlandilla)
 
-MDX-tiedostoissa välitämme kokoelman mukautettuja React-komponentteja etärenderöijämme kuorelle, jotta kirjoittajat voivat kirjoittaa `<CTAButton>` suoraan tekstieditoriin:
+MDX on säädetty tunnistamaan erityiset koodinpätkät, joten kirjoittajat voivat lisätä vaikkapa <CTAButton>-painikkeen suoraan tekstin joukkoon.":
 
 ```tsx
 import Link from 'next/link';
@@ -293,6 +293,6 @@ Valitsetpa Markdownin tai MDX:n, siirtyminen graafisesta tietokantanäkymästä 
 
 ### Yhteenveto: valitse se, mikä sopii tavoitteeseesi
 
-Jos rakennat kaupallista tuotetta tai sivustoa, joka vaatii erittäin mukautettuja interaktiivisia suppiloita, toimintakehotteita tai interaktiivisia kaavioita sisällön sisään, MDX on valintasi. Tämä antaa sinulle erinomaisen tasapainon staattisen sisällön ja dynaamisten sovellusten välillä.
+Jos rakennat kaupallista tuotetta tai sivustoa, joka vaatii erittäin mukautettuja interaktiivisia suppiloita, toimintakehotteita tai interaktiivisia kaavioita, MDX on valintasi. Tämä antaa sinulle erinomaisen tasapainon staattisen sisällön ja dynaamisten sovellusten välillä.
 
 Mutta jos rakennat henkilökohtaista sivustoa tai teknistä päiväkirjaa, älä tee liian hienoa. Puhdas Markdown on kehittäjän ja tekoälyn paras ystävä. Se antaa sinulle siirrettävyyttä, absoluuttista yksinkertaisuutta ja häikäisevää suorituskykyä ilman monimutkaisten käännösketjujen painolastia. Tekoäly rakastaa Markdownia ja se ymmärtää sitä paremmin kuin MDX:ää.
