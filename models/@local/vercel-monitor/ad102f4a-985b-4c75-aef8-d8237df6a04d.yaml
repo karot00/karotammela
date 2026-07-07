@@ -7,7 +7,7 @@ globalArguments:
   projectId: "karotammela"
   resendApiKey: '${{ vault.get("vercel-monitor-secrets", "RESEND_API_KEY") }}'
   notificationEmail: "karo@staffbite.fi"
-  # teamId: "your-vercel-team-id-or-slug" # uncomment and set if using a team account
+  teamId: "team_O7tfOCeYQzQTD4Sex5GNlyYA"
 methods:
   check:
     arguments: {}
