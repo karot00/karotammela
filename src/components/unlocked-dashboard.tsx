@@ -101,6 +101,9 @@ type DashboardCopy = {
   toolkitTitle: string;
   codingModelsLabel: string;
   chatbotModelLabel: string;
+  toolkitTitleH2: string;
+  codingModelsLabelH2: string;
+  chatbotModelLabelH2: string;
   analyticsTitle: string;
   totalAttemptsLabel: string;
   unlockedCountLabel: string;
@@ -334,6 +337,20 @@ function OverviewView({
                 </span>
                 <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
                   {copy.chatbotModelLabel}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                {copy.toolkitTitleH2}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
+                  {copy.codingModelsLabelH2}
+                </span>
+                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
+                  {copy.chatbotModelLabelH2}
                 </span>
               </div>
             </div>
