@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { CookieConsentPreferences } from "@/components/cookie-consent-preferences";
+import { TechComparison } from "@/components/tech-comparison";
 import { routing } from "@/i18n/routing";
 
 type LocaleLayoutProps = {
@@ -31,6 +32,7 @@ export default async function LocaleLayout({
         {children}
         <CookieConsentPreferences />
         <CookieConsentBanner />
+        <TechComparison />
       </div>
     </NextIntlClientProvider>
   );

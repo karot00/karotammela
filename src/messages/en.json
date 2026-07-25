@@ -191,6 +191,25 @@
     "en": "English",
     "fi": "Suomi"
   },
+  "comparison": {
+    "switcher": {
+      "title": "Tech switcher",
+      "description": "Compare this Next.js build against the self-hosted Go + HTMX version.",
+      "go": "Go",
+      "next": "Next.js",
+      "ariaLabel": "Tech switcher (current stack: {stack})",
+      "toggleLabel": "Open tech switcher"
+    },
+    "perf": {
+      "title": "Live performance",
+      "caption": "Median TTFB, measured from your browser.",
+      "go": "Go (HTMX)",
+      "next": "Next.js",
+      "loading": "…",
+      "unavailable": "n/a",
+      "unit": "ms"
+    }
+  },
   "privacyPolicy": {
     "title": "Privacy Policy",
     "introTitle": "1. Introduction",

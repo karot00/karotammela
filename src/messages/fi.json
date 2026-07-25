@@ -191,6 +191,25 @@
     "en": "English",
     "fi": "Suomi"
   },
+  "comparison": {
+    "switcher": {
+      "title": "Teknologiavalitsin",
+      "description": "Vertaa tätä Next.js-versiota itse isännöityyn Go + HTMX -versioon.",
+      "go": "Go",
+      "next": "Next.js",
+      "ariaLabel": "Teknologiavalitsin (nykyinen: {stack})",
+      "toggleLabel": "Avaa teknologiavalitsin"
+    },
+    "perf": {
+      "title": "Suorituskyky",
+      "caption": "TTFB:n mediaani, mitattuna selaimestasi.",
+      "go": "Go (HTMX)",
+      "next": "Next.js",
+      "loading": "…",
+      "unavailable": "n/a",
+      "unit": "ms"
+    }
+  },
   "privacyPolicy": {
     "title": "Tietosuojaseloste",
     "introTitle": "1. Johdanto",
