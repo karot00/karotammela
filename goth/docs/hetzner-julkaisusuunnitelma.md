@@ -11,16 +11,20 @@ Merkinnät: **PÄÄTÄ** = sinun tehtävä valinta, **RAPORTOI** = kerro minulle
 tulos/arvo seuraavaa vaihetta varten (älä koskaan liitä salaisuuksia itse
 tekstiin — riittää "kyllä/täytetty").
 
-**Kokonaistilanne (2026-07-25):** Vaiheet 1–8 valmiit ja merkitty ✅ alla.
+**Kokonaistilanne (2026-07-25):** Vaiheet 1–9 valmiit ja merkitty ✅ alla.
 Palvelin `ubuntu-4gb-hel1-1` (`135.181.27.78`, hel1/Helsinki) pystyssä,
 SSH-avainkirjautuminen ja palomuuri kunnossa, Caddy asennettu ja validoitu,
 salaisuudet täytetty (täsmäävät Vercelin tuotantoarvojen kanssa), Cloudflare
-R2 -varmuuskopiokanava toimii testattuna (rclone + cron 04:00 UTC), ja
+R2 -varmuuskopiokanava toimii testattuna ja round-trip-varmistettuna
+(rclone + cron 04:00 UTC, sha256-tarkistus paikallinen vs. R2 täsmää), ja
 **karotammela.fi on julkinen Go+HTMX-tuotanto CX23:llä** (harmaa pilvi →
-`135.181.27.78`, tuotanto-Let's Encrypt -TLS). **Vaihe 9:n koodiosuus valmis**
-(Next.js + Go `/api/ping` + CORS, cross-origin Tech Switcher, client-side
-perf-widget); jäljellä vain Vercelin subdomain-julkaisu ja Cloudflare-CNAME
-(manuaaliset, ks. Vaihe 9).
+`135.181.27.78`, tuotanto-Let's Encrypt -TLS). **Vaihe 9 on kokonaan valmis**:
+Next.js-vertailu pyörii tuotannossa osoitteessa `next.karotammela.fi`
+(Vercel-subdomain + Cloudflare-CNAME + `/api/ping` + CORS tehty ja
+vahvistettu), ja Tech Switcherin cross-origin-bugi (ks. alla) on korjattu ja
+varmistettu tuotannossa molempiin suuntiin. Manuaalinen deploy (`deploy.sh`)
+toimii; automaattinen CI/CD on suunniteltu
+(`goth/.kilo/plans/cicd-autodeploy-suunnitelma.md`) mutta ei toteutettu.
 
 ---
 
@@ -340,9 +344,6 @@ Toteutettavat kohdat (Next.js-repo, `src/`):
   `NEXT_PING_URL` (server-side probe) jää väliaikaiseksi tueksi, kunnes widget
   on migroitu.
 
-**RAPORTOI (kun päätät tehdä tämän):** haluatko että toteutan nämä Next.js- ja
-Go/CORS-muutokset, ja millä aikataululla (esim. heti cutoverin jälkeen).
-
 **Tila (koodi valmis 2026-07-25):** ✅ Next.js `GET /api/ping`
 (`src/app/api/ping/route.ts`) palauttaa `{"status":"ok","stack":"next"}`,
 `Cache-Control: no-store` ja CORS-otsakkeet molemmille vertailuorigineille.
@@ -358,11 +359,31 @@ konfiguroitavissa: Go `NEXT_URL`/`APP_URL`, Next.js
 `NEXT_PUBLIC_GO_ORIGIN`/`NEXT_PUBLIC_NEXT_ORIGIN` (oletukset apex +
 `next.karotammela.fi`).
 
-**Jäljellä (manuaalinen, ei koodia):**
-1. Cloudflare: lisää CNAME `next.karotammela.fi` → `cname.vercel-dns.com`.
-2. Vercel: lisää `next.karotammela.fi` custom domainiksi (Vercel myöntää TLS:n).
-3. Deployaa Next.js-buildi Verceliin ja varmista, että
-   `https://next.karotammela.fi/api/ping` vastaa julkisesti.
+**Manuaaliset askeleet — valmis:**
+1. ✅ Cloudflare: CNAME `next.karotammela.fi` → `cname.vercel-dns.com` lisätty.
+2. ✅ Vercel: `next.karotammela.fi` custom domainiksi, Vercel myöntänyt TLS:n.
+3. ✅ Next.js-buildi deployattu Verceliin, `https://next.karotammela.fi/api/ping`
+   vastaa julkisesti.
+
+**Tunnettu bugi löydetty ja korjattu tuotannossa (2026-07-25):** Tech Switcher
+-kupla oli klikkaamaton kaikilla uusilla kävijöillä (consent-banneri peitti sen
+z-index-järjestyksen takia footer.html:ssä) ja Alpinen `@click`-handlerin
+`$el` osoitti klikattuun nappiin eikä komponentin juureen (`nextUrl`
+`undefined` → reload samalle originille). Molemmat korjattu
+(`footer.html`, `dashboard.html`), varmistettu headless-Chromella paikallisesti
+ja tuotannossa: banneri ei enää peitä kuplaa, "Next.js"-valinta laskeutuu
+oikein `https://next.karotammela.fi{path}`-osoitteeseen polku säilyttäen,
+nolla selainvirhettä. Deployattu (`goth-20260725-1505-linux-amd64`,
+`deploy.sh` puhtaasti, health check OK).
+
+**Tila:** ✅ **Vaihe 9 kokonaan valmis** — koodi, manuaaliset Vercel/Cloudflare-
+askeleet ja tuotantoverifiointi (molemmat suunnat, kummatkin locale-poluat)
+kaikki tehty ja vahvistettu 2026-07-25.
+
+**Jatko (ei osa tätä vaihetta):** deploy-prosessin automatisointi on
+suunniteltu erikseen — ks. `goth/.kilo/plans/cicd-autodeploy-suunnitelma.md`
+(avainpari → GitHub-secretit → workflow-YAML → ensimmäinen automaattideploy +
+rollback-testi). Toteutus aloittamatta.
 
 ---
 
@@ -386,4 +407,4 @@ konfiguroitavissa: Go `NEXT_URL`/`APP_URL`, Next.js
 6. Restore-drillin tulos (Vaihe 6)
 7. Timerien tila + lokit (Vaihe 7)
 8. DNS-cutoverin ajankohta, proxy-tila "DNS only" -vahvistus, tulokset (Vaihe 8)
-9. Next.js-tuotantoajon suunnitelma, jos/kun etenet siihen (Vaihe 9)
+9. ~~Next.js-tuotantoajon suunnitelma~~ — ✅ tehty, Vaihe 9 valmis (2026-07-25)

@@ -25,9 +25,9 @@
   </div>
 </footer>
 
-{{template "techswitcher" .}}
-
 {{template "consent" .}}
+
+{{template "techswitcher" .}}
 
 <script src="/static/htmx.min.js" defer></script>
 <script src="/static/alpine.min.js" defer></script>
@@ -111,9 +111,7 @@
 
 {{define "techswitcher"}}
 <div
-  x-data="techSwitcher()"
-  data-go-url="{{.GoURL}}"
-  data-next-url="{{.NextURL}}"
+  x-data="techSwitcher('{{.GoURL}}', '{{.NextURL}}')"
   class="fixed bottom-4 right-4 z-50"
 >
   <div x-show="open" @click.away="open = false" x-cloak class="mb-2 w-64 rounded-2xl border border-border/70 bg-popover/95 p-4 shadow-2xl backdrop-blur-md">
@@ -140,16 +138,19 @@
   </button>
 </div>
 <script>
-  function techSwitcher() {
+  // Origins are interpolated into x-data at render time. Reading
+  // $el.dataset at click time is unreliable: Alpine resolves $el to the
+  // clicked button (which has no data attributes), not the component root.
+  function techSwitcher(goURL, nextURL) {
     return {
       open: false,
       // This build is always the Go apex; the current stack is 'go'.
       stack: 'go',
+      goOrigin: (goURL || '').replace(/\/$/, ''),
+      nextOrigin: (nextURL || '').replace(/\/$/, ''),
       // Cross-origin redirect preserving path + query + hash (no cookie).
       go(target) {
-        var goURL = (this.$el.dataset.goUrl || '').replace(/\/$/, '');
-        var nextURL = (this.$el.dataset.nextUrl || '').replace(/\/$/, '');
-        var base = target === 'next' ? nextURL : goURL;
+        var base = target === 'next' ? this.nextOrigin : this.goOrigin;
         var rest = location.pathname + location.search + location.hash;
         var dest = base + rest;
         if (dest === location.href) { this.open = false; return; }
