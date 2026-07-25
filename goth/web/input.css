@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #101114;
+  --card-foreground: #ededed;
+  --popover: #121318;
+  --popover-foreground: #ededed;
+  --primary: #00d2ff;
+  --primary-foreground: #06131a;
+  --secondary: #171a1f;
+  --secondary-foreground: #d4d8df;
+  --muted: #14161b;
+  --muted-foreground: #9da2ad;
+  --accent: #ff8c00;
+  --accent-foreground: #231200;
+  --destructive: #dc2626;
+  --border: #272a31;
+  --input: #242832;
+  --ring: #00d2ff;
+  --sidebar: #0e1014;
+  --sidebar-foreground: #e8eaf0;
+  --sidebar-primary: #00d2ff;
+  --sidebar-primary-foreground: #06131a;
+  --sidebar-accent: #1a1f29;
+  --sidebar-accent-foreground: #dce0e9;
+  --sidebar-border: #2b313d;
+  --sidebar-ring: #00d2ff;
+  --radius: 0.625rem;
+}
+
+:root:not(.dark) {
+  --background: #f6f7fb;
+  --foreground: #11131a;
+  --card: #ffffff;
+  --card-foreground: #11131a;
+  --popover: #ffffff;
+  --popover-foreground: #11131a;
+  --primary: #0f5cc0;
+  --primary-foreground: #f6f7fb;
+  --secondary: #eef1f7;
+  --secondary-foreground: #1f2937;
+  --muted: #f2f4f8;
+  --muted-foreground: #5b6472;
+  --accent: #dbeafe;
+  --accent-foreground: #0f172a;
+  --destructive: #dc2626;
+  --border: #d7dce6;
+  --input: #d7dce6;
+  --ring: #0f5cc0;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #11131a;
+  --sidebar-primary: #0f5cc0;
+  --sidebar-primary-foreground: #f6f7fb;
+  --sidebar-accent: #edf2ff;
+  --sidebar-accent-foreground: #1e293b;
+  --sidebar-border: #d7dce6;
+  --sidebar-ring: #0f5cc0;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at top, #101824 0%, #0a0a0a 56%);
+  }
+  :root:not(.dark) body {
+    background-image: radial-gradient(circle at top, #f8fbff 0%, #f3f6fb 58%);
+  }
+  html {
+    font-size: 17px;
+  }
+  body {
+    line-height: 1.6;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .font-mono {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+}
+
+@layer components {
+  .blog-prose {
+    color: var(--foreground);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .blog-prose h1,
+  .blog-prose h2,
+  .blog-prose h3,
+  .blog-prose h4,
+  .blog-prose h5,
+  .blog-prose h6 {
+    color: var(--foreground);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+  }
+  .blog-prose h1 { font-size: 1.7rem; }
+  .blog-prose h2 { font-size: 1.45rem; }
+  .blog-prose h3 { font-size: 1.2rem; }
+  .blog-prose p { margin: 0.9em 0; color: var(--foreground); }
+  .blog-prose ul,
+  .blog-prose ol { margin: 0.8em 0 1.1em; padding-left: 1.25em; }
+  .blog-prose li { margin: 0.35em 0; }
+  .blog-prose strong { color: var(--foreground); font-weight: 700; }
+  .blog-prose a { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+  .blog-prose img { display: block; max-width: 100%; height: auto; border-radius: 0.75rem; border: 1px solid var(--border); margin: 1.1rem auto; }
+  .blog-prose pre {
+    position: relative;
+    background-color: #0d0f16;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 2.85rem 1.15rem 1.15rem;
+    margin: 1.6rem 0;
+    overflow-x: auto;
+    box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7);
+  }
+  .blog-prose pre::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2.05rem;
+    background: linear-gradient(180deg, #1b1f2a, #14171f);
+    border-bottom: 1px solid var(--border);
+    border-radius: 0.75rem 0.75rem 0 0;
+  }
+  .blog-prose pre::after {
+    content: "";
+    position: absolute;
+    top: 0.72rem; left: 1.1rem;
+    width: 0.66rem; height: 0.66rem;
+    border-radius: 50%;
+    background: #ff5f56;
+    box-shadow: 1.15rem 0 0 #ffbd2e, 2.3rem 0 0 #27c93f;
+  }
+  .blog-prose code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    color: var(--primary);
+    background-color: rgba(0, 210, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+  .blog-prose pre code {
+    color: #ededed;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.825rem;
+    line-height: 1.55;
+    display: block;
+  }
+}
+
+/* Live perf bars */
+.perf-bar-fill { transition: width 400ms ease-out; }
+
+/* Alpine x-cloak: hide elements until Alpine initializes (prevents FOUC) */
+[x-cloak] { display: none !important; }

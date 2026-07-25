@@ -1,0 +1,218 @@
+{{define "sentinel"}}
+<section
+  x-data="sentinelTerminal()"
+  x-init="init()"
+  class="relative rounded-3xl border border-border/70 bg-popover/50 p-6 shadow-2xl backdrop-blur-md sm:p-8"
+>
+  <script id="sentinel-config" type="application/json">{{json .SentinelConfig}}</script>
+
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h2 class="text-2xl font-semibold text-foreground sm:text-3xl" x-text="cfg.title"></h2>
+      <p class="mt-2 text-sm text-muted-foreground sm:text-base" x-text="cfg.subtitle"></p>
+    </div>
+    <div x-show="unlocked" x-cloak class="flex items-center gap-3">
+      <p class="rounded-md border border-accent/50 bg-accent/15 px-3 py-1.5 text-xs font-semibold tracking-[0.14em] text-accent uppercase" x-text="cfg.unlockedLabel"></p>
+      <a :href="cfg.dashboardPath" class="text-xs font-semibold tracking-[0.14em] text-primary uppercase hover:text-primary/80" x-text="cfg.unlockedCta"></a>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <div class="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.18em] text-muted-foreground">
+      <span x-text="cfg.meterLabel"></span>
+      <span x-text="level + '%'"></span>
+    </div>
+    <div class="h-2 w-full overflow-hidden rounded-full bg-secondary">
+      <div class="h-full transition-[width] duration-500 ease-out"
+        :class="level >= 71 ? 'bg-accent' : (level >= 31 ? 'bg-primary' : 'bg-muted-foreground')"
+        :style="'width:' + level + '%'"></div>
+    </div>
+  </div>
+
+  <div class="mt-6 rounded-2xl border border-border/70 bg-background/60 p-4">
+    <p class="text-sm text-muted-foreground" x-text="cfg.bypassInstructions"></p>
+    <div class="mt-3 flex flex-wrap items-center gap-3">
+      <button type="button" class="inline-flex h-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background px-2.5 text-sm font-medium whitespace-nowrap text-foreground transition-all outline-none select-none hover:bg-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px dark:border-input dark:bg-input/30 dark:hover:bg-input/50"
+        @click="passcodeVisible = true; passcodeCopied = false" x-text="cfg.revealPasscodeLabel"></button>
+      <div x-show="passcodeVisible" x-cloak class="inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2">
+        <span class="text-xs text-muted-foreground" x-text="cfg.passcodeLabel"></span>
+        <code class="text-xs font-semibold tracking-[0.08em] text-foreground" x-text="cfg.accessCode"></code>
+        <button type="button" class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:text-foreground"
+          @click="copyPasscode()" :aria-label="passcodeCopied ? cfg.copiedPasscodeLabel : cfg.copyPasscodeLabel" :title="passcodeCopied ? cfg.copiedPasscodeLabel : cfg.copyPasscodeLabel">
+          <span x-show="!passcodeCopied" x-cloak>⧉</span>
+          <span x-show="passcodeCopied" x-cloak>✓</span>
+        </button>
+      </div>
+    </div>
+    <p x-show="passcodeVisible" x-cloak class="mt-2 text-xs text-muted-foreground" x-text="cfg.directUnlockMessage"></p>
+  </div>
+
+  <div class="mt-6 max-h-64 overflow-y-auto scroll-smooth rounded-2xl border border-border/60 bg-background/70 p-4 font-mono text-sm" x-ref="log">
+    <div class="space-y-3">
+      <template x-for="(m, i) in messages" :key="i">
+        <p :class="m.role === 'assistant' ? 'text-primary' : 'text-foreground'">
+          <span class="mr-2 text-muted-foreground" x-text="m.role === 'assistant' ? 'sentinel>' : 'human>'"></span>
+          <span x-text="m.content"></span>
+        </p>
+      </template>
+    </div>
+  </div>
+
+  <form @submit.prevent="send()" class="mt-4 flex flex-col gap-3 sm:flex-row">
+    <input x-model="input" :placeholder="cfg.inputPlaceholder" :disabled="pending"
+      class="h-11 flex-1 rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:border-primary/60" />
+    <button type="submit" class="h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-opacity disabled:opacity-60"
+      :disabled="pending" x-text="pending ? cfg.pendingLabel : cfg.sendLabel"></button>
+    <button type="button" class="h-11 rounded-lg border border-border/60 px-5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+      @click="reset()" x-text="cfg.resetLabel"></button>
+  </form>
+
+  <p x-show="error" x-cloak class="mt-3 text-sm text-destructive" x-text="error"></p>
+
+  <div x-show="showReturnOverlay" x-cloak class="absolute inset-0 z-10 flex items-center justify-center rounded-3xl bg-background/55 p-6 backdrop-blur-md">
+    <div class="w-full max-w-xl rounded-2xl border border-border/70 bg-card/80 p-6 text-center shadow-2xl">
+      <p class="text-sm font-semibold tracking-[0.14em] text-primary uppercase" x-text="cfg.returnOverlayTitle"></p>
+      <p class="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base" x-text="cfg.returnOverlayBody"></p>
+      <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <button type="button" class="h-11 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground" @click="showReturnOverlay = false" x-text="cfg.playAgainLabel"></button>
+        <a :href="cfg.dashboardPath" class="h-11 inline-flex items-center justify-center rounded-lg border border-border/60 px-5 text-sm font-semibold text-muted-foreground hover:text-foreground" x-text="cfg.goDashboardLabel"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function sentinelTerminal() {
+    return {
+      cfg: {},
+      sessionId: '',
+      messages: [],
+      input: '',
+      level: 0,
+      unlocked: false,
+      pending: false,
+      error: null,
+      showReturnOverlay: false,
+      passcodeVisible: false,
+      passcodeCopied: false,
+      es: null,
+      init() {
+        try { this.cfg = JSON.parse(document.getElementById('sentinel-config').textContent); } catch (e) { this.cfg = {}; }
+        this.sessionId = (crypto.randomUUID ? crypto.randomUUID() : 's-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+        this.messages = [{ role: 'assistant', content: this.cfg.initialMessage || '' }];
+        this.showReturnOverlay = !!this.cfg.hasUnlockedBefore;
+      },
+      copyPasscode() {
+        var self = this;
+        navigator.clipboard.writeText(this.cfg.accessCode).then(function () {
+          self.passcodeCopied = true;
+          setTimeout(function () { self.passcodeCopied = false; }, 1200);
+        }).catch(function () {});
+      },
+      reset() {
+        this.messages = [{ role: 'assistant', content: this.cfg.initialMessage || '' }];
+        this.input = '';
+        this.level = 0;
+        this.unlocked = false;
+        this.pending = false;
+        this.error = null;
+      },
+      send() {
+        var self = this;
+        var value = (this.input || '').trim();
+        if (!value || this.pending) return;
+        var userMsg = { role: 'user', content: value };
+        var next = this.messages.concat([userMsg]);
+        this.messages = next;
+        this.input = '';
+        this.error = null;
+        this.pending = true;
+
+        var code = (this.cfg.accessCode || '').toUpperCase();
+        if (value.toUpperCase() === code) {
+          this.commitDirect(value);
+          return;
+        }
+
+        var payload = next.map(function (m) { return { role: m.role, content: m.content }; });
+        var url = '/api/sentinel/stream?locale=' + encodeURIComponent(this.cfg.locale) +
+          '&level=' + this.level +
+          '&sid=' + encodeURIComponent(this.sessionId) +
+          '&m=' + encodeURIComponent(JSON.stringify(payload));
+        var assistantIdx = this.messages.length;
+        this.messages = this.messages.concat([{ role: 'assistant', content: '' }]);
+
+        try {
+          this.es = new EventSource(url);
+        } catch (e) {
+          this.pending = false;
+          this.error = this.cfg.errorLabel;
+          return;
+        }
+        this.es.addEventListener('token', function (ev) {
+          var txt = ev.data || '';
+          try { txt = JSON.parse(txt); } catch (e) {}
+          self.messages[assistantIdx] = { role: 'assistant', content: self.messages[assistantIdx].content + txt };
+          self.scrollLog();
+        });
+        this.es.addEventListener('done', function (ev) {
+          self.handleDone(ev.data);
+          if (self.es) self.es.close();
+        });
+        this.es.onerror = function () {
+          if (self.es) self.es.close();
+          self.pending = false;
+          self.error = self.cfg.errorLabel;
+        };
+      },
+      handleDone(data) {
+        var self = this;
+        var parsed = {};
+        try { parsed = JSON.parse(data); } catch (e) {}
+        if (typeof parsed.level === 'number') self.level = parsed.level;
+        if (typeof parsed.message === 'string' && self.messages.length) {
+          self.messages[self.messages.length - 1] = {
+            role: 'assistant',
+            content: parsed.message + ' [LEVEL:' + self.level + ']'
+          };
+        }
+        if (parsed.unlocked) {
+          self.unlocked = true;
+        }
+        self.pending = false;
+        self.scrollLog();
+      },
+      commitDirect(code) {
+        var self = this;
+        fetch('/api/sentinel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            locale: this.cfg.locale,
+            sessionId: this.sessionId,
+            currentLevel: this.level,
+            messages: [{ role: 'user', content: code }]
+          })
+        }).then(function (r) {
+          if (!r.ok) throw new Error('sentinel request failed');
+          return r.json();
+        }).then(function (p) {
+          self.messages = self.messages.concat([{ role: 'assistant', content: (p.message || '') + ' [LEVEL:' + (p.level || 0) + ']' }]);
+          self.level = p.level || 0;
+          if (p.unlocked) self.unlocked = true;
+          self.pending = false;
+        }).catch(function () {
+          self.error = self.cfg.errorLabel;
+          self.pending = false;
+        });
+      },
+      scrollLog() {
+        var self = this;
+        setTimeout(function () {
+          if (self.$refs.log) self.$refs.log.scrollTop = self.$refs.log.scrollHeight;
+        }, 0);
+      }
+    };
+  }
+</script>
+{{end}}

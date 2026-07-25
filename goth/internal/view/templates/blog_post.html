@@ -1,0 +1,29 @@
+{{define "blog_post"}}
+<!DOCTYPE html>
+<html lang="{{.Locale}}" class="{{.Theme}}">
+<head>
+  {{template "head" .}}
+</head>
+<body class="flex min-h-screen flex-col">
+  {{template "header" .}}
+  <main class="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
+    <a href="/{{.Locale}}/blog" class="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">{{.BackLabel}}</a>
+    <article class="mt-4">
+      <div class="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <time datetime="{{.PublishedAt}}">{{.PublishedAt}}</time>
+        {{if .Draft}}<span class="rounded bg-accent/15 px-2 py-0.5 text-accent">Draft</span>{{end}}
+      </div>
+      <h1 class="mt-2 text-3xl font-semibold text-foreground">{{.Title}}</h1>
+      <p class="mt-2 text-base text-muted-foreground">{{.Description}}</p>
+      {{if .Tags}}
+      <div class="mt-3 flex flex-wrap gap-2">
+        {{range .Tags}}<span class="rounded-md border border-border/60 px-2 py-0.5 text-xs text-muted-foreground">{{.}}</span>{{end}}
+      </div>
+      {{end}}
+      <div class="blog-prose mt-6">{{safe .HTML}}</div>
+    </article>
+  </main>
+  {{template "footer" .}}
+</body>
+</html>
+{{end}}

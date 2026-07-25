@@ -1,0 +1,20 @@
+# GOTH SQLite backup timer (plan §11.3).
+#
+# Daily local snapshot at 03:30 UTC — deliberately offset from the 08:00 UTC
+# AI Pulse refresh so the two writers never overlap. Persistent=true catches
+# up a run missed while the host was down.
+#
+# Install: copy to /etc/systemd/system/goth-backup.timer, then
+#   systemctl daemon-reload && systemctl enable --now goth-backup.timer
+# Production activation happens in Phase 13 — until then the timer ships
+# disabled in the release artifact.
+[Unit]
+Description=Daily GOTH SQLite backup
+
+[Timer]
+OnCalendar=*-*-* 03:30:00 UTC
+RandomizedDelaySec=900
+Persistent=true
+
+[Install]
+WantedBy=timers.target

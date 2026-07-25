@@ -1,0 +1,20 @@
+# GOTH AI Pulse refresh timer (Phase 12.5e).
+#
+# Mirrors the Next.js Vercel cron schedule (0 8 * * * UTC) with a randomized
+# delay so provider calls are jittered. Persistent=true catches up runs missed
+# while the host was down.
+#
+# Install: copy to /etc/systemd/system/goth-refresh.timer, then
+#   systemctl daemon-reload && systemctl enable --now goth-refresh.timer
+# Production activation happens in Phase 13 — until then the timer ships
+# disabled in the release artifact.
+[Unit]
+Description=Daily GOTH AI Pulse refresh
+
+[Timer]
+OnCalendar=*-*-* 08:00:00 UTC
+RandomizedDelaySec=1800
+Persistent=true
+
+[Install]
+WantedBy=timers.target

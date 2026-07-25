@@ -1,0 +1,58 @@
+# Production Caddyfile for karotammela.fi (Phase 13, revised architecture 2026-07-25).
+#
+# Architecture: the Go build (Hetzner CX23) is the DEFAULT stack and is served
+# directly on the apex. The Next.js comparison build is hosted NATIVELY on Vercel
+# at the next.karotammela.fi subdomain — it is NOT reverse-proxied through this
+# Caddy (that would add an unfair network hop and distort the latency comparison).
+# The Tech Switcher and perf widget compare the two stacks via direct client-side
+# fetches and cross-origin redirects, NOT cookie routing. Caddy therefore only
+# ever proxies to localhost:8080 here.
+#
+# TLS: Caddy issues + renews the certificate automatically via ACME once the
+# karotammela.fi A/AAAA records point at this host. Nothing to configure.
+# IMPORTANT: in Cloudflare the apex record must be "DNS only" (grey cloud), or
+# the ACME HTTP-01 challenge cannot reach this origin and no cert is issued.
+
+{
+	admin off
+	# Production Let's Encrypt. Set explicitly so a stray staging override
+	# (e.g. CADDY_ACME_CA in the environment) can never downgrade
+	# the issued cert to the untrusted STAGING CA.
+	email info@karotammela.fi
+	acme_ca https://acme-v02.api.letsencrypt.org/directory
+}
+
+karotammela.fi {
+	encode zstd gzip
+
+	header {
+		# 6 months HSTS to start; raise to 31536000 + preload only after the
+		# cutover has been stable (runbook §DNS cutover).
+		Strict-Transport-Security "max-age=15552000"
+		X-Content-Type-Options "nosniff"
+		-Server
+	}
+
+	# Go-only comparison probe (Caddy -> localhost:8080). The Next.js probe
+	# lives at https://next.karotammela.fi/api/ping and is reached directly by
+	# the browser (client-side), so there is no Next.js upstream here.
+	handle /__compare/go/ping {
+		rewrite * /api/ping
+		reverse_proxy localhost:8080
+	}
+
+	handle {
+		reverse_proxy localhost:8080 {
+			# Surface upstream failures fast instead of hanging the client.
+			transport http {
+				dial_timeout 5s
+				response_header_timeout 30s
+			}
+		}
+	}
+}
+
+# Canonical host: everything else redirects to the apex.
+www.karotammela.fi {
+	redir https://karotammela.fi{uri} permanent
+}

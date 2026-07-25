@@ -1,0 +1,40 @@
+# GOTH SQLite online backup — one-shot run (plan §11.3).
+#
+# Runs `goth backup`: VACUUM INTO a temp file, PRAGMA integrity_check, atomic
+# rename into GOTH_BACKUP_DIR, then retention pruning (GOTH_BACKUP_KEEP,
+# default 14). Safe against the live WAL-mode writer; goth.service does not
+# need to be stopped.
+#
+# Do NOT enable this service for continuous running — goth-backup.timer
+# activates it. Overlap protection: flock -n rejects a concurrent run
+# immediately (exit 1 → unit shows failed, the intended observable signal).
+#
+# Observable exit status: 0 only when a verified snapshot is on disk;
+# any failure exits non-zero and leaves no partial backup file behind
+# (journalctl -u goth-backup.service shows the reason).
+#
+# NOTE: off-server copies (Storage Box / S3) are a separate step — see
+# docs/runbook.md §Backups. This unit only produces the local snapshot.
+[Unit]
+Description=GOTH SQLite online backup (VACUUM INTO + integrity check)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=goth
+Group=goth
+EnvironmentFile=/etc/goth/goth.env
+ExecStart=/usr/bin/flock -n /var/lib/goth/.backup.lock /opt/goth/current/goth backup
+# VACUUM INTO of a small DB is seconds; a wedged run must never hang the timer.
+TimeoutStartSec=300
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/goth
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true

@@ -1,0 +1,51 @@
+{{define "privacy"}}
+<!DOCTYPE html>
+<html lang="{{.Locale}}" class="{{.Theme}}">
+<head>
+  {{template "head" .}}
+</head>
+<body class="flex min-h-screen flex-col">
+  {{template "header" .}}
+  <main class="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
+    <a href="/{{.Locale}}" class="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">{{call .Tr "privacyPolicy.backLinkLabel"}}</a>
+    <h1 class="mt-4 text-3xl font-semibold text-foreground">{{call .Tr "privacyPolicy.title"}}</h1>
+
+    <section class="mt-8 space-y-2">
+      <h2 class="text-xl font-semibold text-foreground">{{call .Tr "privacyPolicy.introTitle"}}</h2>
+      <p class="text-sm leading-relaxed text-muted-foreground">{{call .Tr "privacyPolicy.introBody"}}</p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-semibold text-foreground">{{call .Tr "privacyPolicy.dataTitle"}}</h2>
+      <div>
+        <h3 class="text-base font-semibold text-foreground">{{call .Tr "privacyPolicy.contactForm"}}</h3>
+        <p class="text-sm leading-relaxed text-muted-foreground">{{call .Tr "privacyPolicy.contactFormBody"}}</p>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-foreground">{{call .Tr "privacyPolicy.analytics"}}</h3>
+        <p class="text-sm leading-relaxed text-muted-foreground">{{call .Tr "privacyPolicy.analyticsBody"}}</p>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-foreground">{{call .Tr "privacyPolicy.cookies"}}</h3>
+        <p class="text-sm leading-relaxed text-muted-foreground">{{call .Tr "privacyPolicy.cookiesBody"}}</p>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+          <li>{{call .Tr "privacyPolicy.cookieUnlock"}}</li>
+          <li>{{call .Tr "privacyPolicy.cookieConsent"}}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="mt-8 space-y-2">
+      <h2 class="text-xl font-semibold text-foreground">{{call .Tr "privacyPolicy.rightsTitle"}}</h2>
+      <p class="text-sm leading-relaxed text-muted-foreground">{{call .Tr "privacyPolicy.rightsBody"}}</p>
+    </section>
+
+    <section class="mt-8 space-y-2">
+      <h2 class="text-xl font-semibold text-foreground">{{call .Tr "privacyPolicy.contactTitle"}}</h2>
+      <p class="text-sm leading-relaxed text-muted-foreground">{{call .Tr "privacyPolicy.contactBody"}}</p>
+    </section>
+  </main>
+  {{template "footer" .}}
+</body>
+</html>
+{{end}}

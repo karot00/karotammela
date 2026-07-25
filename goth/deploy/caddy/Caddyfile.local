@@ -1,0 +1,29 @@
+# Local staging variant of the production Caddyfile — same routing logic,
+# plain HTTP on :8090, no TLS/HSTS. Used by deploy/smoke-local.sh to prove
+# the tech-cookie map and the /__compare probe routes before touching the
+# real host. Keep the map + handle blocks in sync with ./Caddyfile.
+{
+	admin off
+	auto_https off
+}
+
+http://localhost:8090 {
+	handle /__compare/go/ping {
+		rewrite * /api/ping
+		reverse_proxy localhost:8080
+	}
+	handle /__compare/next/ping {
+		rewrite * /api/ping
+		reverse_proxy localhost:3000
+	}
+
+	map {http.request.cookie.tech} {upstream} {
+		next    localhost:3000
+		go      localhost:8080
+		default localhost:8080
+	}
+
+	handle {
+		reverse_proxy {upstream}
+	}
+}

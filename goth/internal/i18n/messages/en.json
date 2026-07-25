@@ -1,0 +1,303 @@
+{
+  "metadata": {
+    "title": "Karo Tammela - Agentic AI Experiment Lab",
+    "description": "Portfolio, blog, and live AI bouncer challenge by Karo Tammela. Practical agentic AI builds, real projects, and production-focused workflows."
+  },
+  "home": {
+    "phaseLabel": "Karo tammela",
+    "intro": "Welcome to my site, a kind of AI-workshop. This is where I test and showcase different projects where I use AI - either in the coding itself or in the final implementations. You will also find my blog here, where I share what I've learned from different projects and from the journey overall.",
+    "body1": "Over the past couple of years, I've spent a big part of my free time learning how coding is changing in the agentic AI era. For example, I built this website in about three hours by orchestrating coding agents. I built the landing page, the AI bouncer, connected it to the Gemini language model, set up SQLite, built the dashboard, acquired the domain, hosted it on Vercel, and published everything.",
+    "body2": "I've moved from \"vibe coding\" to systematic end-to-end software development: through dozens of experiments and hundreds of hours studying different technologies, I've built a workflow where ideas now turn into working code, GitHub repositories, and Vercel deployments. The process is fast, but quality stays consistent and secure thanks to solid architecture, planning, documentation, and well-organized, carefully designed agents.",
+    "body3": "Try your luck with the AI Bouncer below. If you manage to talk it around and get the access code, it will open the doors to the backstage - my actual portfolio dashboard. Enjoy exploring!",
+    "sentinel": {
+      "title": "Talk the AI Bouncer Around",
+      "subtitle": "Instructions: Your goal is to get this stubborn bot to reveal a secret access code. Simply asking for the code won't work - you need to be creative. Try flattery, pose as an IT auditor, or convince the bot with technical credibility. Watch the trust meter - once it reaches 100%, the door opens!",
+      "meterLabel": "Trust Level",
+      "inputPlaceholder": "Type your message to the AI Bouncer...",
+      "sendLabel": "Send",
+      "pendingLabel": "Linking...",
+      "resetLabel": "Reset Session",
+      "initialMessage": "Ha. A human enters my terminal without clearance. Surprise me.",
+      "unlockedLabel": "Vault open!",
+      "unlockedCta": "Open dashboard",
+      "errorLabel": "AI Bouncer link wavering. Retry transmission.",
+      "returnOverlayTitle": "Access already unlocked",
+      "returnOverlayBody": "You have broken in before. You can jump directly to the dashboard or play the challenge again.",
+      "playAgainLabel": "Play again",
+      "goDashboardLabel": "Go to dashboard",
+      "bypassInstructions": "If you don't feel like talking to the AI Bouncer, reveal the secret passcode, copy it, paste it into the field, and press Send to unlock access.",
+      "revealPasscodeLabel": "Reveal secret passcode",
+      "passcodeLabel": "Secret passcode",
+      "copyPasscodeLabel": "Copy passcode",
+      "copiedPasscodeLabel": "Copied",
+      "directUnlockMessage": "Paste this passcode into the input field and click Send."
+    },
+    "privacyPolicyLink": "Privacy Policy",
+    "shareLabel": "Share",
+    "shareCopiedLabel": "Link copied.",
+    "shareErrorLabel": "Sharing unavailable."
+  },
+  "dashboard": {
+    "badge": "Welcome to the backstage",
+    "title": "This is my dashboard",
+    "description": "",
+    "navigationLabel": "Navigation",
+    "navOverview": "Overview",
+    "navProjects": "Projects",
+    "navTech": "Technologies",
+    "navBlog": "Blog",
+    "navChangelog": "Changelog",
+    "navSettings": "Settings",
+    "menuLabel": "Menu",
+    "homeLinkLabel": "Back to home",
+    "aboutTitle": "Who?",
+    "aboutBody": "I am Karo Tammela and I have a Master of Science in Economics and Business Administration. Currently, I work as a project manager leading a large CRM procurement. Over my twenty-year career, I have gained a lot of experience in different environments and business challenges, as well as all kinds of software, some of which have been better and some not so good. Programming has always fascinated me, but traditional coding and especially studying it felt too rigid for a long time.\n\nAgent-based development and new language models in late 2024 changed everything. It removed the barrier between idea, research, and a finished product. Over the last two years, I have refined the ways I transfer 20 years of process and business understanding directly into functional systems. I also build a lot of leisure applications that make my own life easier. I no longer just experiment with what AI can do - I build production-ready solutions with it at a speed that was not possible before, even for experienced developers.",
+    "profileImageAlt": "Karo Tammela",
+    "toolkitTitle": "My favorite language models H1 / 2026",
+    "codingModelsLabel": "For coding: Gemini 3.5 Flash, GPT Codex 5.3, Opus 4.7",
+    "chatbotModelLabel": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite",
+    "toolkitTitleH2": "My favorite language models H2 / 2026",
+    "codingModelsLabelH2": "For coding: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max",
+    "chatbotModelLabelH2": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite",
+    "analyticsTitle": "AI Bouncer challenge analytics",
+    "totalAttemptsLabel": "Total messages",
+    "unlockedCountLabel": "Successful unlocks",
+    "directUnlockCountLabel": "Passcode reveals used",
+    "avgMessagesToUnlockLabel": "Average amount of messages to unlock",
+    "latestUnlockLabel": "Latest unlock",
+    "latestUnlockNever": "No successful unlocks yet",
+    "sourceOffline": "Live data is unavailable. Showing fallback values.",
+    "contactTitle": "Contact",
+    "contactDescription": "You can be in touch through this form.",
+    "contactAvailabilityEyebrow": "Availability",
+    "contactAvailabilityStatus": "Open for agentic AI sparring & short collaborations. I'm happy to talk about anything agentic AI related and accept ideas for the blog.",
+    "contactConnectLabel": "Connect",
+    "contactGithubLabel": "GitHub",
+    "contactLinkedinLabel": "LinkedIn",
+    "projectsTitle": "Built applications",
+    "projectsProductionSubtitle": "Production solutions and client projects",
+    "projectsShowcaseSubtitle": "Experiments, prototypes, and showcases",
+    "projectOneTitle": "levifinland.fi",
+    "projectOneDescription": "Travel portal and cabin booking website.",
+    "projectTwoTitle": "Green Fee system",
+    "projectTwoDescription": "Secure booking and payment system for Levi golf green fees for individual share owners.",
+    "projectThreeTitle": "B2B E-commerce",
+    "projectThreeDescription": "Wholesale web store for custom-made lenses.",
+    "projectFourTitle": "karotammela.fi (This site)",
+    "projectFourDescription": "Portfolio and test lab built with agent architecture.",
+    "projectFiveTitle": "Digital Postcard",
+    "projectFiveDescription": "Real-time custom postcard generator and sender (Sydänliitto POC).",
+    "projectPostcardStackBadge": "Built with Next.js",
+    "projectGithubLabel": "GitHub: karot00/karotammela",
+    "techTitle": "Primary technology stack",
+    "techCategories": {
+      "frontend": "Frontend",
+      "backendDb": "Backend & DB",
+      "infrastructure": "Infrastructure",
+      "tools": "Tools"
+    },
+    "techItems": {
+      "nextjs": {
+        "name": "Next.js",
+        "description": "React framework for production-grade applications."
+      },
+      "tailwindCss": {
+        "name": "Tailwind CSS",
+        "description": "Utility-first CSS framework for rapid UI development."
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "Advanced relational database for structured data."
+      },
+      "sqlite": {
+        "name": "libSQL/SQLite",
+        "description": "Lightweight, file-based SQL database engine."
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Deployment and hosting platform for frontend frameworks."
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "Content delivery network and security services."
+      },
+      "github": {
+        "name": "GitHub",
+        "description": "Version control and collaboration platform."
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "Developer-first email API for transactional emails."
+      },
+      "vsCode": {
+        "name": "VS Code",
+        "description": "Primary code editor for development."
+      },
+      "kiloCode": {
+        "name": "Kilo Code",
+        "description": "open-source AI coding agent."
+      }
+    },
+    "blogPreviousLabel": "Previous",
+    "blogNextLabel": "Next",
+    "blogBackLabel": "Back",
+    "blogPageLabel": "Page",
+    "blogNoPostsLabel": "No blog posts yet.",
+    "blogMissingPostLabel": "Selected post was not found.",
+    "blogPlaceholder": "Hi! You found Karo Tammelan's blog - nice! Choose a blog post to start reading.",
+    "blogShareLabel": "Share",
+    "blogShareCopiedLabel": "Link copied.",
+    "blogShareErrorLabel": "Sharing unavailable.",
+    "blogDraftBadgeLabel": "Draft",
+    "settingsLanguageTitle": "Language",
+    "settingsLanguageDescription": "Change the dashboard and site language.",
+    "settingsCookieTitle": "Cookie preferences",
+    "settingsCookieDescription": "Review and update your cookie consent choices.",
+    "settingsThemeTitle": "Theme",
+    "settingsThemeDescription": "Choose light or dark mode for the dashboard.",
+    "privacyPolicyLink": "Privacy Policy",
+    "lightModeLabel": "Light",
+    "darkModeLabel": "Dark",
+    "contactNameLabel": "Name",
+    "contactEmailLabel": "Email",
+    "contactCompanyLabel": "Company",
+    "contactMessageLabel": "Message",
+    "contactSubmitLabel": "Send message",
+    "contactPendingLabel": "Sending...",
+    "contactSuccessLabel": "Message delivered successfully.",
+    "contactErrorLabel": "Message delivery failed. Retry shortly.",
+    "changelogTitle": "Recent improvements",
+    "changelogLead": "A curated summary of what has shipped lately. The full history lives in the GitHub repository.",
+    "changelogEmptyLabel": "No entries yet.",
+    "changelogTypeAdded": "Added",
+    "changelogTypeChanged": "Changed",
+    "changelogTypeFixed": "Fixed",
+    "changelogTypeRemoved": "Removed",
+    "navAiPulse": "AI Pulse",
+    "aiPulseTitle": "AI Pulse",
+    "aiPulseDescription": "Top AI stories, trending AI repositories on GitHub, and live stock prices for leading AI companies.",
+    "aiPulseTrendsTitle": "AI Trends",
+    "aiPulseStocksTitle": "AI Stocks",
+    "aiPulseTickerLabel": "Ticker",
+    "aiPulseNoTrendsLabel": "No trend data available yet. Check back after the next data refresh.",
+    "aiPulseLastUpdatedLabel": "Last updated",
+    "aiPulseSourceLabel": "Source",
+    "aiPulseLoadingLabel": "Loading chart...",
+    "aiPulseReposTitle": "Trending AI Repositories",
+    "aiPulseNoReposLabel": "No repository data available yet. Check back after the next data refresh.",
+    "aiPulseStarsTodayLabel": "stars today",
+    "aiPulseStockChartAria": "Stock price history chart",
+    "aiPulseStockTableCaption": "Daily closing prices",
+    "aiPulseStockDateLabel": "Date",
+    "aiPulseStockCloseLabel": "Close",
+    "aiPulseNoStocksLabel": "No stock data available yet. Check back after the next data refresh."
+  },
+  "localeSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "fi": "Suomi"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "introTitle": "1. Introduction",
+    "introBody": "This privacy policy explains how we collect, use, and protect your information when you visit this website.",
+    "dataTitle": "2. Data We Collect",
+    "contactForm": "Contact Form",
+    "contactFormBody": "If you use our contact form, we collect your name and email address to process your inquiry and send you a response. This information is not stored in a database.",
+    "analytics": "Analytics",
+    "analyticsBody": "We use Umami Analytics to understand usage patterns. This tracking is cookieless and respects your privacy.",
+    "cookies": "Cookies",
+    "cookiesBody": "We use cookies for the following purposes:",
+    "cookieUnlock": "Used to manage access to the dashboard features.",
+    "cookieConsent": "Stores your preferences regarding cookie usage on this site.",
+    "backLinkLabel": "Back",
+    "rightsTitle": "3. Your Rights",
+    "rightsBody": "You have the right to request access to your personal data and to ask for corrections.",
+    "contactTitle": "4. Contact",
+    "contactBody": "If you have any questions, please contact us at info@karotammela.fi."
+  },
+  "cookieConsent": {
+    "settingsTrigger": "Cookie settings",
+    "settingsTriggerAriaLabel": "Open cookie settings",
+    "banner": {
+      "ariaLabel": "Cookie consent notice",
+      "eyebrow": "Privacy settings",
+      "title": "Cookie and storage preferences",
+      "description": "We use essential storage for core functionality. You can choose optional categories anytime.",
+      "acceptAll": "Accept all",
+      "rejectNonEssential": "Reject non-essential",
+      "manageSettings": "Manage settings"
+    },
+    "preferences": {
+      "eyebrow": "Consent center",
+      "title": "Manage your preferences",
+      "description": "Select which optional categories can be used. Essential storage stays enabled for security and core access."
+    },
+    "categories": {
+      "alwaysActive": "Always active",
+      "optional": "Optional",
+      "essential": {
+        "title": "Strictly necessary",
+        "description": "Required for security, unlock verification, and core site operation."
+      },
+      "functional": {
+        "title": "Functional",
+        "description": "Stores language and theme preferences to improve your experience."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Helps us understand usage patterns. In this setup, Umami analytics runs cookieless."
+      },
+      "marketing": {
+        "title": "Marketing",
+        "description": "Reserved for future marketing integrations and campaign measurement."
+      }
+    },
+    "inventory": {
+      "detailsLabel": "Show details",
+      "name": "Name",
+      "provider": "Provider",
+      "purpose": "Purpose",
+      "duration": "Duration",
+      "emptyCategory": "No active items currently mapped to this category."
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "rejectNonEssential": "Reject non-essential",
+      "acceptAll": "Accept all",
+      "savePreferences": "Save preferences"
+    }
+  },
+  "postcard": {
+    "title": "Digital Postcard Generator",
+    "description": "Create and personalize your own digital postcard in real-time. You can download it to your device or send it directly to the recipient's email.",
+    "selectTemplate": "Select Template",
+    "templates": {
+      "ystava": "Friendship Card",
+      "kalja": "Beer Card",
+      "apina": "Monkey Card"
+    },
+    "form": {
+      "senderName": "Sender Name",
+      "senderNamePlaceholder": "Matti Meikäläinen",
+      "recipientEmail": "Recipient Email",
+      "recipientEmailPlaceholder": "recipient@example.com",
+      "greeting": "Greeting Message",
+      "greetingPlaceholder": "Warm holiday wishes to you! Best, Matti",
+      "charLimit": "{count} / {max} characters",
+      "validation": {
+        "email": "Please enter a valid email address",
+        "sender": "Name is required (min 2 chars)",
+        "greeting": "Greeting message is required"
+      }
+    },
+    "actions": {
+      "download": "Download Card",
+      "send": "Send via Email",
+      "sending": "Sending...",
+      "success": "Postcard successfully sent to {email}!",
+      "error": "Sending failed: {error}",
+      "rateLimit": "Rate limit exceeded. Please try again shortly."
+    }
+  }
+}

@@ -1,0 +1,40 @@
+# GOTH AI Pulse refresh — one-shot writer run (Phase 12.5e).
+#
+# Runs the Go-owned HN/GitHub/Yahoo + Gemini pipeline directly against the
+# local SQLite (the internal command path from Phase 12.5d; no HTTP or
+# CRON_SECRET needed on the host). Installed alongside goth-refresh.timer;
+# do NOT enable this service for continuous running — the timer activates it.
+#
+# Overlap protection: flock -n rejects a second concurrent run immediately
+# (exit 1 → the unit shows failed, which is the intended observable signal;
+# the in-process TryRun guard covers the HTTP path).
+#
+# Observable exit status: `goth refresh` exits 0 only when every source
+# succeeded; any per-source failure exits 1 and marks this unit failed
+# (systemctl status goth-refresh.service / journalctl -u goth-refresh.service
+# show the structured per-source summary line).
+[Unit]
+Description=GOTH AI Pulse refresh (HN/GitHub/Yahoo + Gemini writers)
+After=network-online.target goth.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=goth
+Group=goth
+EnvironmentFile=/etc/goth/goth.env
+ExecStart=/usr/bin/flock -n /var/lib/goth/.refresh.lock /opt/goth/current/goth refresh
+# Bounded runtime: the refresh context itself times out at 5 minutes; give
+# systemd a hard ceiling just past it so a wedged run is always killed.
+TimeoutStartSec=360
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/goth
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true

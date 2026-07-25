@@ -1,0 +1,39 @@
+{{define "head"}}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{.Title}}</title>
+<meta name="description" content="{{.Description}}" />
+<link rel="canonical" href="{{.Canonical}}" />
+{{range .Hreflangs}}<link rel="alternate" hreflang="{{.Hreflang}}" href="{{.Href}}" />
+{{end}}<meta property="og:type" content="{{.OGType}}" />
+<meta property="og:locale" content="{{if eq .Locale "fi"}}fi_FI{{else}}en_US{{end}}" />
+<meta property="og:site_name" content="{{.SiteName}}" />
+<meta property="og:title" content="{{.Title}}" />
+<meta property="og:description" content="{{.Description}}" />
+<meta property="og:url" content="{{.OGURL}}" />
+{{if .OGImage}}<meta property="og:image" content="{{.OGImage}}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{.OGImageAlt}}" />{{end}}
+{{if .OGArticlePublished}}<meta property="article:published_time" content="{{.OGArticlePublished}}" />
+<meta property="article:modified_time" content="{{.OGArticleModified}}" />
+{{range .OGArticleTags}}<meta property="article:tag" content="{{.}}" />
+{{end}}{{end}}<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{.Title}}" />
+<meta name="twitter:description" content="{{.Description}}" />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="stylesheet" href="/static/app.css" />
+<link rel="icon" href="/static/hero-poster.svg" type="image/svg+xml" />
+<script>
+  (function () {
+    try {
+      var t = document.cookie.match(/(?:^|; )theme=([^;]+)/);
+      var theme = t ? t[1] : "dark";
+      if (theme === "light") document.documentElement.classList.remove("dark");
+      else document.documentElement.classList.add("dark");
+    } catch (e) {}
+  })();
+</script>
+{{if .JSONLDSite}}<script type="application/ld+json">{{.JSONLDSite}}</script>
+{{end}}{{if .JSONLDArticle}}<script type="application/ld+json">{{.JSONLDArticle}}</script>
+{{end}}{{end}}

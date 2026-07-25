@@ -1,0 +1,15 @@
+# Build artifacts
+/bin/
+/dist/
+/server
+
+# Dependencies
+/node_modules/
+
+# Runtime databases (WAL/SHM are not covered by the repo-root *.db rule)
+*.db
+*.db-shm
+*.db-wal
+
+# Local env (secrets); the example is committed
+.env

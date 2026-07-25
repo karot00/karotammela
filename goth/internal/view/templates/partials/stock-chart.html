@@ -1,0 +1,115 @@
+{{define "stock-chart"}}
+<div id="stock-chart-wrap" x-data="stockChart()" class="space-y-4">
+  <form method="get" action="/{{.Locale}}/dashboard" x-on:submit.prevent>
+    <input type="hidden" name="view" value="ai-pulse" />
+    <label for="ticker-select" class="text-xs font-semibold text-muted-foreground">{{.AiPulseTickerLabel}}</label>
+    <select id="ticker-select" name="ticker" @change="onChange($event)"
+      onchange="this.form.requestSubmit ? this.form.requestSubmit() : this.form.submit()"
+      class="mt-1 block w-full rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring sm:w-auto">
+      {{range .StockTickers}}
+        <option value="{{.Ticker}}" {{if eq $.StockInitialTicker .Ticker}}selected{{end}}>{{.Name}} ({{.Ticker}})</option>
+      {{end}}
+    </select>
+  </form>
+
+  <div x-ref="chart" id="stock-chart-canvas" class="mt-2 h-64 w-full" role="img"
+    aria-label="{{.StockCompanyName}} {{.AiPulseStockChartAria}}"></div>
+
+  <script id="stock-chart-data" type="application/json">{{.StockInitialDataJSON}}</script>
+
+  <div class="mt-2 overflow-x-auto">
+    <table class="w-full text-xs text-muted-foreground">
+      <caption class="sr-only">{{.AiPulseStockTableCaption}}</caption>
+      <thead>
+        <tr class="border-b border-border text-left">
+          <th scope="col" class="py-1 pr-4 font-medium">{{.AiPulseStockDateLabel}}</th>
+          <th scope="col" class="py-1 font-medium">{{.AiPulseStockCloseLabel}}</th>
+        </tr>
+      </thead>
+      <tbody id="stock-chart-tbody">
+        {{range .StockInitialData}}
+          <tr class="border-b border-border/60">
+            <td class="py-1 pr-4">{{.Date}}</td>
+            <td class="py-1">${{printf "%.2f" .Close}}</td>
+          </tr>
+        {{else}}
+          <tr><td colspan="2" class="py-3 text-center">{{.AiPulseNoStocksLabel}}</td></tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="/static/lightweight-charts.standalone.production.js"></script>
+<script>
+  function stockChart() {
+    return {
+      ticker: '{{.StockInitialTicker}}',
+      chart: null,
+      init() {
+        var self = this;
+        var dataEl = document.getElementById('stock-chart-data');
+        var initial = dataEl ? JSON.parse(dataEl.textContent) : [];
+        self.renderChart(self.$refs.chart, initial);
+        window.addEventListener('resize', function () {
+          if (self.chart && self.$refs.chart) {
+            self.chart.resize(self.$refs.chart.clientWidth, 256);
+          }
+        });
+      },
+      renderChart(container, rows) {
+        if (typeof LightweightCharts === 'undefined' || !container) return;
+        if (this.chart) { this.chart.remove(); this.chart = null; }
+        var chart = LightweightCharts.createChart(container, {
+          width: container.clientWidth,
+          height: 256,
+          layout: { background: { color: 'transparent' }, textColor: '#a1a1aa' },
+          grid: {
+            vertLines: { color: 'rgba(255,255,255,0.06)' },
+            horzLines: { color: 'rgba(255,255,255,0.06)' }
+          },
+          rightPriceScale: { borderColor: 'rgba(255,255,255,0.1)' },
+          timeScale: { borderColor: 'rgba(255,255,255,0.1)' },
+          crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
+        });
+        var series = chart.addSeries(LightweightCharts.AreaSeries, {
+          lineColor: '#00d2ff',
+          topColor: 'rgba(0,210,255,0.2)',
+          bottomColor: 'rgba(0,210,255,0)',
+          lineWidth: 2,
+          priceLineVisible: false
+        });
+        series.setData(rows.map(function (r) { return { time: r.date, value: r.close }; }));
+        chart.timeScale().fitContent();
+        this.chart = chart;
+      },
+      onChange(e) {
+        var next = e.target.value;
+        if (next === this.ticker) return;
+        this.ticker = next;
+        var self = this;
+        fetch('/api/ai-pulse/stocks?ticker=' + encodeURIComponent(next))
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (json) {
+            if (!json) return;
+            self.renderChart(self.$refs.chart, json.data);
+            self.updateTable(json.data);
+          })
+          .catch(function () {});
+      },
+      updateTable(rows) {
+        var tbody = document.getElementById('stock-chart-tbody');
+        if (!tbody) return;
+        if (!rows || rows.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="2" class="py-3 text-center">{{.AiPulseNoStocksLabel}}</td></tr>';
+          return;
+        }
+        tbody.innerHTML = rows.map(function (r) {
+          var c = (r.close != null) ? '$' + Number(r.close).toFixed(2) : '';
+          return '<tr class="border-b border-border/60"><td class="py-1 pr-4">' + r.date + '</td><td class="py-1">' + c + '</td></tr>';
+        }).join('');
+      }
+    };
+  }
+</script>
+{{end}}

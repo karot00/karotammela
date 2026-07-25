@@ -1,0 +1,264 @@
+package handler
+
+import (
+	"context"
+	"database/sql"
+	"encoding/json"
+	"net/http"
+	"net/url"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/go-chi/chi/v5"
+
+	"goth/internal/ai"
+	"goth/internal/aipulse"
+	"goth/internal/config"
+	"goth/internal/email"
+	"goth/internal/i18n"
+	"goth/internal/security"
+	"goth/internal/view"
+)
+
+// MailSender delivers a contact email. Implemented by email.ResendSender;
+// nil means contact delivery is not configured (503).
+type MailSender interface {
+	Send(ctx context.Context, msg email.ContactMessage) error
+}
+
+// Handlers bundles shared dependencies.
+type Handlers struct {
+	cfg       *config.Config
+	view      *view.Renderer
+	conn      *sql.DB
+	gemini    *ai.GeminiStreamer
+	mailer    MailSender
+	refresher *aipulse.Refresher
+}
+
+// New builds the handler set.
+func New(cfg *config.Config, vr *view.Renderer, conn *sql.DB, g *ai.GeminiStreamer, mailer MailSender) *Handlers {
+	return &Handlers{cfg: cfg, view: vr, conn: conn, gemini: g, mailer: mailer}
+}
+
+// SetRefresher installs the AI Pulse refresh orchestrator used by
+// POST /api/ai-pulse/refresh. nil (the default) makes the endpoint 503.
+func (h *Handlers) SetRefresher(r *aipulse.Refresher) {
+	h.refresher = r
+}
+
+func themeFromCookie(r *http.Request) string {
+	c, err := r.Cookie("theme")
+	if err != nil || c.Value == "" {
+		return "dark"
+	}
+	if c.Value == "light" {
+		return "light"
+	}
+	return "dark"
+}
+
+func switchURLs(r *http.Request, locale string) (string, string) {
+	parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
+	if len(parts) == 0 || parts[0] == "" {
+		return "/en", "/fi"
+	}
+	other := make([]string, len(parts))
+	copy(other, parts)
+	other[0] = "en"
+	en := "/" + strings.Join(other, "/")
+	other[0] = "fi"
+	fi := "/" + strings.Join(other, "/")
+	return en, fi
+}
+
+func (h *Handlers) common(r *http.Request, locale string) map[string]any {
+	tr := func(key string) string { return i18n.T(locale, key) }
+	en, fi := switchURLs(r, locale)
+	consent := security.DefaultConsentState()
+	if c, err := r.Cookie(security.ConsentCookieName); err == nil {
+		consent = security.ParseConsentState(c.Value, time.Now())
+	}
+	canonical, ogURL, links := localizedAlternates(h.cfg, r.URL.Path)
+	base := strings.TrimRight(h.cfg.BaseURL, "/")
+	return map[string]any{
+		"Locale":      locale,
+		"Theme":       themeFromCookie(r),
+		"Tr":          tr,
+		"Title":       tr("metadata.title"),
+		"Description": tr("metadata.description"),
+		// Canonical mirrors getLocalizedAlternates: the default-locale URL of
+		// this path (avoids duplicate-content during the stack experiment).
+		"Canonical": canonical,
+		// og:url is the absolute URL of the current page (reference openGraph.url).
+		"OGURL":      ogURL,
+		"Hreflangs":  links,
+		"OGType":     "website",
+		"SiteName":   siteName,
+		"OGImage":    base + siteOGImagePath,
+		"OGImageAlt": siteOGImageAlt,
+		"SwitchToEn": en,
+		"SwitchToFi": fi,
+		// Comparison origins for the Tech Switcher (cross-origin redirect) and
+		// the performance widget (direct client-side pings). Go is the apex,
+		// Next.js is hosted on its own Vercel subdomain (2026-07-25 decision).
+		"GoURL":   strings.TrimRight(h.cfg.BaseURL, "/"),
+		"NextURL": strings.TrimRight(h.cfg.NextURL, "/"),
+		"Year":    time.Now().Year(),
+		// Global WebSite + publisher Person JSON-LD (src/app/layout.tsx).
+		"JSONLDSite": websiteJSONLD(h.cfg),
+		// SSR gate for the consent banner: render only until the first
+		// stored decision (mirrors isBannerRequired in the Next.js layout).
+		"ConsentBannerRequired": security.IsConsentBannerRequired(consent),
+	}
+}
+
+func (h *Handlers) render(w http.ResponseWriter, name string, data map[string]any) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	if err := h.view.Render(w, name, data); err != nil {
+		http.Error(w, "render error: "+err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func (h *Handlers) resolveLocale(r *http.Request) string {
+	loc := chi.URLParam(r, "locale")
+	if !i18n.Exists(loc) {
+		return i18n.DefaultLocale
+	}
+	return loc
+}
+
+func (h *Handlers) hasUnlockedBefore(r *http.Request) bool {
+	if h.cfg.UnlockCookieSecret == "" {
+		return false
+	}
+	c, err := r.Cookie("karot_unlock")
+	if err != nil {
+		return false
+	}
+	return security.VerifyUnlockCookieValue(c.Value, h.cfg.UnlockCookieSecret) != nil
+}
+
+func (h *Handlers) sentinelConfig(r *http.Request, locale string) string {
+	tr := func(key string) string { return i18n.T(locale, key) }
+	cfg := map[string]any{
+		"locale":              locale,
+		"accessCode":          ai.GetAccessCode(),
+		"hasUnlockedBefore":   h.hasUnlockedBefore(r),
+		"dashboardPath":       "/" + locale + "/dashboard",
+		"homePath":            "/" + locale,
+		"title":               tr("home.sentinel.title"),
+		"subtitle":            tr("home.sentinel.subtitle"),
+		"meterLabel":          tr("home.sentinel.meterLabel"),
+		"inputPlaceholder":    tr("home.sentinel.inputPlaceholder"),
+		"sendLabel":           tr("home.sentinel.sendLabel"),
+		"resetLabel":          tr("home.sentinel.resetLabel"),
+		"initialMessage":      tr("home.sentinel.initialMessage"),
+		"unlockedLabel":       tr("home.sentinel.unlockedLabel"),
+		"unlockedCta":         tr("home.sentinel.unlockedCta"),
+		"pendingLabel":        tr("home.sentinel.pendingLabel"),
+		"errorLabel":          tr("home.sentinel.errorLabel"),
+		"returnOverlayTitle":  tr("home.sentinel.returnOverlayTitle"),
+		"returnOverlayBody":   tr("home.sentinel.returnOverlayBody"),
+		"playAgainLabel":      tr("home.sentinel.playAgainLabel"),
+		"goDashboardLabel":    tr("home.sentinel.goDashboardLabel"),
+		"bypassInstructions":  tr("home.sentinel.bypassInstructions"),
+		"revealPasscodeLabel": tr("home.sentinel.revealPasscodeLabel"),
+		"passcodeLabel":       tr("home.sentinel.passcodeLabel"),
+		"copyPasscodeLabel":   tr("home.sentinel.copyPasscodeLabel"),
+		"copiedPasscodeLabel": tr("home.sentinel.copiedPasscodeLabel"),
+		"directUnlockMessage": tr("home.sentinel.directUnlockMessage"),
+	}
+	b, _ := json.Marshal(cfg)
+	// Guard against a literal "</" breaking out of the <script> JSON block.
+	return strings.ReplaceAll(string(b), "</", "<\\/")
+}
+
+func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
+	locale := h.resolveLocale(r)
+	data := h.common(r, locale)
+	tr := func(key string) string { return i18n.T(locale, key) }
+	data["Badge"] = tr("home.phaseLabel")
+	data["Intro"] = tr("home.intro")
+	data["Body1"] = tr("home.body1")
+	data["Body2"] = tr("home.body2")
+	data["Body3"] = tr("home.body3")
+	data["SentinelConfig"] = h.sentinelConfig(r, locale)
+	h.render(w, "home", data)
+}
+
+func (h *Handlers) Privacy(w http.ResponseWriter, r *http.Request) {
+	locale := h.resolveLocale(r)
+	data := h.common(r, locale)
+	h.render(w, "privacy", data)
+}
+
+func (h *Handlers) Ping(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
+	h.setPingCORS(w, r)
+	w.Header().Set("Cache-Control", "no-store")
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	target := r.URL.Query().Get("target")
+	if target == "next" {
+		ms := h.pingNext(r.Context())
+		if ms == nil {
+			w.Write([]byte(`{"stack":"next","ms":null}`))
+			return
+		}
+		w.Write([]byte(`{"stack":"next","ms":` + strconv.Itoa(*ms) + `}`))
+		return
+	}
+	ms := int(time.Since(start).Milliseconds())
+	w.Write([]byte(`{"stack":"go","ms":` + strconv.Itoa(ms) + `}`))
+}
+
+// setPingCORS allows the cross-origin performance widget to fetch /api/ping.
+// The Next.js comparison build (served from NextURL) pings Go client-side, so
+// its origin must be allow-listed. The Origin is reflected only when it matches
+// a known comparison origin; unknown origins receive no ACAO header.
+func (h *Handlers) setPingCORS(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Vary", "Origin")
+	origin := r.Header.Get("Origin")
+	if origin == "" {
+		return
+	}
+	allowed := map[string]bool{
+		strings.TrimRight(h.cfg.NextURL, "/"): true,
+		strings.TrimRight(h.cfg.BaseURL, "/"): true,
+	}
+	if !allowed[origin] {
+		return
+	}
+	w.Header().Set("Access-Control-Allow-Origin", origin)
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Max-Age", "86400")
+}
+
+func (h *Handlers) pingNext(ctx context.Context) *int {
+	raw := h.cfg.NextPingURL
+	if raw == "" {
+		return nil
+	}
+	u, err := url.Parse(raw)
+	if err != nil {
+		return nil
+	}
+	client := &http.Client{Timeout: 3 * time.Second}
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+	if err != nil {
+		return nil
+	}
+	start := time.Now()
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil
+	}
+	defer resp.Body.Close()
+	ms := int(time.Since(start).Milliseconds())
+	return &ms
+}

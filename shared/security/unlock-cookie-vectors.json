@@ -1,0 +1,182 @@
+{
+  "description": "Phase 12.5f golden vectors proving karot_unlock cookie interoperability between the Next.js reference (src/lib/security/unlock-cookie.ts) and the Go port (goth/internal/security/security.go). createdBy records which stack minted the value; both stacks must (a) reproduce every create-parity value byte-for-byte from its payload and (b) accept/reject every value per expectVerify. Created-by-Go vectors are appended by goth/test/genvectors, not by this script.",
+  "spec": {
+    "valueFormat": "base64url(JSON payload, no padding) + '.' + base64url(HMAC-SHA256(secret, payload-part), no padding)",
+    "payloadKeyOrder": [
+      "sessionId",
+      "locale",
+      "unlockedAt"
+    ],
+    "validation": "HMAC compared first (constant time, length-checked); then each field must be present with the right JSON type (string, string, number). Empty strings and unlockedAt=0 are ACCEPTED (reference typeof semantics, explicitly resolved in 12.5f). Missing keys, null, and wrong JSON types are rejected.",
+    "cookieAttributes": {
+      "name": "karot_unlock",
+      "path": "/",
+      "httpOnly": true,
+      "sameSite": "Lax",
+      "secure": "production only",
+      "maxAgeSeconds": 1209600
+    }
+  },
+  "vectors": [
+    {
+      "name": "node-basic",
+      "createdBy": "node",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": {
+        "sessionId": "sess-abc123",
+        "locale": "fi",
+        "unlockedAt": 1780000000000
+      },
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLWFiYzEyMyIsImxvY2FsZSI6ImZpIiwidW5sb2NrZWRBdCI6MTc4MDAwMDAwMDAwMH0.sV9eRStlYCiWMgp2icf0Y_VCrbHj7tIUqj2oXjKGK5s",
+      "expectVerify": true,
+      "note": "create-parity: the other stack must reproduce this value byte-for-byte"
+    },
+    {
+      "name": "node-unicode",
+      "createdBy": "node",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": {
+        "sessionId": "sess-\u003cä\u003e\u0026ö-🚀-\"quote\"",
+        "locale": "en",
+        "unlockedAt": 1780000123456
+      },
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLTzDpD4mw7Yt8J-agC1cInF1b3RlXCIiLCJsb2NhbGUiOiJlbiIsInVubG9ja2VkQXQiOjE3ODAwMDAxMjM0NTZ9.csmfKDoNuE1b1Q-eXRMfKgUpns2ns-fEGDavSUxGCs4",
+      "expectVerify": true,
+      "note": "multibyte + HTML-escape chars (\u003c, \u0026, quotes): JSON.stringify emits them raw; Go must too (SetEscapeHTML(false))"
+    },
+    {
+      "name": "node-empty-fields",
+      "createdBy": "node",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": {
+        "sessionId": "",
+        "locale": "",
+        "unlockedAt": 0
+      },
+      "value": "eyJzZXNzaW9uSWQiOiIiLCJsb2NhbGUiOiIiLCJ1bmxvY2tlZEF0IjowfQ.Npk7AimPA9WkGNn2zSEZczCU-o7lCCPQnq65sRf2CPo",
+      "expectVerify": true,
+      "note": "12.5f explicit resolution: empty strings and unlockedAt=0 PASS the reference typeof checks; both stacks accept"
+    },
+    {
+      "name": "signed-wrong-type-sessionid",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "eyJzZXNzaW9uSWQiOjEyMywibG9jYWxlIjoiZmkiLCJ1bmxvY2tlZEF0IjoxNzgwMDAwMDAwMDAwfQ.zi-qPdHr_zRNzhUtyjwJZpXhNzyYmhTfb0P5N7dLJmM",
+      "expectVerify": false,
+      "note": "valid HMAC but sessionId is a number: rejected by typeof check (Node) / unmarshal type error (Go)"
+    },
+    {
+      "name": "signed-missing-locale",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLXgiLCJ1bmxvY2tlZEF0IjoxNzgwMDAwMDAwMDAwfQ.22JLP_VR7HufhgqY2EkKuci1FMjIxl3d3qnpkbnn-UE",
+      "expectVerify": false,
+      "note": "valid HMAC but locale key absent: rejected by both stacks"
+    },
+    {
+      "name": "signed-null-fields",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "eyJzZXNzaW9uSWQiOm51bGwsImxvY2FsZSI6bnVsbCwidW5sb2NrZWRBdCI6bnVsbH0.9qvMnyXggNU9QEFf-SMsUMh0VY5QxxfbrptigkpIgVI",
+      "expectVerify": false,
+      "note": "null is not string/number: rejected by both stacks"
+    },
+    {
+      "name": "tampered-signature",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLWFiYzEyMyIsImxvY2FsZSI6ImZpIiwidW5sb2NrZWRBdCI6MTc4MDAwMDAwMDAwMH0.sV9eRStlYCiWMgp2icf0Y_VCrbHj7tIUqj2oXjKGK5A",
+      "expectVerify": false,
+      "note": "last signature char flipped: HMAC comparison fails"
+    },
+    {
+      "name": "tampered-payload",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLTzDpD4mw7Yt8J-agC1cInF1b3RlXCIiLCJsb2NhbGUiOiJlbiIsInVubG9ja2VkQXQiOjE3ODAwMDAxMjM0NTZ9.sV9eRStlYCiWMgp2icf0Y_VCrbHj7tIUqj2oXjKGK5s",
+      "expectVerify": false,
+      "note": "payload swapped under another cookie's signature: HMAC mismatch"
+    },
+    {
+      "name": "wrong-secret",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "verifySecret": "not-the-right-secret",
+      "payload": null,
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLWFiYzEyMyIsImxvY2FsZSI6ImZpIiwidW5sb2NrZWRBdCI6MTc4MDAwMDAwMDAwMH0.sV9eRStlYCiWMgp2icf0Y_VCrbHj7tIUqj2oXjKGK5s",
+      "expectVerify": false,
+      "note": "valid cookie, wrong verification secret"
+    },
+    {
+      "name": "malformed-no-dot",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "bm90LWEtY29va2ll",
+      "expectVerify": false,
+      "note": "no separator"
+    },
+    {
+      "name": "malformed-empty-payload",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": ".c2ln",
+      "expectVerify": false,
+      "note": "empty payload part"
+    },
+    {
+      "name": "malformed-empty-signature",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": null,
+      "value": "cGF5bG9hZA.",
+      "expectVerify": false,
+      "note": "empty signature part"
+    },
+    {
+      "name": "extra-segments-ignored",
+      "createdBy": "manual",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": {
+        "sessionId": "sess-abc123",
+        "locale": "fi",
+        "unlockedAt": 1780000000000
+      },
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLWFiYzEyMyIsImxvY2FsZSI6ImZpIiwidW5sb2NrZWRBdCI6MTc4MDAwMDAwMDAwMH0.sV9eRStlYCiWMgp2icf0Y_VCrbHj7tIUqj2oXjKGK5s.extra",
+      "expectVerify": true,
+      "note": "the reference split('.') keeps only segments 0 and 1, so trailing segments are ignored; both stacks accept (aligned in 12.5f)"
+    },
+    {
+      "name": "go-basic",
+      "createdBy": "go",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": {
+        "sessionId": "sess-go-42",
+        "locale": "en",
+        "unlockedAt": 1784897414046
+      },
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLWdvLTQyIiwibG9jYWxlIjoiZW4iLCJ1bmxvY2tlZEF0IjoxNzg0ODk3NDE0MDQ2fQ.xn6nxGs7E33-CO8hrBoXkbMkVVa949KE6PVbcQoQlkk",
+      "expectVerify": true,
+      "note": "minted by internal/security.CreateUnlockCookieValue; Node must reproduce and accept"
+    },
+    {
+      "name": "go-unicode",
+      "createdBy": "go",
+      "secret": "golden-vector-secret-0123456789abcdef",
+      "payload": {
+        "sessionId": "sess-åö-🚀-\u003c\u0026\u003e",
+        "locale": "fi",
+        "unlockedAt": 1784897414046
+      },
+      "value": "eyJzZXNzaW9uSWQiOiJzZXNzLcOlw7Yt8J-agC08Jj4iLCJsb2NhbGUiOiJmaSIsInVubG9ja2VkQXQiOjE3ODQ4OTc0MTQwNDZ9.CmhybpJeUwCBRtudQpCww3XDJG9Nhf9TOi6TCsIeXCo",
+      "expectVerify": true,
+      "note": "multibyte + HTML-escape chars; Go marshals with SetEscapeHTML(false) for JSON.stringify byte parity"
+    }
+  ]
+}

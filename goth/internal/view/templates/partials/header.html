@@ -1,0 +1,29 @@
+{{define "header"}}
+<header class="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href="/{{.Locale}}" class="text-sm font-semibold tracking-[0.18em] text-foreground uppercase">
+      Karo Tammela
+    </a>
+    <nav class="flex items-center gap-2 sm:gap-3" aria-label="Primary">
+      <a href="/{{.Locale}}" class="hidden text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground sm:inline">{{call .Tr "home.phaseLabel"}}</a>
+      <a href="/{{.Locale}}/blog" class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">Blog</a>
+      <a href="/{{.Locale}}/privacy" class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">Privacy</a>
+        <div class="flex items-center gap-1 rounded-md border border-border/60 p-0.5" role="group" aria-label="{{call .Tr "localeSwitcher.label"}}">
+        <a href="{{.SwitchToEn}}" class="rounded px-2 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition-colors {{if eq .Locale "en"}}bg-primary/20 text-primary{{else}}text-muted-foreground hover:text-foreground{{end}}">EN</a>
+        <a href="{{.SwitchToFi}}" class="rounded px-2 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition-colors {{if eq .Locale "fi"}}bg-primary/20 text-primary{{else}}text-muted-foreground hover:text-foreground{{end}}">FI</a>
+      </div>
+      <button
+        type="button"
+        x-data="{ dark: document.documentElement.classList.contains('dark') }"
+        @click="dark = !dark; document.documentElement.classList.toggle('dark', dark); document.cookie='theme=' + (dark ? 'dark' : 'light') + ';path=/;max-age=31536000';"
+        class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border/60 text-muted-foreground transition-colors hover:text-foreground"
+        :aria-label="dark ? 'Switch to light' : 'Switch to dark'"
+        title="Toggle theme"
+      >
+        <span x-show="dark" x-cloak>☀</span>
+        <span x-show="!dark" x-cloak>☾</span>
+      </button>
+    </nav>
+  </div>
+</header>
+{{end}}

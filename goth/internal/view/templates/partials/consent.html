@@ -1,0 +1,322 @@
+{{/*
+  Cookie consent banner + preferences modal.
+
+  Port of the Next.js reference components (src/components/cookie-consent-banner.tsx,
+  src/components/cookie-consent-preferences.tsx) backed by the shared contract in
+  src/modules/cookie-consent/*. Markup and classes mirror the reference; React
+  context state becomes a single Alpine component (gothConsent) shared by both
+  widgets, exposed globally as window.__gothConsent for the dashboard settings
+  trigger.
+
+  The banner is server-gated by .ConsentBannerRequired (karot_consent missing or
+  unset): it renders only while no decision is stored, so it neither flashes nor
+  reappears after a choice. The modal always renders (x-cloak hidden) so
+  window.__gothConsent.open() works from any page.
+
+  The storage inventory rows mirror src/modules/cookie-consent/config.ts
+  verbatim; the reference does not localize item purposes/durations, so these
+  strings are intentionally identical in both locales.
+*/}}
+{{define "consent"}}
+{{$btn := "inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded-md border border-transparent px-2.5 text-[0.8rem] font-medium whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50"}}
+<div x-data="gothConsent()" x-init="boot()" class="contents">
+  {{if .ConsentBannerRequired}}
+  <aside
+    x-show="bannerVisible"
+    class="fixed right-3 bottom-3 z-50 w-[min(24rem,calc(100vw-1.5rem))] rounded-xl border border-border/80 bg-card/95 p-4 text-card-foreground shadow-[0_18px_44px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:right-5 sm:bottom-5"
+    aria-live="polite"
+    aria-label="{{call .Tr "cookieConsent.banner.ariaLabel"}}"
+  >
+    <p class="text-[0.72rem] font-semibold tracking-[0.15em] text-primary uppercase">{{call .Tr "cookieConsent.banner.eyebrow"}}</p>
+    <h2 class="mt-1 text-base font-semibold">{{call .Tr "cookieConsent.banner.title"}}</h2>
+    <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{{call .Tr "cookieConsent.banner.description"}}</p>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button type="button" @click="acceptAll()" class="{{$btn}} bg-primary text-primary-foreground shadow-sm hover:bg-primary/90">{{call .Tr "cookieConsent.banner.acceptAll"}}</button>
+      <button type="button" @click="rejectNonEssential()" class="{{$btn}} bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80">{{call .Tr "cookieConsent.banner.rejectNonEssential"}}</button>
+      <button type="button" @click="openSettings()" class="{{$btn}} hover:bg-accent hover:text-accent-foreground">{{call .Tr "cookieConsent.banner.manageSettings"}}</button>
+    </div>
+  </aside>
+  {{end}}
+
+  <div
+    x-show="settingsOpen"
+    x-cloak
+    class="fixed inset-0 z-[60] flex items-end justify-center overflow-y-auto bg-black/55 p-3 sm:items-center sm:p-4"
+    role="presentation"
+    @mousedown.self="closeSettings()"
+    @keydown.window="settingsOpen && onDialogKeydown($event)"
+  >
+    <section
+      x-ref="panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="consent-preferences-title"
+      class="my-auto flex max-h-[96svh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-[0_24px_60px_rgba(0,0,0,0.42)]"
+    >
+      <header class="border-b border-border/80 px-5 py-4 sm:px-6">
+        <p class="text-[0.7rem] font-semibold tracking-[0.16em] text-primary uppercase">{{call .Tr "cookieConsent.preferences.eyebrow"}}</p>
+        <h2 id="consent-preferences-title" class="mt-1 text-lg font-semibold text-card-foreground">{{call .Tr "cookieConsent.preferences.title"}}</h2>
+        <p class="mt-1 text-sm text-muted-foreground">{{call .Tr "cookieConsent.preferences.description"}}</p>
+      </header>
+
+      <div class="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-4 pb-5 sm:px-6 sm:pb-6">
+        {{template "consentCategory" dict "Tr" .Tr "Category" "essential" "Required" true "Title" (call .Tr "cookieConsent.categories.essential.title") "Description" (call .Tr "cookieConsent.categories.essential.description")}}
+        {{template "consentCategory" dict "Tr" .Tr "Category" "functional" "Required" false "Title" (call .Tr "cookieConsent.categories.functional.title") "Description" (call .Tr "cookieConsent.categories.functional.description")}}
+        {{template "consentCategory" dict "Tr" .Tr "Category" "analytics" "Required" false "Title" (call .Tr "cookieConsent.categories.analytics.title") "Description" (call .Tr "cookieConsent.categories.analytics.description")}}
+        {{template "consentCategory" dict "Tr" .Tr "Category" "marketing" "Required" false "Title" (call .Tr "cookieConsent.categories.marketing.title") "Description" (call .Tr "cookieConsent.categories.marketing.description")}}
+      </div>
+
+      <footer class="sticky bottom-0 flex flex-wrap items-center justify-end gap-2 border-t border-border/80 bg-card px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6">
+        <button type="button" @click="closeSettings()" class="{{$btn}} hover:bg-accent hover:text-accent-foreground">{{call .Tr "cookieConsent.actions.cancel"}}</button>
+        <button type="button" @click="rejectNonEssential()" class="{{$btn}} bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80">{{call .Tr "cookieConsent.actions.rejectNonEssential"}}</button>
+        <button type="button" @click="acceptAll()" class="{{$btn}} bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80">{{call .Tr "cookieConsent.actions.acceptAll"}}</button>
+        <button type="button" @click="savePreferences()" class="{{$btn}} bg-primary text-primary-foreground shadow-sm hover:bg-primary/90">{{call .Tr "cookieConsent.actions.savePreferences"}}</button>
+      </footer>
+    </section>
+  </div>
+</div>
+
+<script>
+  // gothConsent is the Alpine port of the Next.js CookieConsentProvider
+  // (context.tsx) plus the storage helpers (storage.ts). The cookie contract
+  // — name karot_consent, percent-encoded JSON, schema version 1, 180-day
+  // Max-Age, SameSite=Lax, Secure on https, essential always true, banner
+  // gated on the unset updatedAt sentinel — is identical in both stacks.
+  var GOTH_CONSENT_COOKIE = 'karot_consent';
+  var GOTH_CONSENT_UNSET = '1970-01-01T00:00:00.000Z';
+  var GOTH_CONSENT_MAX_AGE = 60 * 60 * 24 * 180;
+
+  function gothConsentDefaultState() {
+    return {
+      version: 1,
+      updatedAt: GOTH_CONSENT_UNSET,
+      categories: { essential: true, functional: false, analytics: false, marketing: false }
+    };
+  }
+
+  function gothConsentParse(value) {
+    if (!value) return gothConsentDefaultState();
+    try {
+      var parsed = JSON.parse(decodeURIComponent(value));
+      if (!parsed || typeof parsed !== 'object' || !('categories' in parsed)) {
+        return gothConsentDefaultState();
+      }
+      var cats = parsed.categories || {};
+      var updatedAt = (typeof parsed.updatedAt === 'string' && !Number.isNaN(Date.parse(parsed.updatedAt)))
+        ? new Date(parsed.updatedAt).toISOString()
+        : new Date().toISOString();
+      return {
+        version: 1,
+        updatedAt: updatedAt,
+        categories: {
+          essential: true,
+          functional: typeof cats.functional === 'boolean' ? cats.functional : false,
+          analytics: typeof cats.analytics === 'boolean' ? cats.analytics : false,
+          marketing: typeof cats.marketing === 'boolean' ? cats.marketing : false
+        }
+      };
+    } catch (e) {
+      return gothConsentDefaultState();
+    }
+  }
+
+  function gothConsentRead() {
+    var pair = document.cookie
+      .split(';')
+      .map(function (entry) { return entry.trim(); })
+      .find(function (entry) { return entry.indexOf(GOTH_CONSENT_COOKIE + '=') === 0; });
+    if (!pair) return gothConsentDefaultState();
+    return gothConsentParse(pair.slice(GOTH_CONSENT_COOKIE.length + 1));
+  }
+
+  function gothConsentWrite(state) {
+    var securePart = (typeof location !== 'undefined' && location.protocol === 'https:') ? '; Secure' : '';
+    document.cookie = GOTH_CONSENT_COOKIE + '=' + encodeURIComponent(JSON.stringify(state)) +
+      '; Path=/; Max-Age=' + GOTH_CONSENT_MAX_AGE + '; SameSite=Lax' + securePart;
+  }
+
+  function gothConsentBuild(categories) {
+    return {
+      version: 1,
+      updatedAt: new Date().toISOString(),
+      categories: {
+        essential: true,
+        functional: categories.functional === true,
+        analytics: categories.analytics === true,
+        marketing: categories.marketing === true
+      }
+    };
+  }
+
+  function gothConsent() {
+    return {
+      consent: gothConsentDefaultState(),
+      bannerVisible: false,
+      settingsOpen: false,
+      draft: null,
+      focusableSelector: "a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex='-1'])",
+      _prevOverflow: '',
+      boot() {
+        this.consent = gothConsentRead();
+        this.bannerVisible = this.consent.updatedAt === GOTH_CONSENT_UNSET;
+        var self = this;
+        window.__gothConsent = {
+          open: function () { self.openSettings(); },
+          close: function () { self.closeSettings(); }
+        };
+        this.$watch('settingsOpen', function (open) {
+          if (open) {
+            self._prevOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            self.$nextTick(function () {
+              var first = self.$refs.panel ? self.$refs.panel.querySelector(self.focusableSelector) : null;
+              if (first) first.focus();
+            });
+          } else {
+            document.body.style.overflow = self._prevOverflow;
+          }
+        });
+      },
+      currentDraft() {
+        return this.draft ? this.draft : this.consent.categories;
+      },
+      toggle(category, checked) {
+        var base = this.currentDraft();
+        var next = {
+          essential: true,
+          functional: base.functional,
+          analytics: base.analytics,
+          marketing: base.marketing
+        };
+        next[category] = checked;
+        this.draft = next;
+      },
+      persist(state) {
+        this.consent = state;
+        gothConsentWrite(state);
+        this.bannerVisible = state.updatedAt === GOTH_CONSENT_UNSET;
+      },
+      acceptAll() {
+        this.persist(gothConsentBuild({ functional: true, analytics: true, marketing: true }));
+        this.settingsOpen = false;
+      },
+      rejectNonEssential() {
+        this.persist(gothConsentBuild({ functional: false, analytics: false, marketing: false }));
+        this.settingsOpen = false;
+      },
+      savePreferences() {
+        this.persist(gothConsentBuild(this.currentDraft()));
+        this.draft = null;
+        this.settingsOpen = false;
+      },
+      openSettings() {
+        this.settingsOpen = true;
+      },
+      closeSettings() {
+        this.draft = null;
+        this.settingsOpen = false;
+      },
+      onDialogKeydown(event) {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          this.closeSettings();
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        var panel = this.$refs.panel;
+        if (!panel) return;
+        var nodes = Array.prototype.slice.call(panel.querySelectorAll(this.focusableSelector));
+        if (nodes.length === 0) return;
+        var first = nodes[0];
+        var last = nodes[nodes.length - 1];
+        var active = document.activeElement;
+        if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        }
+      }
+    };
+  }
+</script>
+{{end}}
+
+{{/* One consent category card: title, description, toggle, and the storage
+     inventory table for that category. Data comes from a dict call in the
+     consent define: Tr, Category, Required, Title, Description. */}}
+{{define "consentCategory"}}
+<article class="rounded-xl border border-border bg-muted/20 p-4">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h3 class="text-sm font-semibold text-card-foreground">{{.Title}}</h3>
+      <p class="mt-1 text-sm text-muted-foreground">{{.Description}}</p>
+    </div>
+
+    <label for="consent-toggle-{{.Category}}" class="inline-flex items-center gap-3 self-start">
+      <input
+        id="consent-toggle-{{.Category}}"
+        type="checkbox"
+        :checked="currentDraft().{{.Category}}"
+        {{if .Required}}disabled{{end}}
+        @change="toggle('{{.Category}}', $event.currentTarget.checked)"
+        class="h-4 w-4 rounded border-border accent-primary disabled:cursor-not-allowed disabled:opacity-70"
+      />
+      <span class="text-xs font-medium text-muted-foreground">{{if .Required}}{{call .Tr "cookieConsent.categories.alwaysActive"}}{{else}}{{call .Tr "cookieConsent.categories.optional"}}{{end}}</span>
+    </label>
+  </div>
+
+  {{if eq .Category "marketing"}}
+  <p class="mt-3 text-xs text-muted-foreground">{{call .Tr "cookieConsent.inventory.emptyCategory"}}</p>
+  {{else}}
+  <details class="mt-3 rounded-lg border border-border/80 bg-card/60">
+    <summary class="cursor-pointer px-3 py-2 text-xs font-medium text-muted-foreground sm:text-sm">{{call .Tr "cookieConsent.inventory.detailsLabel"}}</summary>
+    <div class="overflow-hidden border-t border-border/80">
+      <table class="w-full border-collapse text-left text-xs sm:text-sm">
+        <thead class="bg-muted/40 text-muted-foreground">
+          <tr>
+            <th class="px-3 py-2 font-medium">{{call .Tr "cookieConsent.inventory.name"}}</th>
+            <th class="px-3 py-2 font-medium">{{call .Tr "cookieConsent.inventory.provider"}}</th>
+            <th class="px-3 py-2 font-medium">{{call .Tr "cookieConsent.inventory.purpose"}}</th>
+            <th class="px-3 py-2 font-medium">{{call .Tr "cookieConsent.inventory.duration"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{if eq .Category "essential"}}
+          <tr class="border-t border-border/80">
+            <td class="px-3 py-2 text-card-foreground">karot_unlock</td>
+            <td class="px-3 py-2 text-muted-foreground">karotammela.fi</td>
+            <td class="px-3 py-2 text-muted-foreground">Sentinel unlock verification for dashboard access</td>
+            <td class="px-3 py-2 text-muted-foreground">14 days</td>
+          </tr>
+          {{else if eq .Category "functional"}}
+          <tr class="border-t border-border/80">
+            <td class="px-3 py-2 text-card-foreground">NEXT_LOCALE</td>
+            <td class="px-3 py-2 text-muted-foreground">karotammela.fi</td>
+            <td class="px-3 py-2 text-muted-foreground">Persist selected language between visits</td>
+            <td class="px-3 py-2 text-muted-foreground">Session and refresh persistence</td>
+          </tr>
+          <tr class="border-t border-border/80">
+            <td class="px-3 py-2 text-card-foreground">karot-theme</td>
+            <td class="px-3 py-2 text-muted-foreground">karotammela.fi</td>
+            <td class="px-3 py-2 text-muted-foreground">Persist preferred visual theme</td>
+            <td class="px-3 py-2 text-muted-foreground">Until cleared</td>
+          </tr>
+          {{else if eq .Category "analytics"}}
+          <tr class="border-t border-border/80">
+            <td class="px-3 py-2 text-card-foreground">Umami cookieless analytics</td>
+            <td class="px-3 py-2 text-muted-foreground">Umami</td>
+            <td class="px-3 py-2 text-muted-foreground">Measure page views and engagement without cookies</td>
+            <td class="px-3 py-2 text-muted-foreground">No cookies used</td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+  </details>
+  {{end}}
+</article>
+{{end}}

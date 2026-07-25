@@ -1,0 +1,161 @@
+{{define "footer"}}
+<footer class="mt-16 border-t border-border/60 bg-card/30">
+  <div class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+      <div class="max-w-md">
+        <p class="text-sm font-semibold tracking-[0.18em] text-foreground uppercase">Karo Tammela</p>
+        <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{{call .Tr "home.intro"}}</p>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            x-data="{ copied: false }"
+            @click="navigator.clipboard.writeText(location.href).then(() => { copied = true; setTimeout(() => copied = false, 1400) })"
+            class="inline-flex items-center gap-2 rounded-md border border-border/60 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <span x-show="!copied">{{call .Tr "home.shareLabel"}}</span>
+            <span x-show="copied" x-cloak>{{call .Tr "home.shareCopiedLabel"}}</span>
+          </button>
+          <a href="/{{.Locale}}/privacy" class="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">{{call .Tr "home.privacyPolicyLink"}}</a>
+        </div>
+      </div>
+
+      {{template "perfwidget" .}}
+    </div>
+    <p class="mt-8 text-xs text-muted-foreground">© {{.Year}} Karo Tammela — Go + HTMX build (GOTH).</p>
+  </div>
+</footer>
+
+{{template "techswitcher" .}}
+
+{{template "consent" .}}
+
+<script src="/static/htmx.min.js" defer></script>
+<script src="/static/alpine.min.js" defer></script>
+{{end}}
+
+{{define "perfwidget"}}
+<div
+  x-data="perfWidget()"
+  x-init="boot()"
+  data-go-url="{{.GoURL}}"
+  data-next-url="{{.NextURL}}"
+  class="w-full rounded-2xl border border-border/60 bg-background/60 p-4 sm:w-72"
+>
+  <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Live performance</p>
+  <p class="mt-1 text-[11px] text-muted-foreground">Median TTFB, measured from your browser.</p>
+  <div class="mt-3 space-y-3">
+    <div>
+      <div class="flex items-center justify-between text-xs">
+        <span class="font-medium text-foreground">Go (HTMX)</span>
+        <span class="font-mono text-primary" x-text="goMs !== null ? goMs + ' ms' : (goProbed ? 'n/a' : '…')"></span>
+      </div>
+      <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+        <div class="perf-bar-fill h-full bg-primary" :style="'width:' + barWidth(goMs) + '%'"></div>
+      </div>
+    </div>
+    <div>
+      <div class="flex items-center justify-between text-xs">
+        <span class="font-medium text-foreground">Next.js</span>
+        <span class="font-mono text-accent" x-text="nextMs !== null ? nextMs + ' ms' : (nextProbed ? 'n/a' : '…')"></span>
+      </div>
+      <div class="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+        <div class="perf-bar-fill h-full bg-accent" :style="'width:' + barWidth(nextMs) + '%'"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function perfWidget() {
+    return {
+      goMs: null,
+      nextMs: null,
+      goProbed: false,
+      nextProbed: false,
+      barWidth(v) {
+        if (v === null) return 2;
+        var pct = Math.max(2, Math.min(100, 100 - (v / 400) * 100));
+        return pct;
+      },
+      // Direct client-side TTFB probe: fetch /api/ping on the target origin a
+      // few times and take the median so a single cold hit does not dominate.
+      // Cross-origin failures (CORS/offline) resolve to n/a, never a fake 0.
+      async median(origin, samples) {
+        var url = origin.replace(/\/$/, '') + '/api/ping';
+        var values = [];
+        for (var i = 0; i < samples; i++) {
+          var t0 = performance.now();
+          try {
+            var res = await fetch(url, { cache: 'no-store', mode: 'cors' });
+            if (!res.ok) continue;
+            await res.text();
+            values.push(performance.now() - t0);
+          } catch (e) { /* ignore this sample */ }
+        }
+        if (!values.length) return null;
+        values.sort(function (a, b) { return a - b; });
+        var mid = Math.floor(values.length / 2);
+        var m = values.length % 2 ? values[mid] : (values[mid - 1] + values[mid]) / 2;
+        return Math.round(m);
+      },
+      async boot() {
+        var goURL = this.$el.dataset.goUrl || '';
+        var nextURL = this.$el.dataset.nextUrl || '';
+        var self = this;
+        this.median(goURL, 4).then(function (v) { self.goMs = v; self.goProbed = true; });
+        this.median(nextURL, 4).then(function (v) { self.nextMs = v; self.nextProbed = true; });
+      }
+    };
+  }
+</script>
+{{end}}
+
+{{define "techswitcher"}}
+<div
+  x-data="techSwitcher()"
+  data-go-url="{{.GoURL}}"
+  data-next-url="{{.NextURL}}"
+  class="fixed bottom-4 right-4 z-50"
+>
+  <div x-show="open" @click.away="open = false" x-cloak class="mb-2 w-64 rounded-2xl border border-border/70 bg-popover/95 p-4 shadow-2xl backdrop-blur-md">
+    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Tech switcher</p>
+    <p class="mt-1 text-xs text-muted-foreground">Compare the Go + HTMX build against the original Next.js app.</p>
+    <div class="mt-3 grid grid-cols-2 gap-2">
+      <button type="button"
+        @click="go('go')"
+        :class="stack === 'go' ? 'border-primary/70 bg-primary/20 text-primary' : 'border-border/60 text-muted-foreground'"
+        class="rounded-md border px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors">Go</button>
+      <button type="button"
+        @click="go('next')"
+        :class="stack === 'next' ? 'border-primary/70 bg-primary/20 text-primary' : 'border-border/60 text-muted-foreground'"
+        class="rounded-md border px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors">Next.js</button>
+    </div>
+  </div>
+  <button type="button"
+    @click="open = !open"
+    class="ml-auto flex h-12 w-12 items-center justify-center rounded-full border border-primary/60 bg-primary/15 text-primary shadow-lg backdrop-blur-md transition-colors hover:bg-primary/25"
+    :aria-label="'Tech switcher (' + stack + ')'"
+    title="Tech switcher"
+  >
+    <span class="text-lg font-bold">G</span>
+  </button>
+</div>
+<script>
+  function techSwitcher() {
+    return {
+      open: false,
+      // This build is always the Go apex; the current stack is 'go'.
+      stack: 'go',
+      // Cross-origin redirect preserving path + query + hash (no cookie).
+      go(target) {
+        var goURL = (this.$el.dataset.goUrl || '').replace(/\/$/, '');
+        var nextURL = (this.$el.dataset.nextUrl || '').replace(/\/$/, '');
+        var base = target === 'next' ? nextURL : goURL;
+        var rest = location.pathname + location.search + location.hash;
+        var dest = base + rest;
+        if (dest === location.href) { this.open = false; return; }
+        location.href = dest;
+      }
+    };
+  }
+</script>
+{{end}}

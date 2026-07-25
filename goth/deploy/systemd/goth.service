@@ -1,0 +1,36 @@
+# GOTH — karotammela.fi Go application server (Phase 12.5e).
+#
+# Install: copy to /etc/systemd/system/goth.service, then
+#   systemctl daemon-reload && systemctl enable --now goth.service
+# Expects the production layout from plan §11.2:
+#   /opt/goth/current/goth     (release symlink)
+#   /etc/goth/goth.env         (root-owned environment, mode 0600)
+#   /var/lib/goth/goth.db      (SQLite, owned by goth)
+[Unit]
+Description=GOTH - karotammela.fi Go application server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=goth
+Group=goth
+EnvironmentFile=/etc/goth/goth.env
+ExecStart=/opt/goth/current/goth
+Restart=on-failure
+RestartSec=3
+
+# Hardening: the server only needs its DB directory writable.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/goth
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

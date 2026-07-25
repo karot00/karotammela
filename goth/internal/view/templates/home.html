@@ -1,0 +1,36 @@
+{{define "home"}}
+<!DOCTYPE html>
+<html lang="{{.Locale}}" class="{{.Theme}}">
+<head>
+  {{template "head" .}}
+</head>
+<body class="flex min-h-screen flex-col">
+  {{template "header" .}}
+  <main class="flex flex-1 px-6 py-10 sm:py-16">
+    <div class="mx-auto flex w-full max-w-6xl flex-col gap-8 sm:gap-10">
+    <section class="relative overflow-hidden rounded-3xl border border-border/60 bg-card/50 p-8 backdrop-blur-md sm:p-12">
+      <div class="pointer-events-none absolute inset-0">
+        <img src="/static/hero-poster.svg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-40" />
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at top right, rgba(0,210,255,0.2), transparent 52%), radial-gradient(circle at 20% 90%, rgba(255,140,0,0.12), transparent 45%);"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-background/20 via-background/35 to-background/70"></div>
+      </div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-primary">{{.Badge}}</p>
+        <p class="mt-4 max-w-3xl text-lg font-medium leading-relaxed text-foreground sm:text-2xl sm:leading-snug">{{.Intro}}</p>
+        <div class="mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>{{.Body1}}</p>
+          <p>{{.Body2}}</p>
+          <p>{{.Body3}}</p>
+        </div>
+      </div>
+    </section>
+
+    <div>
+      {{template "sentinel" .}}
+    </div>
+    </div>
+  </main>
+  {{template "footer" .}}
+</body>
+</html>
+{{end}}

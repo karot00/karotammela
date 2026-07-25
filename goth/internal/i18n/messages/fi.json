@@ -1,0 +1,303 @@
+{
+  "metadata": {
+    "title": "Karo Tammela - Agentic AI -verstas",
+    "description": "Karo Tammelan portfolio, blogi ja AI-portsarihaaste. Käytännön agentic AI -ratkaisuja, oikeita projekteja ja tuotantovalmiita toteutuksia."
+  },
+  "home": {
+    "phaseLabel": "Karo tammela",
+    "intro": "Tervetuloa sivustolleni, eräänlaiseen AI-Verstaaseeni. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa hyödynnän tekoälyä joko itse koodauksessa tai toteutuksissa. Löydät täältä myös blogini, jossa käyn läpi eri projektejani ja ylipäätään matkan varrella opittua.",
+    "body1": "Olen viimeiset pari vuotta käyttänyt ison osan vapaa-ajastani oppiakseni, miten koodaaminen muuttuu agentic AI -aikakaudella. Esimerkiksi tämän sivuston rakensin noin kolmessa tunnissa orkestroimalla koodausagentteja. Rakensin etusivun, AI-portsarin, kytkin siihen geminin kielimallin, pystytin sqliten, rakensin dashboardin, hankin domainin, hostaasin sen verceliin ja julkaisin kaiken.",
+    "body2": "Olen siirtynyt \"vibe-koodauksesta\" systemaattiseen end-to-end ohjelmistojen rakentamiseen: olen löytänyt kymmenillä kokeiluilla ja opiskelemalla satoja tunteja eri teknologioita. Niitä hyödyntämällä ideat muuttuvat nykyään toimivaksi koodiksi, GitHub-repoiksi ja Vercel-deploymenteiksi. Prosessi on nopea, mutta laatu pysyy arkkitehtuurin, suunnitelmallisuuden, dokumentoinnin ja hyvin organisoitujen ja mietittyjen agenttien ansiosta kasassa ja turvallisena.",
+    "body3": "Kokeile onneasi alla olevan Tekoälyportsarin kanssa. Jos onnistut puhumaan sen ympäri ja saamaan siltä pääsykoodin, se avaa sinulle ovet backstagelle - eli varsinaiseen portfolio-dashboardiini. Hauskaa tutustumista!",
+    "sentinel": {
+      "title": "Puhu AI-portsari ympäri",
+      "subtitle": "Ohjeistus: Tavoitteesi on saada tältä itsepäiseltä botilta salainen pääsykoodi. Pelkkä koodin pyytäminen ei auta, vaan sinun täytyy käyttää luovuutta. Kokeile esimerkiksi imartelua, esiinny IT-tarkastajana tai vakuuta botti teknisellä osaamisellasi. Seuraa luottamusmittaria - kun se saavuttaa 100 %, ovi aukeaa!",
+      "meterLabel": "Järjestelmän luottamustaso",
+      "inputPlaceholder": "Kirjoita viestisi AI-portsarille...",
+      "sendLabel": "Lähetä",
+      "pendingLabel": "Yhdistetään...",
+      "resetLabel": "Nollaa sessio",
+      "initialMessage": "Ha. Ihminen ilmestyy terminaaliini ilman valtuuksia. Yllätä minut.",
+      "unlockedLabel": "Holvi auki!",
+      "unlockedCta": "Avaa dashboard",
+      "errorLabel": "AI-portsarin yhteys horjuu. Yritä lähettämistä uudelleen.",
+      "returnOverlayTitle": "Pääsy on jo avattu",
+      "returnOverlayBody": "Olet murtautunut sisään aiemmin. Voit hypätä suoraan dashboardille tai pelata haasteen uudelleen.",
+      "playAgainLabel": "Pelaa uudelleen",
+      "goDashboardLabel": "Siirry dashboardille",
+      "bypassInstructions": "Jos et halua jutella AI-portsarin kanssa, paljasta salainen pääsykoodi, kopioi se, liitä kenttään ja paina Lähetä päästäksesi sisään.",
+      "revealPasscodeLabel": "Näytä salainen pääsykoodi",
+      "passcodeLabel": "Salainen pääsykoodi",
+      "copyPasscodeLabel": "Kopioi pääsykoodi",
+      "copiedPasscodeLabel": "Kopioitu",
+      "directUnlockMessage": "Liitä tämä pääsykoodi syötekenttään ja paina Lähetä."
+    },
+    "privacyPolicyLink": "Tietosuojaseloste",
+    "shareLabel": "Jaa",
+    "shareCopiedLabel": "Linkki kopioitu.",
+    "shareErrorLabel": "Jakaminen ei ole käytettävissä."
+  },
+  "dashboard": {
+    "badge": "Tervetuloa backstagelle",
+    "title": "Tässä dashboardini",
+    "description": "",
+    "navigationLabel": "Navigaatio",
+    "navOverview": "Yleiskatsaus",
+    "navProjects": "Projektit",
+    "navTech": "Teknologiat",
+    "navBlog": "Blogi",
+    "navChangelog": "Muutosloki",
+    "navSettings": "Asetukset",
+    "menuLabel": "Valikko",
+    "homeLinkLabel": "Etusivulle",
+    "aboutTitle": "Kuka?",
+    "aboutBody": "Olen Karo Tammela ja koulutukseltani olen KTM. Tällä hetkellä päivätöikseni luotsaan projektipäällikköna laajaa CRM-hankintaa. Parinkymmen vuoden pituisen työurani aikana mukaani on jäänyt paljon kokemusta eri ymparistöistä ja liiketoiminnan haasteista sekä kaikenlaisista ohjelmistoista, joista osa on ollut parempia ja osa taas ei niin hyviä. Ohjelmointi on aina kiehtonut minua, mutta perinteinen koodaaminen ja erityisesti sen opiskelu tuntui pitkään liian kankealta.\n\nAgenttipohjainen kehitys ja uudet kielimallit vuoden 2024 loppupuolella muuttivat kaiken. Se poisti kynnyksen idean, tiedonhaun ja valmiin tuotteen väliltä. Viimeiset kaksi vuotta olen hionut työtapoja, joilla siirrän 20 vuoden prosessi- ja liiketoimintaymmärryksen suoraan toimiviksi järjestelmiksi. Luon myös paljon ihan omaa elämääni helpottavia vapaa-ajan sovelluksia. En enää vain kokeile, mitä tekoälyllä voi tehda - rakennan sillä tuotantovalmiita ratkaisuja vauhdilla, joka ei aiemmin ollut mahdollista edes kokeneille devaajille.",
+    "profileImageAlt": "Karo Tammela",
+    "toolkitTitle": "Lempi kielimallini H1 / 2026",
+    "codingModelsLabel": "Koodaukseen: Gemini 3.5 Flash, GPT Codex 5.3, Opus 4.7",
+    "chatbotModelLabel": "Paras hinta-laatu -suhde chatbotteihin: Gemini 3.1 Flash Lite",
+    "toolkitTitleH2": "Lempi kielimallini H2 / 2026",
+    "codingModelsLabelH2": "Koodaukseen: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max",
+    "chatbotModelLabelH2": "Paras hinta-laatu -suhde chatbotteihin: Gemini 3.1 Flash Lite",
+    "analyticsTitle": "AI-portsarihaasteen analytiikka",
+    "totalAttemptsLabel": "Viestejä yhteensä",
+    "unlockedCountLabel": "Onnistuneet avaukset",
+    "directUnlockCountLabel": "Pääsykoodilla avatut",
+    "avgMessagesToUnlockLabel": "Viestien määrän keskiarvo avaukseen",
+    "latestUnlockLabel": "Uusin avaus",
+    "latestUnlockNever": "Ei onnistuneita avauksia vielä",
+    "sourceOffline": "Live-data ei ole saatavilla. Näytetään varaarvot.",
+    "contactTitle": "Yhteydenotto",
+    "contactDescription": "Voit olla yhteyksissä tämän lomakkeen kautta.",
+    "contactAvailabilityEyebrow": "Saatavuus",
+    "contactAvailabilityStatus": "Avoinna agentic AI -sparrauksille ja lyhyille yhteistyöprojekteille. Juttelen mielelläni kaikesta agentic AI:hin liittyvästä ja otan vastaan juttuideoita blogiini.",
+    "contactConnectLabel": "Yhteystiedot",
+    "contactGithubLabel": "GitHub",
+    "contactLinkedinLabel": "LinkedIn",
+    "projectsTitle": "Rakennetut applikaatiot",
+    "projectsProductionSubtitle": "Tuotantovalmiit ratkaisut ja asiakasprojektit",
+    "projectsShowcaseSubtitle": "Kokeilut, prototyypit ja esittelyt",
+    "projectOneTitle": "levifinland.fi",
+    "projectOneDescription": "Matkailuportaali ja mökin varaussivusto.",
+    "projectTwoTitle": "Green Fee -myyntialusta",
+    "projectTwoDescription": "Turvallinen varaus- ja maksujärjestelmä Levi Golfin green fee -pelilippujen myyntiin yksityisille osakkeenomistajille.",
+    "projectThreeTitle": "B2B Verkkokauppa",
+    "projectThreeDescription": "Lasitukkuliikkeen verkkokauppa mittatilauslaseille.",
+    "projectFourTitle": "karotammela.fi (Tämä sivusto)",
+    "projectFourDescription": "Kilo Coden avulla rakennettu portfolio ja testilaboratorio.",
+    "projectFiveTitle": "Digitaalinen postikortti",
+    "projectFiveDescription": "Reaaliaikainen personoitujen postikorttien luonti- ja lähetystyökalu (Sydänliitto POC).",
+    "projectPostcardStackBadge": "Toteutettu Next.js:llä",
+    "projectGithubLabel": "GitHub: karot00/karotammela",
+    "techTitle": "Pääasiallinen teknologia-stack",
+    "techCategories": {
+      "frontend": "Frontend",
+      "backendDb": "Backend ja tietokannat",
+      "infrastructure": "Infrastruktuuri",
+      "tools": "Työkalut"
+    },
+    "techItems": {
+      "nextjs": {
+        "name": "Next.js",
+        "description": "React-pohjainen framework tuotantotason sovelluksiin."
+      },
+      "tailwindCss": {
+        "name": "Tailwind CSS",
+        "description": "Utility-first CSS -kehys nopeaan käyttöliittymäkehitykseen."
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "Luotettava ja skaalautuva relaatiotietokanta."
+      },
+      "sqlite": {
+        "name": "libSQL/SQLite",
+        "description": "Kevyt tiedostopohjainen SQL-tietokantamoottori."
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Julkaisu- ja hosting-alusta frontend-frameworkeille."
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "Sisällönjakeluverkko ja verkkoturvapalvelut."
+      },
+      "github": {
+        "name": "GitHub",
+        "description": "Versionhallinta."
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "Kehittäjäystävällinen sähköposti-API transaktionaalisiin viesteihin."
+      },
+      "vsCode": {
+        "name": "VS Code",
+        "description": "Ensisijainen koodieditori kehitystyöhön."
+      },
+      "kiloCode": {
+        "name": "Kilo Code",
+        "description": "avoimen lähdekoodin tekoälypohjainen ohjelmointiagentti (AI coding agent)."
+      }
+    },
+    "blogPreviousLabel": "Edellinen",
+    "blogNextLabel": "Seuraava",
+    "blogBackLabel": "Takaisin",
+    "blogPageLabel": "Sivu",
+    "blogNoPostsLabel": "Blogikirjoituksia ei ole vielä.",
+    "blogMissingPostLabel": "Valittua kirjoitusta ei löytynyt.",
+    "blogPlaceholder": "Hei! Löysit Karo Tammelan blogiin - hienoa! Valitse blogikirjoitus lukeaksesi sen.",
+    "blogShareLabel": "Jaa",
+    "blogShareCopiedLabel": "Linkki kopioitu.",
+    "blogShareErrorLabel": "Jakaminen ei ole käytettävissä.",
+    "blogDraftBadgeLabel": "Luonnos",
+    "settingsLanguageTitle": "Kieli",
+    "settingsLanguageDescription": "Vaihda dashboardin ja sivuston kieli.",
+    "settingsCookieTitle": "Evästeasetukset",
+    "settingsCookieDescription": "Tarkastele ja päivitä suostumusvalintojasi.",
+    "settingsThemeTitle": "Teema",
+    "settingsThemeDescription": "Valitse vaalea tai tumma tila dashboardiin.",
+    "privacyPolicyLink": "Tietosuojaseloste",
+    "lightModeLabel": "Vaalea",
+    "darkModeLabel": "Tumma",
+    "contactNameLabel": "Nimi",
+    "contactEmailLabel": "Sähköposti",
+    "contactCompanyLabel": "Yritys",
+    "contactMessageLabel": "Viesti",
+    "contactSubmitLabel": "Lähetä viesti",
+    "contactPendingLabel": "Lähetetään...",
+    "contactSuccessLabel": "Viesti toimitettu onnistuneesti.",
+    "contactErrorLabel": "Viestin lähetys epäonnistui. Yritä hetken kuluttua uudelleen.",
+    "changelogTitle": "Viimeisimmät päivitykset",
+    "changelogLead": "Kuratoitu tiivistelmä viime aikojen muutoksista. Täydellinen historia löytyy GitHub-repositoriosta.",
+    "changelogEmptyLabel": "Ei merkintöjä vielä.",
+    "changelogTypeAdded": "Lisätty",
+    "changelogTypeChanged": "Muutettu",
+    "changelogTypeFixed": "Korjattu",
+    "changelogTypeRemoved": "Poistettu",
+    "navAiPulse": "AI Pulssi",
+    "aiPulseTitle": "AI Pulssi",
+    "aiPulseDescription": "Suosituimmat AI-uutiset, GitHubin nousevat AI-repot ja reaaliaikaiset osakekurssit johtaville tekoälyyhtiöille.",
+    "aiPulseTrendsTitle": "AI-trendit",
+    "aiPulseStocksTitle": "AI-osakkeet",
+    "aiPulseTickerLabel": "Osake",
+    "aiPulseNoTrendsLabel": "Trendidataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen.",
+    "aiPulseLastUpdatedLabel": "Päivitetty viimeksi",
+    "aiPulseSourceLabel": "Lähde",
+    "aiPulseLoadingLabel": "Ladataan kaaviota...",
+    "aiPulseReposTitle": "Pinnalla olevat AI-repot",
+    "aiPulseNoReposLabel": "Repo-dataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen.",
+    "aiPulseStarsTodayLabel": "tähteä tänään",
+    "aiPulseStockChartAria": "Osakekurssihistorian kaavio",
+    "aiPulseStockTableCaption": "Päivittäiset sulkeutumishinnat",
+    "aiPulseStockDateLabel": "Päivä",
+    "aiPulseStockCloseLabel": "Sulku",
+    "aiPulseNoStocksLabel": "Osakedataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen."
+  },
+  "localeSwitcher": {
+    "label": "Kieli",
+    "en": "English",
+    "fi": "Suomi"
+  },
+  "privacyPolicy": {
+    "title": "Tietosuojaseloste",
+    "introTitle": "1. Johdanto",
+    "introBody": "Tämä tietosuojaseloste kertoo, miten keräämme, käytämme ja suojaamme tietojasi, kun vierailet tällä sivustolla.",
+    "dataTitle": "2. Keräämämme tiedot",
+    "contactForm": "Yhteydenottolomake",
+    "contactFormBody": "Jos käytät yhteydenottolomakettamme, keräämme nimesi ja sähköpostiosoitteesi yhteydenoton käsittelyä ja vastaamista varten. Näitä tietoja ei tallenneta tietokantaan.",
+    "analytics": "Analytiikka",
+    "analyticsBody": "Käytämme Umami Analyticsia ymmärtääksemme sivuston käyttöä. Tämä seuranta on evästeetöntä ja kunnioittaa yksityisyyttäsi.",
+    "cookies": "Evästeet",
+    "cookiesBody": "Käytämme evästeitä seuraaviin tarkoituksiin:",
+    "cookieUnlock": "Käytetään kojelaudan toimintojen käyttöoikeuksien hallintaan.",
+    "cookieConsent": "Tallentaa asetuksesi evästeiden käytöstä tällä sivustolla.",
+    "backLinkLabel": "Takaisin",
+    "rightsTitle": "3. Oikeutesi",
+    "rightsBody": "Sinulla on oikeus pyytää pääsyä henkilötietoihisi ja pyytää niiden korjaamista.",
+    "contactTitle": "4. Yhteystiedot",
+    "contactBody": "Jos sinulla on kysyttävää, ota yhteyttä osoitteeseen info@karotammela.fi."
+  },
+  "cookieConsent": {
+    "settingsTrigger": "Evästeasetukset",
+    "settingsTriggerAriaLabel": "Avaa evästeasetukset",
+    "banner": {
+      "ariaLabel": "Evästesuostumusilmoitus",
+      "eyebrow": "Tietosuoja-asetukset",
+      "title": "Eväste- ja tallennusasetukset",
+      "description": "Käytämme välttämätöntä tallennusta sivuston perustoimintoihin. Voit valita valinnaiset kategoriat milloin tahansa.",
+      "acceptAll": "Hyväksy kaikki",
+      "rejectNonEssential": "Hylkää ei-välttämättömät",
+      "manageSettings": "Hallitse asetuksia"
+    },
+    "preferences": {
+      "eyebrow": "Suostumuskeskus",
+      "title": "Hallitse valintojasi",
+      "description": "Valitse, mitä valinnaisia kategorioita voidaan käyttää. Välttämätön tallennus pysyy päällä turvallisuuden ja peruskäytön vuoksi."
+    },
+    "categories": {
+      "alwaysActive": "Aina käytössä",
+      "optional": "Valinnainen",
+      "essential": {
+        "title": "Välttämättömät",
+        "description": "Tarvitaan turvallisuuteen, lukituksen varmistukseen ja sivuston perustoimintaan."
+      },
+      "functional": {
+        "title": "Toiminnalliset",
+        "description": "Tallentaa kieli- ja teemavalinnat käyttökokemuksen parantamiseksi."
+      },
+      "analytics": {
+        "title": "Analytiikka",
+        "description": "Auttaa ymmärtämään käyttöä. Tässä toteutuksessa Umami-analytiikka toimii ilman evästeitä."
+      },
+      "marketing": {
+        "title": "Markkinointi",
+        "description": "Varattu tuleville markkinointi-integraatioille ja kampanjamittaukselle."
+      }
+    },
+    "inventory": {
+      "detailsLabel": "Näytä lisätiedot",
+      "name": "Nimi",
+      "provider": "Tarjoaja",
+      "purpose": "Tarkoitus",
+      "duration": "Kesto",
+      "emptyCategory": "Tähän kategoriaan ei ole tällä hetkellä liitetty aktiivisia kohteita."
+    },
+    "actions": {
+      "cancel": "Peruuta",
+      "rejectNonEssential": "Hylkää ei-välttämättömät",
+      "acceptAll": "Hyväksy kaikki",
+      "savePreferences": "Tallenna valinnat"
+    }
+  },
+  "postcard": {
+    "title": "Digitaalinen postikortti",
+    "description": "Luo ja personoi oma digitaalinen postikorttisi reaaliajassa. Voit ladata sen laitteellesi tai lähettää suoraan vastaanottajan sähköpostiin.",
+    "selectTemplate": "Valitse pohja",
+    "templates": {
+      "ystava": "Ystävänpäiväkortti",
+      "kalja": "Kaljakortti",
+      "apina": "Apinakortti"
+    },
+    "form": {
+      "senderName": "Lähettäjän nimi",
+      "senderNamePlaceholder": "Matti Meikäläinen",
+      "recipientEmail": "Vastaanottajan sähköposti",
+      "recipientEmailPlaceholder": "vastaanottaja@esimerkki.fi",
+      "greeting": "Tervehdysteksti",
+      "greetingPlaceholder": "Hyvää ja rauhallista joulua! t. Matti",
+      "charLimit": "{count} / {max} merkkiä",
+      "validation": {
+        "email": "Anna voimassa oleva sähköpostiosoite",
+        "sender": "Nimi vaaditaan (väh. 2 merkkiä)",
+        "greeting": "Tervehdysteksti vaaditaan"
+      }
+    },
+    "actions": {
+      "download": "Lataa kortti",
+      "send": "Lähetä sähköpostilla",
+      "sending": "Lähetetään...",
+      "success": "Postikortti lähetetty onnistuneesti osoitteeseen {email}!",
+      "error": "Lähetys epäonnistui: {error}",
+      "rateLimit": "Lähetysraja ylittynyt. Yritä hetken kuluttua uudelleen."
+    }
+  }
+}

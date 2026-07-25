@@ -1,0 +1,476 @@
+{{define "dashboard"}}
+<!DOCTYPE html>
+<html lang="{{.Locale}}" class="{{.Theme}}">
+<head>
+  {{template "head" .}}
+</head>
+<body x-data="{ mobileOpen: false }">
+  <main class="flex min-h-screen bg-background">
+    <aside class="hidden w-72 shrink-0 border-r border-sidebar-border bg-sidebar px-4 py-6 md:block">
+      <p class="px-3 text-xs font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/70">{{.NavigationLabel}}</p>
+      <div class="mt-4">
+        {{template "dashnav" .}}
+      </div>
+    </aside>
+
+    <div class="flex min-w-0 flex-1 flex-col">
+      <header class="sticky top-0 z-20 border-b border-border bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/85 sm:px-6">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2 md:hidden">
+            <button type="button" @click="mobileOpen = !mobileOpen"
+              class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-input bg-background text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+              :aria-expanded="mobileOpen" aria-label="{{.MenuLabel}}">
+              {{icon "menu" "size-4"}}
+            </button>
+            <span class="text-sm font-medium text-foreground">{{.MenuLabel}}</span>
+          </div>
+
+          <div class="min-w-0">
+            <p class="text-xs uppercase tracking-[0.12em] text-muted-foreground">{{.Badge}}</p>
+            <h1 class="truncate text-lg font-semibold text-foreground sm:text-xl">{{.Title}}</h1>
+            {{if .Description}}<p class="hidden text-xs text-muted-foreground sm:block">{{.Description}}</p>{{end}}
+          </div>
+
+          <a href="/{{.Locale}}" class="shrink-0 text-xs font-medium text-primary hover:text-primary/80">{{.BackLabel}}</a>
+        </div>
+
+        <div x-show="mobileOpen" x-cloak class="mt-3 rounded-xl border border-border bg-card p-3 md:hidden">
+          {{template "dashnav" .}}
+        </div>
+      </header>
+
+      <section class="min-w-0 flex-1 px-4 py-6 sm:px-6">
+        {{if eq .ActiveView "overview"}}{{template "dash-overview" .}}{{end}}
+        {{if eq .ActiveView "projects"}}{{template "dash-projects" .}}{{end}}
+        {{if eq .ActiveView "tech"}}{{template "dash-tech" .}}{{end}}
+        {{if eq .ActiveView "blog"}}{{template "dash-blog" .}}{{end}}
+        {{if eq .ActiveView "changelog"}}{{template "dash-changelog" .}}{{end}}
+        {{if eq .ActiveView "ai-pulse"}}{{template "dash-aipulse" .}}{{end}}
+        {{if eq .ActiveView "settings"}}{{template "dash-settings" .}}{{end}}
+      </section>
+    </div>
+  </main>
+
+  {{template "techswitcher" .}}
+  {{template "consent" .}}
+  <script src="/static/htmx.min.js" defer></script>
+  <script src="/static/alpine.min.js" defer></script>
+</body>
+</html>
+{{end}}
+
+{{define "dashnav"}}
+<nav class="space-y-1" aria-label="{{.NavigationLabel}}">
+  <a href="{{.DashBase}}?view=overview" {{if eq .ActiveView "overview"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "overview")}}">{{.NavOverview}}</a>
+  <a href="{{.DashBase}}?view=projects" {{if eq .ActiveView "projects"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "projects")}}">{{.NavProjects}}</a>
+  <a href="{{.DashBase}}?view=tech" {{if eq .ActiveView "tech"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "tech")}}">{{.NavTech}}</a>
+  <a href="{{.DashBase}}?view=blog" {{if eq .ActiveView "blog"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "blog")}}">{{.NavBlog}}</a>
+  <a href="{{.DashBase}}?view=changelog" {{if eq .ActiveView "changelog"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "changelog")}}">{{.NavChangelog}}</a>
+  <a href="{{.DashBase}}?view=ai-pulse" {{if eq .ActiveView "ai-pulse"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "ai-pulse")}}">{{.NavAiPulse}}</a>
+  <a href="{{.DashBase}}?view=settings" {{if eq .ActiveView "settings"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "settings")}}">{{.NavSettings}}</a>
+</nav>
+{{end}}
+
+{{define "dash-overview"}}
+<div class="space-y-6">
+  <section class="rounded-xl border border-border bg-card p-6">
+    <div class="grid gap-6 md:grid-cols-[220px_1fr] md:items-start">
+      <div class="h-64 overflow-hidden rounded-xl border border-border bg-muted/30">
+        <img src="{{.ProfileImage}}" alt="{{.ProfileImageAlt}}" class="h-full w-full object-cover" />
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold text-foreground">{{.AboutTitle}}</h2>
+        <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{{.AboutBody}}</p>
+
+        <div class="mt-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{{.ToolkitTitle}}</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">{{.CodingModelsLabel}}</span>
+            <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">{{.ChatbotModelLabel}}</span>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{{.ToolkitTitleH2}}</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">{{.CodingModelsLabelH2}}</span>
+            <span class="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">{{.ChatbotModelLabelH2}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-3">
+    <h3 class="text-lg font-semibold text-foreground">{{.AnalyticsTitle}}</h3>
+
+    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <article class="rounded-xl border border-border bg-card p-4">
+        <p class="text-xs text-muted-foreground">{{.TotalAttemptsLabel}}</p>
+        <p class="mt-2 text-2xl font-semibold text-foreground">{{.Stats.TotalAttempts}}</p>
+      </article>
+      <article class="rounded-xl border border-border bg-card p-4">
+        <p class="text-xs text-muted-foreground">{{.UnlockedCountLabel}}</p>
+        <p class="mt-2 text-2xl font-semibold text-foreground">{{.Stats.UnlockedCount}}</p>
+      </article>
+      <article class="rounded-xl border border-border bg-card p-4">
+        <p class="text-xs text-muted-foreground">{{.DirectUnlockCountLabel}}</p>
+        <p class="mt-2 text-2xl font-semibold text-foreground">{{.Stats.DirectUnlockCount}}</p>
+      </article>
+      <article class="rounded-xl border border-border bg-card p-4">
+        <p class="text-xs text-muted-foreground">{{.AvgMessagesToUnlockLabel}}</p>
+        <p class="mt-2 text-2xl font-semibold text-foreground">{{printf "%.1f" .Stats.AvgMessagesToUnlock}}</p>
+      </article>
+      <article class="rounded-xl border border-border bg-card p-4">
+        <p class="text-xs text-muted-foreground">{{.LatestUnlockLabel}}</p>
+        <p class="mt-2 text-sm font-medium text-foreground">{{if .LatestUnlock}}{{.LatestUnlock}}{{else}}{{.LatestUnlockNever}}{{end}}</p>
+      </article>
+    </div>
+
+    {{if .StatsOffline}}<p class="text-xs text-destructive">{{.SourceOffline}}</p>{{end}}
+  </section>
+
+  <section class="rounded-xl border border-border bg-card p-6">
+    <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)] lg:items-start">
+      <div>
+        <h3 class="text-lg font-semibold text-foreground">{{.ContactTitle}}</h3>
+        <p class="mt-2 text-sm text-muted-foreground">{{.ContactDescription}}</p>
+        {{template "dash-contact-form" .}}
+      </div>
+
+      <aside class="rounded-lg border border-border bg-background/40 p-5">
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{{.ContactAvailabilityEyebrow}}</p>
+        <p class="mt-2 text-sm leading-relaxed text-foreground">{{.ContactAvailabilityStatus}}</p>
+
+        <div class="my-5 h-px bg-border" aria-hidden="true"></div>
+
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{{.ContactConnectLabel}}</p>
+        <ul class="mt-3 space-y-2">
+          <li>
+            <a href="{{.GithubURL}}" target="_blank" rel="noreferrer noopener" class="group flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+              {{icon "githubBrand" "size-4 text-muted-foreground transition-colors group-hover:text-foreground"}}
+              <span>{{.ContactGithubLabel}}</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{.LinkedinURL}}" target="_blank" rel="noreferrer noopener" class="group flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+              {{icon "linkedinBrand" "size-4 text-muted-foreground transition-colors group-hover:text-foreground"}}
+              <span>{{.ContactLinkedinLabel}}</span>
+            </a>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</div>
+{{end}}
+
+{{define "dash-contact-form"}}
+<form class="mt-6 space-y-3" x-data="contactForm()" @submit.prevent="submit">
+  <div class="hidden" aria-hidden="true">
+    <label for="cf-website">Leave empty</label>
+    <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off" x-model="form.website" />
+  </div>
+
+  <label class="block text-xs text-muted-foreground" for="cf-name">
+    {{.ContactNameLabel}}
+    <input id="cf-name" name="name" type="text" required x-model="form.name"
+      class="mt-1 h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none focus-visible:border-primary/60" />
+  </label>
+
+  <label class="block text-xs text-muted-foreground" for="cf-email">
+    {{.ContactEmailLabel}}
+    <input id="cf-email" name="email" type="email" required x-model="form.email"
+      class="mt-1 h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none focus-visible:border-primary/60" />
+  </label>
+
+  <label class="block text-xs text-muted-foreground" for="cf-company">
+    {{.ContactCompanyLabel}}
+    <input id="cf-company" name="company" type="text" x-model="form.company"
+      class="mt-1 h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground outline-none focus-visible:border-primary/60" />
+  </label>
+
+  <label class="block text-xs text-muted-foreground" for="cf-message">
+    {{.ContactMessageLabel}}
+    <textarea id="cf-message" name="message" required minlength="10" x-model="form.message"
+      class="mt-1 min-h-24 w-full resize-y rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground outline-none focus-visible:border-primary/60"></textarea>
+  </label>
+
+  <button type="submit" :disabled="status === 'pending'"
+    class="inline-flex h-10 w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 disabled:opacity-50">
+    <span x-show="status !== 'pending'" x-cloak>{{.ContactSubmitLabel}}</span>
+    <span x-show="status === 'pending'" x-cloak>{{.ContactPendingLabel}}</span>
+  </button>
+
+  <p x-show="status === 'success'" x-cloak class="text-xs text-primary">{{.ContactSuccessLabel}}</p>
+  <p x-show="status === 'error'" x-cloak class="text-xs text-destructive" x-text="errorMsg || '{{.ContactErrorLabel}}'"></p>
+</form>
+<script>
+  function contactForm() {
+    return {
+      form: { name: '', email: '', company: '', message: '', website: '' },
+      status: 'idle',
+      errorMsg: '',
+      submit() {
+        this.status = 'pending';
+        this.errorMsg = '';
+        var self = this;
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.form)
+        }).then(function (r) {
+          if (r.ok) { self.status = 'success'; self.form = { name: '', email: '', company: '', message: '', website: '' }; }
+          else { self.status = 'error'; }
+        }).catch(function () { self.status = 'error'; });
+      }
+    };
+  }
+</script>
+{{end}}
+
+{{define "dash-projects"}}
+<section class="space-y-6">
+  <h2 class="text-xl font-semibold text-foreground">{{.ProjectsTitle}}</h2>
+
+  <div class="space-y-3">
+    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">{{.ProjectsProductionSubtitle}}</h3>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{range .ProjectsProduction}}{{template "dash-project-card" .}}{{end}}
+    </div>
+  </div>
+
+  <div class="space-y-3 pt-4">
+    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">{{.ProjectsShowcaseSubtitle}}</h3>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {{range .ProjectsShowcase}}{{template "dash-project-card" .}}{{end}}
+    </div>
+  </div>
+</section>
+{{end}}
+
+{{define "dash-project-card"}}
+  {{if .Href}}
+    <a href="{{.Href}}" {{if not .IsInternal}}target="_blank" rel="noreferrer noopener"{{end}}
+      class="group block rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <div class="flex flex-wrap items-center gap-2">
+        <h3 class="font-semibold text-foreground">{{.Title}}</h3>
+        {{if .Badge}}<span class="inline-block rounded border border-border bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{{.Badge}}</span>{{end}}
+      </div>
+      <p class="mt-2 text-sm text-muted-foreground">{{.Description}}</p>
+    </a>
+  {{else}}
+    <article class="rounded-xl border border-border bg-card p-5">
+      <div class="flex flex-wrap items-center gap-2">
+        <h3 class="font-semibold text-foreground">{{.Title}}</h3>
+        {{if .Badge}}<span class="inline-block rounded border border-border bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{{.Badge}}</span>{{end}}
+      </div>
+      <p class="mt-2 text-sm text-muted-foreground">{{.Description}}</p>
+      {{if .GithubHref}}
+        <a href="{{.GithubHref}}" target="_blank" rel="noreferrer noopener"
+          class="mt-4 inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">{{.GithubLabel}}</a>
+      {{end}}
+    </article>
+  {{end}}
+{{end}}
+
+{{define "dash-tech"}}
+<section class="mx-auto w-full max-w-6xl space-y-10">
+  <h2 class="text-xl font-semibold text-foreground">{{.TechTitle}}</h2>
+
+  {{range .TechCategories}}
+    <section class="space-y-6">
+      <h3 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground after:h-px after:flex-1 after:bg-border">{{.Label}}</h3>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {{range .Items}}
+          <article class="group flex items-start gap-4 rounded-xl border border-border bg-card p-5 text-foreground transition-colors hover:bg-muted/40">
+            <div class="rounded-lg bg-muted p-2.5 text-muted-foreground transition-colors group-hover:text-foreground">
+              {{icon .ID "size-5"}}
+            </div>
+            <div>
+              <h4 class="text-base font-medium text-foreground">{{.Name}}</h4>
+              <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{{.Description}}</p>
+            </div>
+          </article>
+        {{end}}
+      </div>
+    </section>
+  {{end}}
+</section>
+{{end}}
+
+{{define "dash-blog"}}
+{{if eq .BlogTotal 0}}
+  <section class="flex min-h-[320px] items-center justify-center rounded-xl border border-border bg-card p-6">
+    <p class="text-base text-muted-foreground">{{.BlogNoPostsLabel}}</p>
+  </section>
+{{else}}
+  <section class="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
+    <div class="min-w-0 rounded-xl border border-border bg-card p-4">
+      <div class="space-y-3">
+        {{range .BlogItems}}
+          {{$isActive := and $.BlogSelected (eq $.BlogSelected.Slug .Slug)}}
+          <article class="rounded-lg border p-3 transition-colors {{if $isActive}}border-primary bg-primary/5 ring-1 ring-primary{{else}}border-border bg-background hover:bg-muted/40{{end}}">
+            <a href="{{$.DashBase}}?view=blog&post={{.Slug}}" {{if $isActive}}aria-current="true"{{end}} class="block w-full text-left">
+              <p class="text-sm font-semibold {{if $isActive}}text-primary{{else}}text-foreground{{end}}">{{.Title}}</p>
+              <p class="mt-1 text-xs text-muted-foreground">{{date $.Locale .PublishedAt}}</p>
+              <p class="mt-2 text-sm text-muted-foreground">{{.Description}}</p>
+              {{if .Draft}}<span class="mt-2 inline-block rounded border border-border bg-muted px-2 py-0.5 text-[11px] text-foreground">{{$.BlogDraftBadgeLabel}}</span>{{end}}
+            </a>
+          </article>
+        {{end}}
+      </div>
+
+      <div class="mt-4 flex items-center justify-between gap-2">
+        <a href="{{.DashBase}}?view=blog&page={{.BlogPrevPage}}" {{if not .BlogHasPrev}}aria-disabled="true" class="pointer-events-none inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium opacity-50 shadow-sm"{{else}}class="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"{{end}}>{{.BlogPrevLabel}}</a>
+        <p class="text-xs text-muted-foreground">{{.BlogPageLabel}} {{.BlogPage}} / {{.BlogPages}}</p>
+        <a href="{{.DashBase}}?view=blog&page={{.BlogNextPage}}" {{if not .BlogHasNext}}aria-disabled="true" class="pointer-events-none inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium opacity-50 shadow-sm"{{else}}class="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"{{end}}>{{.BlogNextLabel}}</a>
+      </div>
+    </div>
+
+    <article class="min-w-0 scroll-mt-20 rounded-xl border border-border bg-card p-6">
+      {{if .BlogSelected}}
+        <div class="mx-auto w-full min-w-0 max-w-3xl">
+          <h2 class="text-xl font-semibold text-foreground">{{.BlogSelected.Title}}</h2>
+          <div class="mt-3">
+            <button type="button" x-data="{ copied: false }" @click="navigator.share ? navigator.share({title: '{{.BlogSelected.Title}}', url: location.href}) : navigator.clipboard.writeText(location.href).then(() => { copied = true; setTimeout(() => copied = false, 1400) })"
+              class="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+              <span x-show="!copied">{{.BlogShareLabel}}</span>
+              <span x-show="copied" x-cloak>{{.BlogShareCopiedLabel}}</span>
+            </button>
+          </div>
+          <p class="mt-2 text-sm text-muted-foreground">{{date $.Locale .BlogSelected.PublishedAt}}</p>
+          <div class="blog-prose mt-4">{{safe .BlogSelected.HTML}}</div>
+        </div>
+      {{else if .BlogMissingPost}}
+        <p class="text-sm text-muted-foreground">{{.BlogMissingPostLabel}}</p>
+      {{else}}
+        <p class="text-sm text-muted-foreground">{{.BlogPlaceholder}}</p>
+      {{end}}
+    </article>
+  </section>
+{{end}}
+{{end}}
+
+{{define "dash-changelog"}}
+<section class="mx-auto w-full max-w-4xl space-y-6">
+  <div>
+    <h2 class="text-xl font-semibold text-foreground">{{.ChangelogTitle}}</h2>
+    <p class="mt-2 text-sm text-muted-foreground">{{.ChangelogLead}}</p>
+  </div>
+
+  {{if eq (len .Changelog) 0}}
+    <p class="rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground">{{.ChangelogEmptyLabel}}</p>
+  {{else}}
+    <div class="space-y-4">
+      {{range .Changelog}}
+        <article class="rounded-xl border border-border bg-card p-5">
+          <div class="grid gap-4 md:grid-cols-[140px_1fr] md:items-start">
+            <div>
+              <span class="inline-flex items-center rounded-full border border-border bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground">{{.Version}}</span>
+              <p class="mt-2 text-xs text-muted-foreground">{{date $.Locale .Date}}</p>
+            </div>
+
+            <div>
+              {{if .Title}}<h3 class="text-base font-medium text-foreground">{{.Title}}</h3>{{end}}
+              <ul class="mt-3 space-y-2">
+                {{range .Changes}}
+                  <li class="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                    <span class="mt-0.5 inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide {{changeClass .Type}}">
+                      {{if eq .Type "added"}}{{$.ChangelogTypeAdded}}{{end}}
+                      {{if eq .Type "changed"}}{{$.ChangelogTypeChanged}}{{end}}
+                      {{if eq .Type "fixed"}}{{$.ChangelogTypeFixed}}{{end}}
+                      {{if eq .Type "removed"}}{{$.ChangelogTypeRemoved}}{{end}}
+                    </span>
+                    <span>{{.Text}}</span>
+                  </li>
+                {{end}}
+              </ul>
+            </div>
+          </div>
+        </article>
+      {{end}}
+    </div>
+  {{end}}
+</section>
+{{end}}
+
+{{define "dash-aipulse"}}
+<section class="space-y-6">
+  <div>
+    <h2 class="text-xl font-semibold text-foreground">{{.AiPulseTitle}}</h2>
+    <p class="mt-2 text-sm text-muted-foreground">{{.AiPulseDescription}}</p>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-2">
+    <div class="space-y-6">
+      <div class="rounded-xl border border-border bg-card p-5">
+        <h3 class="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
+          {{.AiPulseTrendsTitle}}
+        </h3>
+        <div class="mt-4">{{template "trends-list" .}}</div>
+      </div>
+
+      <div class="rounded-xl border border-border bg-card p-5">
+        <h3 class="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
+          {{.AiPulseReposTitle}}
+        </h3>
+        <div class="mt-4">{{template "repos-list" .}}</div>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-border bg-card p-5 h-fit">
+      <h3 class="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
+        {{.AiPulseStocksTitle}}
+      </h3>
+      <div class="mt-4">
+        {{template "stock-chart" .}}
+      </div>
+    </div>
+  </div>
+</section>
+{{end}}
+
+{{define "dash-settings"}}
+<section class="space-y-6">
+  <article class="rounded-xl border border-border bg-card p-6">
+    <h2 class="text-lg font-semibold text-foreground">{{.SettingsLanguageTitle}}</h2>
+    <p class="mt-1 text-sm text-muted-foreground">{{.SettingsLanguageDescription}}</p>
+    <div class="mt-4">
+      <div class="inline-flex items-center gap-1 rounded-md border border-input bg-background p-0.5" role="group" aria-label="{{.NavigationLabel}}">
+        <a href="{{.SwitchToEn}}" class="rounded px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition-colors {{if eq .Locale "en"}}bg-primary text-primary-foreground{{else}}text-muted-foreground hover:text-foreground{{end}}">EN</a>
+        <a href="{{.SwitchToFi}}" class="rounded px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition-colors {{if eq .Locale "fi"}}bg-primary text-primary-foreground{{else}}text-muted-foreground hover:text-foreground{{end}}">FI</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="rounded-xl border border-border bg-card p-6">
+    <h2 class="text-lg font-semibold text-foreground">{{.SettingsThemeTitle}}</h2>
+    <p class="mt-1 text-sm text-muted-foreground">{{.SettingsThemeDescription}}</p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button type="button" @click="document.documentElement.classList.remove('dark'); document.cookie='theme=light;path=/;max-age=31536000';"
+        class="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors {{if eq .Theme "light"}}bg-primary text-primary-foreground shadow hover:bg-primary/90{{else}}border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground{{end}}">{{.LightModeLabel}}</button>
+      <button type="button" @click="document.documentElement.classList.add('dark'); document.cookie='theme=dark;path=/;max-age=31536000';"
+        class="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors {{if eq .Theme "dark"}}bg-primary text-primary-foreground shadow hover:bg-primary/90{{else}}border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground{{end}}">{{.DarkModeLabel}}</button>
+    </div>
+  </article>
+
+  <article class="rounded-xl border border-border bg-card p-6">
+    <h2 class="text-lg font-semibold text-foreground">{{.SettingsCookieTitle}}</h2>
+    <p class="mt-1 text-sm text-muted-foreground">{{.SettingsCookieDescription}}</p>
+    <div class="mt-4">
+      <button type="button" @click="if (window.__gothConsent) window.__gothConsent.open()" aria-label="{{.ConsentSettingsTriggerAria}}"
+        class="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">{{.ConsentSettingsTrigger}}</button>
+    </div>
+  </article>
+
+  <article class="rounded-xl border border-border bg-card p-6">
+    <h2 class="text-lg font-semibold text-foreground">{{.PrivacyPolicyLink}}</h2>
+    <div class="mt-4">
+      <a href="{{.PrivacyReturn}}" class="text-sm text-primary underline-offset-4 hover:underline">{{.PrivacyPolicyLink}}</a>
+    </div>
+  </article>
+</section>
+{{end}}

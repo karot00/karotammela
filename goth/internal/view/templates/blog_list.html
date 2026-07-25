@@ -1,0 +1,46 @@
+{{define "blog_list"}}
+<!DOCTYPE html>
+<html lang="{{.Locale}}" class="{{.Theme}}">
+<head>
+  {{template "head" .}}
+</head>
+<body class="flex min-h-screen flex-col">
+  {{template "header" .}}
+  <main class="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
+    <h1 class="text-3xl font-semibold text-foreground">{{.Title}}</h1>
+    <p class="mt-2 text-sm text-muted-foreground">{{.Subtitle}}</p>
+
+    {{if .HasPosts}}
+    <ul class="mt-8 space-y-4">
+      {{range .Posts}}
+      <li>
+        <a href="/{{$.Locale}}/blog/{{.Slug}}" class="block rounded-2xl border border-border/60 bg-card/40 p-5 transition-colors hover:border-primary/40">
+          <div class="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <time datetime="{{.PublishedAt}}">{{.PublishedAt}}</time>
+            {{if .Draft}}<span class="rounded bg-accent/15 px-2 py-0.5 text-accent">Draft</span>{{end}}
+          </div>
+          <h2 class="mt-2 text-xl font-semibold text-foreground">{{.Title}}</h2>
+          <p class="mt-1 text-sm text-muted-foreground">{{.Description}}</p>
+          {{if .Tags}}
+          <div class="mt-3 flex flex-wrap gap-2">
+            {{range .Tags}}<span class="rounded-md border border-border/60 px-2 py-0.5 text-xs text-muted-foreground">{{.}}</span>{{end}}
+          </div>
+          {{end}}
+        </a>
+      </li>
+      {{end}}
+    </ul>
+
+    <nav class="mt-10 flex items-center justify-center gap-4 text-sm" aria-label="Pagination">
+      {{if .HasPrev}}<a href="/{{$.Locale}}/blog?page={{.PrevPage}}" class="rounded-md border border-border/60 px-3 py-1.5 text-muted-foreground hover:text-foreground">{{$.PrevLabel}}</a>{{end}}
+      <span class="text-muted-foreground">{{$.PageLabel}} {{.Page}} / {{.Pages}}</span>
+      {{if .HasNext}}<a href="/{{$.Locale}}/blog?page={{.NextPage}}" class="rounded-md border border-border/60 px-3 py-1.5 text-muted-foreground hover:text-foreground">{{$.NextLabel}}</a>{{end}}
+    </nav>
+    {{else}}
+    <p class="mt-8 text-sm text-muted-foreground">{{.EmptyLabel}}</p>
+    {{end}}
+  </main>
+  {{template "footer" .}}
+</body>
+</html>
+{{end}}

@@ -1,0 +1,15 @@
+{
+	admin off
+}
+
+# Map the `tech` cookie to an upstream. Default to the original Next.js app.
+map {http.request.cookie.tech} {upstream} {
+	default        next
+	next           localhost:3000
+	go             localhost:8080
+}
+
+:80 {
+	# Canonical + SEO passthrough to whichever upstream is active.
+	reverse_proxy {upstream}
+}
