@@ -1,0 +1,95 @@
+name: Deploy GOTH to CX23
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'goth/**'
+      - '.github/workflows/deploy-goth.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: goth-deploy
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: goth
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: goth/go.mod
+          cache-dependency-path: goth/go.sum
+      - name: Vet
+        run: go vet ./...
+      - name: Tests
+        run: go test -count=1 ./...
+      - name: Standalone drill (12.5g gate)
+        run: bash test/drill-standalone.sh
+
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: goth
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: goth/go.mod
+          cache-dependency-path: goth/go.sum
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: goth/package-lock.json
+      - name: Install Tailwind CLI
+        run: npm ci
+      - name: Build release artifact
+        run: make release RELEASE="goth-$(date +%Y%m%d)-${GITHUB_SHA::8}-linux-amd64"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: goth-release
+          path: goth/dist/*.tar.gz*
+          retention-days: 14
+
+  deploy:
+    needs: release
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: goth-release
+          path: dist
+      - name: Install SSH key + known_hosts
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.GOTH_DEPLOY_SSH_KEY }}" > ~/.ssh/goth_deploy
+          chmod 600 ~/.ssh/goth_deploy
+          printf '%s\n' "${{ secrets.GOTH_DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+      - name: Ship artifact to CX23
+        run: |
+          TARBALL="$(basename dist/*.tar.gz)"
+          scp -i ~/.ssh/goth_deploy "dist/${TARBALL}" "dist/${TARBALL}.sha256" \
+            "root@${{ secrets.GOTH_DEPLOY_HOST }}:/tmp/"
+          echo "TARBALL=${TARBALL}" >> "$GITHUB_ENV"
+      - name: Run deploy.sh on host
+        run: |
+          ssh -i ~/.ssh/goth_deploy "root@${{ secrets.GOTH_DEPLOY_HOST }}" \
+            "/root/deploy/deploy.sh /tmp/${TARBALL} && rm -f /tmp/${TARBALL} /tmp/${TARBALL}.sha256"
+      - name: Verify production health
+        run: |
+          for i in $(seq 1 10); do
+            if curl -fsS https://karotammela.fi/api/ping | grep -q '"stack":"go"'; then
+              echo "production OK"; exit 0
+            fi
+            sleep 3
+          done
+          echo "ERROR: production health check failed after deploy"; exit 1
