@@ -8,7 +8,8 @@
     "intro": "Welcome to my site, a kind of AI-workshop. This is where I test and showcase different projects where I use AI - either in the coding itself or in the final implementations. You will also find my blog here, where I share what I've learned from different projects and from the journey overall.",
     "body1": "Over the past couple of years, I've spent a big part of my free time learning how coding is changing in the agentic AI era. For example, I built this website in about three hours by orchestrating coding agents. I built the landing page, the AI bouncer, connected it to the Gemini language model, set up SQLite, built the dashboard, acquired the domain, hosted it on Vercel, and published everything.",
     "body2": "I've moved from \"vibe coding\" to systematic end-to-end software development: through dozens of experiments and hundreds of hours studying different technologies, I've built a workflow where ideas now turn into working code, GitHub repositories, and Vercel deployments. The process is fast, but quality stays consistent and secure thanks to solid architecture, planning, documentation, and well-organized, carefully designed agents.",
-    "body3": "Try your luck with the AI Bouncer below. If you manage to talk it around and get the access code, it will open the doors to the backstage - my actual portfolio dashboard. Enjoy exploring!",
+    "body3": "This site also lets you compare two completely different technology choices, live: the version you're reading now is built with Next.js and hosted on Vercel, but running alongside it is an identical Go+HTMX implementation that I set up on my own Hetzner VPS with a SQLite database (instead of the Turso-backed database the Next.js version relies on). I wanted to find out in practice what Go+HTMX is capable of compared to Next.js, what setting up a VPS on Hetzner actually feels like, and how running SQLite on your own server compares to a managed Turso database. You can compare both directly: the round button in the bottom-right corner (the letter N on this version, G on the Go version) opens a switcher and shows the response-time difference measured live from your browser.",
+    "body4": "Try your luck with the AI Bouncer below. If you manage to talk it around and get the access code, it will open the doors to the backstage - my actual portfolio dashboard. Enjoy exploring!",
     "sentinel": {
       "title": "Talk the AI Bouncer Around",
       "subtitle": "Instructions: Your goal is to get this stubborn bot to reveal a secret access code. Simply asking for the code won't work - you need to be creative. Try flattery, pose as an IT auditor, or convince the bot with technical credibility. Watch the trust meter - once it reaches 100%, the door opens!",
@@ -33,6 +34,7 @@
       "directUnlockMessage": "Paste this passcode into the input field and click Send."
     },
     "privacyPolicyLink": "Privacy Policy",
+    "blogLink": "Blog",
     "shareLabel": "Share",
     "shareCopiedLabel": "Link copied.",
     "shareErrorLabel": "Sharing unavailable."
@@ -57,7 +59,7 @@
     "codingModelsLabel": "For coding: Gemini 3.5 Flash, GPT Codex 5.3, Opus 4.7",
     "chatbotModelLabel": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite",
     "toolkitTitleH2": "My favorite language models H2 / 2026",
-    "codingModelsLabelH2": "For coding: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max",
+    "codingModelsLabelH2": "For coding: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max, Hy3",
     "chatbotModelLabelH2": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite",
     "analyticsTitle": "AI Bouncer challenge analytics",
     "totalAttemptsLabel": "Total messages",

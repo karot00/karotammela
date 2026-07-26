@@ -1,6 +1,45 @@
 {
   "releases": [
     {
+      "version": "v2.0",
+      "date": "2026-07-25",
+      "title": "Go+HTMX production comparison, AI Pulse & automated deploys",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Shipped a full Go+HTMX implementation as a parallel production site on my own Hetzner VPS (SQLite database, Caddy, systemd) – identical content, dashboard, and AI bouncer to the Next.js version."
+        },
+        {
+          "type": "added",
+          "text": "Tech Switcher and Live Performance widget: switch between the two implementations and see the response-time comparison measured live from your own browser against both servers."
+        },
+        {
+          "type": "added",
+          "text": "AI Pulse dashboard section (Hacker News trends, trending GitHub repos, stock prices) on both stacks, with its own data pipeline on the Go side."
+        },
+        {
+          "type": "added",
+          "text": "The Next.js comparison build moved to its own domain (next.karotammela.fi) on Vercel; karotammela.fi is now the default Go+HTMX implementation."
+        },
+        {
+          "type": "added",
+          "text": "Automated deploy pipeline via GitHub Actions: tests, build, and deploy to the Hetzner server run automatically on every push."
+        },
+        {
+          "type": "added",
+          "text": "New blog post covering the reasoning behind the Go+HTMX build, the VPS setup, and the SQLite experience."
+        },
+        {
+          "type": "changed",
+          "text": "The homepage intro now briefly explains the two-stack comparison and where to find the switcher."
+        },
+        {
+          "type": "changed",
+          "text": "Added Hy3 to the favorite language models list (H2/2026)."
+        }
+      ]
+    },
+    {
       "version": "v1.3",
       "date": "2026-06-02",
       "title": "Swamp integration & automated log monitoring",

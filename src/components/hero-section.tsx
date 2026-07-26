@@ -6,6 +6,7 @@ type HeroSectionProps = {
   body1: string;
   body2: string;
   body3: string;
+  body4: string;
 };
 
 export function HeroSection({
@@ -14,6 +15,7 @@ export function HeroSection({
   body1,
   body2,
   body3,
+  body4,
 }: HeroSectionProps) {
   const videoEnabled = process.env.NEXT_PUBLIC_HERO_VIDEO_ENABLED === "1";
   const showVideo = videoEnabled;
@@ -65,6 +67,7 @@ export function HeroSection({
             <p>{body1}</p>
             <p>{body2}</p>
             <p>{body3}</p>
+            <p>{body4}</p>
           </div>
         </div>
       </div>

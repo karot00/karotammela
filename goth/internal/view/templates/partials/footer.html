@@ -73,7 +73,9 @@
       nextProbed: false,
       barWidth(v) {
         if (v === null) return 2;
-        var pct = Math.max(2, Math.min(100, 100 - (v / 400) * 100));
+        // Directly proportional to the measured time: a longer TTFB draws a
+        // longer bar (0 ms -> 2% floor, 400 ms -> 100% cap).
+        var pct = Math.max(2, Math.min(100, (v / 400) * 100));
         return pct;
       },
       // Direct client-side TTFB probe: fetch /api/ping on the target origin a

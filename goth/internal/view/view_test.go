@@ -45,6 +45,7 @@ func TestRenderAllTemplates(t *testing.T) {
 				"Body1":          "b1",
 				"Body2":          "b2",
 				"Body3":          "b3",
+				"Body4":          "b4",
 				"SentinelConfig": sentinelCfg,
 			}),
 		},
@@ -347,6 +348,7 @@ func TestConsentBannerGating(t *testing.T) {
 			"Body1":                 "b1",
 			"Body2":                 "b2",
 			"Body3":                 "b3",
+			"Body4":                 "b4",
 			"SentinelConfig":        `{"locale":"fi"}`,
 			"ConsentBannerRequired": required,
 		}
@@ -407,6 +409,7 @@ func TestSentinelConfigIsEmbeddedAsJSON(t *testing.T) {
 		"Body1":          "b1",
 		"Body2":          "b2",
 		"Body3":          "b3",
+		"Body4":          "b4",
 		"SentinelConfig": config,
 	}
 	if err := r.Render(&out, "home", data); err != nil {

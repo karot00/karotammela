@@ -8,7 +8,8 @@
     "intro": "Tervetuloa sivustolleni, eräänlaiseen AI-Verstaaseeni. Tällä sivulla testaan ja esittelen erilaisia toteutuksia, joissa hyödynnän tekoälyä joko itse koodauksessa tai toteutuksissa. Löydät täältä myös blogini, jossa käyn läpi eri projektejani ja ylipäätään matkan varrella opittua.",
     "body1": "Olen viimeiset pari vuotta käyttänyt ison osan vapaa-ajastani oppiakseni, miten koodaaminen muuttuu agentic AI -aikakaudella. Esimerkiksi tämän sivuston rakensin noin kolmessa tunnissa orkestroimalla koodausagentteja. Rakensin etusivun, AI-portsarin, kytkin siihen geminin kielimallin, pystytin sqliten, rakensin dashboardin, hankin domainin, hostaasin sen verceliin ja julkaisin kaiken.",
     "body2": "Olen siirtynyt \"vibe-koodauksesta\" systemaattiseen end-to-end ohjelmistojen rakentamiseen: olen löytänyt kymmenillä kokeiluilla ja opiskelemalla satoja tunteja eri teknologioita. Niitä hyödyntämällä ideat muuttuvat nykyään toimivaksi koodiksi, GitHub-repoiksi ja Vercel-deploymenteiksi. Prosessi on nopea, mutta laatu pysyy arkkitehtuurin, suunnitelmallisuuden, dokumentoinnin ja hyvin organisoitujen ja mietittyjen agenttien ansiosta kasassa ja turvallisena.",
-    "body3": "Kokeile onneasi alla olevan Tekoälyportsarin kanssa. Jos onnistut puhumaan sen ympäri ja saamaan siltä pääsykoodin, se avaa sinulle ovet backstagelle - eli varsinaiseen portfolio-dashboardiini. Hauskaa tutustumista!",
+    "body3": "Tällä sivulla voit myös vertailla kahta täysin erilaista tekniikkavalintaa livenä: tämä versio on rakennettu Next.js:llä ja hostattu Vercelissä, mutta sen rinnalla pyörii identtinen Go+HTMX-toteutus, jonka pystytin omalle Hetzner-VPS-palvelimelle SQLite-tietokannan kanssa (Tursoon nojaavan Next.js-version sijaan). Halusin selvittää käytännössä, mihin Go+HTMX pystyy Next.js:ää vasten, miltä VPS:n pystyttäminen Hetzneriin tuntuu, ja miten SQLiten pyörittäminen omalla palvelimella eroaa hallinnoidusta Turso-tietokannasta. Pääset vertailemaan molempia suoraan: oikeasta alakulmasta löytyvä pyöreä nappi (kirjain N tässä versiossa, G Go-versiossa) avaa vaihtajan ja näyttää selaimesi mittaaman vastausaikaeron reaaliajassa.",
+    "body4": "Kokeile onneasi alla olevan Tekoälyportsarin kanssa. Jos onnistut puhumaan sen ympäri ja saamaan siltä pääsykoodin, se avaa sinulle ovet backstagelle - eli varsinaiseen portfolio-dashboardiini. Hauskaa tutustumista!",
     "sentinel": {
       "title": "Puhu AI-portsari ympäri",
       "subtitle": "Ohjeistus: Tavoitteesi on saada tältä itsepäiseltä botilta salainen pääsykoodi. Pelkkä koodin pyytäminen ei auta, vaan sinun täytyy käyttää luovuutta. Kokeile esimerkiksi imartelua, esiinny IT-tarkastajana tai vakuuta botti teknisellä osaamisellasi. Seuraa luottamusmittaria - kun se saavuttaa 100 %, ovi aukeaa!",
@@ -33,6 +34,7 @@
       "directUnlockMessage": "Liitä tämä pääsykoodi syötekenttään ja paina Lähetä."
     },
     "privacyPolicyLink": "Tietosuojaseloste",
+    "blogLink": "Blogi",
     "shareLabel": "Jaa",
     "shareCopiedLabel": "Linkki kopioitu.",
     "shareErrorLabel": "Jakaminen ei ole käytettävissä."
@@ -57,7 +59,7 @@
     "codingModelsLabel": "Koodaukseen: Gemini 3.5 Flash, GPT Codex 5.3, Opus 4.7",
     "chatbotModelLabel": "Paras hinta-laatu -suhde chatbotteihin: Gemini 3.1 Flash Lite",
     "toolkitTitleH2": "Lempi kielimallini H2 / 2026",
-    "codingModelsLabelH2": "Koodaukseen: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max",
+    "codingModelsLabelH2": "Koodaukseen: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max, Hy3",
     "chatbotModelLabelH2": "Paras hinta-laatu -suhde chatbotteihin: Gemini 3.1 Flash Lite",
     "analyticsTitle": "AI-portsarihaasteen analytiikka",
     "totalAttemptsLabel": "Viestejä yhteensä",

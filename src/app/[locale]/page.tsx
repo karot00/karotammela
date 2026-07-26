@@ -1,12 +1,10 @@
 import { use } from "react";
-import Link from "next/link";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HeroSection } from "@/components/hero-section";
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ShareButton } from "@/components/share-button";
 import { SentinelTerminal } from "@/components/sentinel-terminal";
 import {
@@ -66,16 +64,13 @@ export default function LocaleHomePage({ params }: Props) {
   return (
     <main className="flex flex-1 px-6 py-10 sm:py-16">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 sm:gap-10">
-        <div className="flex justify-end">
-          <LocaleSwitcher />
-        </div>
-
         <HeroSection
           badge={t("phaseLabel")}
           intro={t("intro")}
           body1={t("body1")}
           body2={t("body2")}
           body3={t("body3")}
+          body4={t("body4")}
         />
 
         <SentinelTerminal
@@ -112,14 +107,6 @@ export default function LocaleHomePage({ params }: Props) {
             copiedLabel={t("shareCopiedLabel")}
             errorLabel={t("shareErrorLabel")}
           />
-        </div>
-        <div className="flex justify-center mt-8">
-          <Link
-            href={`/${locale}/privacy?returnTo=${encodeURIComponent(`/${locale}`)}`}
-            className="text-xs text-muted-foreground hover:text-foreground"
-          >
-            {t("privacyPolicyLink")}
-          </Link>
         </div>
       </div>
     </main>

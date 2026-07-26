@@ -1,6 +1,45 @@
 {
   "releases": [
     {
+      "version": "v2.0",
+      "date": "2026-07-25",
+      "title": "Go+HTMX-tuotantovertailu, AI Pulse ja automaattinen deploy",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Julkaistu täysi Go+HTMX-toteutus rinnakkaisena tuotantosivustona omalla Hetzner-VPS:llä (SQLite-tietokanta, Caddy, systemd) – identtinen sisältö, dashboard ja AI-portsari kuin Next.js-versiossa."
+        },
+        {
+          "type": "added",
+          "text": "Tech Switcher ja Live Performance -widget: vaihda toteutusten välillä ja näe selaimesi mittaama vastausaikavertailu suoraan molemmilta palvelimilta."
+        },
+        {
+          "type": "added",
+          "text": "AI Pulse -dashboard-osio (Hacker News -trendit, GitHub-suositut repot, osakekurssit) molemmilla stackeilla, oma tietokantasyöte Go-puolella."
+        },
+        {
+          "type": "added",
+          "text": "Next.js-vertailubuildi siirretty omaan osoitteeseensa (next.karotammela.fi) Verceliin; karotammela.fi on nyt Go+HTMX-oletustoteutus."
+        },
+        {
+          "type": "added",
+          "text": "Automaattinen julkaisuputki GitHub Actionsilla: testit, build ja deploy Hetzner-palvelimelle ajautuvat automaattisesti joka pushilla."
+        },
+        {
+          "type": "added",
+          "text": "Uusi blogikirjoitus Go+HTMX-toteutuksen taustoista, VPS-pystytyksestä ja SQLite-kokemuksista."
+        },
+        {
+          "type": "changed",
+          "text": "Etusivun esittelyteksti kertoo nyt lyhyesti kahden teknologiavalinnan vertailusta ja siitä, mistä vaihtaja löytyy."
+        },
+        {
+          "type": "changed",
+          "text": "Lempi kielimallit -listaan (H2/2026) lisätty Hy3."
+        }
+      ]
+    },
+    {
       "version": "v1.3",
       "date": "2026-06-02",
       "title": "Swamp-integraatio ja automaattinen virhevalvonta",

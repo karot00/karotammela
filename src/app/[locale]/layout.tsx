@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { CookieConsentPreferences } from "@/components/cookie-consent-preferences";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { TechComparison } from "@/components/tech-comparison";
 import { routing } from "@/i18n/routing";
 
@@ -29,7 +31,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <div lang={locale} className="flex min-h-full flex-1 flex-col">
+        <SiteHeader />
         {children}
+        <SiteFooter />
         <CookieConsentPreferences />
         <CookieConsentBanner />
         <TechComparison />

@@ -184,6 +184,7 @@ func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
 	data["Body1"] = tr("home.body1")
 	data["Body2"] = tr("home.body2")
 	data["Body3"] = tr("home.body3")
+	data["Body4"] = tr("home.body4")
 	data["SentinelConfig"] = h.sentinelConfig(r, locale)
 	h.render(w, "home", data)
 }
