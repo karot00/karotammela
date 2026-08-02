@@ -67,10 +67,46 @@ func switchURLs(r *http.Request, locale string) (string, string) {
 	other := make([]string, len(parts))
 	copy(other, parts)
 	other[0] = "en"
+	if len(other) >= 3 && other[1] == "blog" {
+		other[2] = translatedBlogSlug(locale, "en", other[2])
+	}
 	en := "/" + strings.Join(other, "/")
 	other[0] = "fi"
+	if len(other) >= 3 && other[1] == "blog" {
+		other[2] = translatedBlogSlug(locale, "fi", parts[2])
+	}
 	fi := "/" + strings.Join(other, "/")
 	return en, fi
+}
+
+func translatedBlogSlug(currentLocale, targetLocale, slug string) string {
+	if currentLocale == targetLocale {
+		return slug
+	}
+
+	pairs := map[string]string{
+		"how-ai-unlocked-my-coding":                     "tekoaly-avasi-koodaukseni-lukot",
+		"vibe-coding-vs-production-ready":               "vibe-coding-vs-tuotantovalmis",
+		"mcp-bridging-the-knowledge-gap":                "mcp-bridgin-the-knowledge-gap",
+		"whatsapp-chaos-to-automated-process-levi-golf": "whatsapp-kaoottisuudesta-automatisoituun-prosessiin-levi-golf",
+		"agentic-ai-era-blogs-in-mdx":                   "agenttisen-tekoalyn-aikakausi-blogit-markdownilla",
+		"modern-ai-era-blog-in-md-or-mdx":               "moderni-seo-blogi-markdown-vai-mdx",
+		"go-htmx-vs-nextjs-hetzner":                     "go-htmx-nextjs-vertailu-hetzner",
+		"how-i-moved-wordpress-site-to-next-js":         "miten-siirsin-wordpress-sivuston-next-js-teknologiaan",
+	}
+	if currentLocale == "fi" {
+		for english, finnish := range pairs {
+			if slug == finnish {
+				return english
+			}
+		}
+	}
+	if targetLocale == "fi" {
+		if translated, ok := pairs[slug]; ok {
+			return translated
+		}
+	}
+	return slug
 }
 
 func (h *Handlers) common(r *http.Request, locale string) map[string]any {
