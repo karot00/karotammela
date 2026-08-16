@@ -93,6 +93,7 @@ func translatedBlogSlug(currentLocale, targetLocale, slug string) string {
 		"modern-ai-era-blog-in-md-or-mdx":               "moderni-seo-blogi-markdown-vai-mdx",
 		"go-htmx-vs-nextjs-hetzner":                     "go-htmx-nextjs-vertailu-hetzner",
 		"how-i-moved-wordpress-site-to-next-js":         "miten-siirsin-wordpress-sivuston-next-js-teknologiaan",
+		"home-ai-lab-qwen-3-8-27b":                      "kotilabra-ja-qwen-3-8-27b",
 	}
 	if currentLocale == "fi" {
 		for english, finnish := range pairs {

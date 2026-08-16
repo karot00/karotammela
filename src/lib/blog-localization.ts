@@ -13,6 +13,7 @@ const translatedSlugs: Record<BlogLocale, Record<string, string>> = {
     "go-htmx-vs-nextjs-hetzner": "go-htmx-nextjs-vertailu-hetzner",
     "how-i-moved-wordpress-site-to-next-js":
       "miten-siirsin-wordpress-sivuston-next-js-teknologiaan",
+    "home-ai-lab-qwen-3-8-27b": "kotilabra-ja-qwen-3-8-27b",
   },
   fi: {
     "tekoaly-avasi-koodaukseni-lukot": "how-ai-unlocked-my-coding",
@@ -27,6 +28,7 @@ const translatedSlugs: Record<BlogLocale, Record<string, string>> = {
     "go-htmx-nextjs-vertailu-hetzner": "go-htmx-vs-nextjs-hetzner",
     "miten-siirsin-wordpress-sivuston-next-js-teknologiaan":
       "how-i-moved-wordpress-site-to-next-js",
+    "kotilabra-ja-qwen-3-8-27b": "home-ai-lab-qwen-3-8-27b",
   },
 };
 
