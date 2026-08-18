@@ -259,6 +259,15 @@ curl -s -o /dev/null -w '%{http_code}\n' https://karotammela.fi/en/vip   # 404
 Keep the Caddy VIP path rules after disabling; removing them makes
 re-enablement riskier (plan §5.3).
 
+The production Caddyfile uses `admin off`, so its systemd service cannot use the
+usual Caddy admin-API reload operation. After changing the Caddyfile, validate it
+and restart the service instead:
+
+```bash
+caddy validate --config /etc/caddy/Caddyfile
+systemctl restart caddy
+```
+
 ### 12.4 Rotate credentials
 
 Rotate `VIP_PASSWORD_HASH` and `VIP_COOKIE_SECRET` before any re-enable after

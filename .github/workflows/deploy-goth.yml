@@ -87,7 +87,7 @@ jobs:
       - name: Validate and reload production Caddy
         run: |
           ssh -i ~/.ssh/goth_deploy "root@${{ secrets.GOTH_DEPLOY_HOST }}" \
-            "caddy validate --config /etc/caddy/Caddyfile && systemctl reload caddy"
+            "caddy validate --config /etc/caddy/Caddyfile && systemctl restart caddy"
       - name: Verify production health
         run: |
           for i in $(seq 1 10); do
@@ -97,11 +97,11 @@ jobs:
             sleep 3
           done
           echo "ERROR: production health check failed after deploy"; exit 1
-      - name: Verify production VIP routing while disabled
+      - name: Verify production VIP routing
         run: |
           set -euo pipefail
           status_body="$(curl -fsS https://karotammela.fi/api/vip/status)"
-          test "$status_body" = '{"enabled":false}'
+          enabled="$(printf '%s' "$status_body" | jq -er '.enabled | if type == "boolean" then tostring else error end')"
           for cookie in '' 'tech=next'; do
             headers="$(mktemp)"
             if [ -n "$cookie" ]; then
@@ -120,7 +120,11 @@ jobs:
               code="$(curl -sS -o /dev/null -w '%{http_code}' \
                 https://karotammela.fi/en/vip)"
             fi
-            test "$code" = 404
+            if [ "$enabled" = true ]; then
+              test "$code" = 200
+            else
+              test "$code" = 404
+            fi
             rm -f "$headers"
           done
-          echo "production VIP routing OK while disabled (direct + tech=next)"
+          echo "production VIP routing OK (enabled=$enabled; direct + tech=next)"
