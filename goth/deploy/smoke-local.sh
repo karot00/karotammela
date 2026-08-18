@@ -56,8 +56,12 @@ if ss -tln 2>/dev/null | grep -q ':8080 '; then
   ok "reusing existing server on :8080"
 else
   go build -o "$WORK/goth" ./cmd/server || { echo "build failed" >&2; exit 1; }
+  # The scratch server runs VIP-enabled so the VIP precedence assertions below
+  # can observe live Go responses (development env: no startup validation).
   ( cd "$WORK" && GOTH_PORT=8080 GOTH_DB_PATH="$WORK/smoke.db" GOTH_ENV=development \
-      UNLOCK_COOKIE_SECRET=smoke-secret ./goth >"$WORK/goth.log" 2>&1 ) &
+      UNLOCK_COOKIE_SECRET=smoke-secret \
+      VIP_ENABLED=true VIP_PASSWORD_HASH=smoke-vip-hash VIP_COOKIE_SECRET=smoke-vip-cookie-secret \
+      ./goth >"$WORK/goth.log" 2>&1 ) &
   SRV_PID=$!
   for _ in $(seq 1 50); do
     curl -fsS --max-time 1 http://localhost:8080/api/ping >/dev/null 2>&1 && break
@@ -121,6 +125,37 @@ else
   else
     bad "tech=next with Next.js down -> expected 502 from :3000 upstream, got HTTP $code"
   fi
+fi
+
+say "4b. VIP path precedence over tech cookie (plan §4.2, threat T9)"
+# /api/vip/status exists only in the Go build: receiving its JSON while
+# carrying tech=next proves the VIP handle outranks the cookie map.
+body=$(curl -fsS --max-time 3 -H 'Cookie: tech=next' "$CADDY_URL/api/vip/status" 2>/dev/null)
+case "$body" in
+  *'"enabled"'*) ok "/api/vip/status -> Go status JSON even with tech=next";;
+  *) bad "/api/vip/status with tech=next -> expected Go status JSON, got: $body";;
+esac
+
+if [ -n "${SRV_PID:-}" ]; then
+  case "$body" in
+    *'"enabled":true'*) ok "/api/vip/status reports enabled:true (scratch server runs VIP-enabled)";;
+    *) bad "/api/vip/status -> expected enabled:true, got: $body";;
+  esac
+
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 -H 'Cookie: tech=next' "$CADDY_URL/en/vip")
+  if [ "$code" = "200" ]; then
+    ok "/en/vip with tech=next -> served by Go (HTTP 200)"
+  else
+    bad "/en/vip with tech=next -> expected Go HTTP 200, got HTTP $code"
+  fi
+
+  loc=$(curl -s -o /dev/null -w '%{redirect_url}' --max-time 3 -H 'Cookie: tech=next' "$CADDY_URL/vip")
+  case "$loc" in
+    */en/vip*) ok "/vip with tech=next -> redirects to /en/vip via Go";;
+    *) bad "/vip with tech=next -> expected redirect to /en/vip, got: $loc";;
+  esac
+else
+  skip "VIP enabled-state assertions (reusing an existing :8080 server; VIP state unknown)"
 fi
 
 say "5. comparison probe routes (bypass cookie routing)"

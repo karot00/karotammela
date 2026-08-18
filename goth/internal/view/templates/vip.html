@@ -1,0 +1,74 @@
+{{define "vip"}}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{.Title}}</title>
+  <meta name="description" content="{{.Description}}" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <link rel="icon" href="/static/hero-poster.svg" type="image/svg+xml" />
+  <script src="/static/htmx.min.js" defer></script>
+  <script src="/static/alpine.min.js" defer></script>
+  <script src="/static/vip.js" defer></script>
+  <script>
+    // Swap 429 rate-limit partials too; htmx swaps only 2xx/3xx by default.
+    // htmx loads with defer, so it is defined by DOMContentLoaded.
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.htmx && window.htmx.config) {
+        window.htmx.config.responseHandling = [
+          { code: "204", swap: false },
+          { code: "429", swap: true },
+          { code: "[23]..", swap: true },
+          { code: "[45]..", swap: false, error: true }
+        ];
+      }
+    });
+
+    // Cinematic login handoff: 900 ms intro fade-in, a deliberately long hold,
+    // matching 900 ms fade-out, one second of darkness, then portal fade-in.
+    // Reduced-motion visitors and Skip bypass the timed sequence.
+    function vipIntro() {
+      return {
+        show: false,
+        portalVisible: false,
+        introTimer: null,
+        revealTimer: null,
+        init() {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            this.portalVisible = true;
+            return;
+          }
+          this.show = true;
+          this.$nextTick(() => { if (this.$refs.skip) this.$refs.skip.focus(); });
+          this.introTimer = setTimeout(() => this.dismiss(false), 4300);
+        },
+        dismiss(skipped) {
+          if (!this.show) return;
+          clearTimeout(this.introTimer);
+          this.show = false;
+          if (skipped) {
+            this.portalVisible = true;
+            this.$nextTick(() => { if (this.$refs.portal) this.$refs.portal.focus(); });
+            return;
+          }
+          // Wait for the 900 ms leave transition, hold black for 1000 ms,
+          // then let Alpine run the portal's own 900 ms entrance transition.
+          this.revealTimer = setTimeout(() => {
+            this.portalVisible = true;
+            this.$nextTick(() => { if (this.$refs.portal) this.$refs.portal.focus(); });
+          }, 1900);
+        }
+      };
+    }
+  </script>
+</head>
+<body class="flex min-h-screen flex-col bg-background text-foreground">
+  <main id="vip-root" class="flex flex-1 flex-col">
+    {{if .Authed}}{{template "vip-portal" .}}{{else}}{{template "vip-login" .}}{{end}}
+  </main>
+</body>
+</html>
+{{end}}

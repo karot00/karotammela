@@ -200,6 +200,11 @@ type UnlockedDashboardProps = {
   changelog: ChangelogRelease[];
   aiPulse: AiPulseData | null;
   initialView?: DashboardView;
+  // Absolute URL of the Go-hosted VIP portal when the feature is enabled, or
+  // null to hide the link (fail closed, resolved server-side from Go's
+  // /api/vip/status — plan §5.2). Deliberately not a DashboardView: it is a
+  // normal cross-origin anchor, never a client-side view.
+  vipUrl?: string | null;
 };
 
 type DashboardView =
@@ -247,11 +252,13 @@ function updateDashboardQueryParams(
 function SidebarNav({
   activeView,
   copy,
+  vipUrl,
   onSelect,
   onClose,
 }: {
   activeView: DashboardView;
   copy: DashboardCopy;
+  vipUrl?: string | null;
   onSelect: (view: DashboardView) => void;
   onClose?: () => void;
 }) {
@@ -288,6 +295,15 @@ function SidebarNav({
           </button>
         );
       })}
+      {vipUrl ? (
+        <a
+          href={vipUrl}
+          onClick={() => onClose?.()}
+          className="block w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-primary transition hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+        >
+          VIP
+        </a>
+      ) : null}
     </nav>
   );
 }
@@ -1088,6 +1104,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
     changelog,
     aiPulse,
     initialView = "overview",
+    vipUrl = null,
   } = props;
   const router = useRouter();
   const pathname = usePathname();
@@ -1219,6 +1236,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
           <SidebarNav
             activeView={activeView}
             copy={copy}
+            vipUrl={vipUrl}
             onSelect={onSelectView}
           />
         </div>
@@ -1268,6 +1286,7 @@ export function UnlockedDashboard(props: UnlockedDashboardProps) {
               <SidebarNav
                 activeView={activeView}
                 copy={copy}
+                vipUrl={vipUrl}
                 onSelect={onSelectView}
                 onClose={() => setMobileMenuOpen(false)}
               />

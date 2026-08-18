@@ -17,6 +17,13 @@ http://localhost:8090 {
 		reverse_proxy localhost:3000
 	}
 
+	# VIP portal paths always reach the Go build AHEAD of the tech-cookie map
+	# (plan §4.2, threat T9): a visitor carrying tech=next must never be sent
+	# to a nonexistent Next.js VIP route.
+	handle /vip /en/vip* /fi/vip* /api/vip* {
+		reverse_proxy localhost:8080
+	}
+
 	map {http.request.cookie.tech} {upstream} {
 		next    localhost:3000
 		go      localhost:8080

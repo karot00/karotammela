@@ -41,6 +41,14 @@ karotammela.fi {
 		reverse_proxy localhost:8080
 	}
 
+	# VIP portal paths are always owned by the Go build (plan §4.2, threat T9).
+	# Today the production default already proxies everything to Go, but the
+	# explicit handle keeps the guarantee if cookie-based stack routing ever
+	# returns, and matches the local staging Caddyfile used by smoke-local.sh.
+	handle /vip /en/vip* /fi/vip* /api/vip* {
+		reverse_proxy localhost:8080
+	}
+
 	handle {
 		reverse_proxy localhost:8080 {
 			# Surface upstream failures fast instead of hanging the client.

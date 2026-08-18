@@ -1,0 +1,9 @@
+{{define "vip-wait"}}
+<section class="flex flex-1 items-center justify-center px-6 py-16">
+  <div class="w-full max-w-md rounded-2xl border border-border/60 bg-card/60 p-8 text-center backdrop-blur-md">
+    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-primary">Restricted access</p>
+    <p class="mt-4 text-sm leading-relaxed text-muted-foreground" role="alert">{{.Message}}</p>
+    <div class="mt-6 flex items-center justify-center gap-5 text-xs"><a href="/en/vip" class="text-muted-foreground hover:text-foreground">Try again</a><a href="/" class="text-muted-foreground hover:text-foreground">Main page →</a></div>
+  </div>
+</section>
+{{end}}

@@ -202,3 +202,77 @@
 
 /* Alpine x-cloak: hide elements until Alpine initializes (prevents FOUC) */
 [x-cloak] { display: none !important; }
+
+/* VIP application: restrained depth, cyan signal, and deliberate transitions. */
+#vip-root { view-transition-name: vip-root; }
+.vip-orb {
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.14) 0%, rgba(0, 210, 255, 0.04) 42%, transparent 70%);
+  filter: blur(18px);
+}
+.vip-card {
+  transition: border-color 220ms ease, background-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+.vip-card:hover {
+  border-color: rgba(0, 210, 255, 0.3);
+  background-color: rgba(16, 17, 20, 0.72);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 50px -32px rgba(0, 210, 255, 0.35);
+}
+.vip-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.58rem 0.85rem;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+.vip-chip:hover,
+.vip-chip:focus-visible {
+  border-color: rgba(0, 210, 255, 0.55);
+  background: rgba(0, 210, 255, 0.06);
+  color: var(--foreground);
+  outline: none;
+}
+.vip-console {
+  background-image: radial-gradient(circle at 80% 0%, rgba(0, 210, 255, 0.08), transparent 42%);
+}
+.vip-auth-shell {
+  animation: vip-auth-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.vip-auth-shell.is-leaving {
+  pointer-events: none;
+  animation: vip-auth-leave 380ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-old(vip-root) {
+  animation: vip-auth-leave 320ms ease-in both;
+}
+::view-transition-new(vip-root) {
+  animation: vip-portal-enter 680ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes vip-auth-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes vip-auth-leave {
+  from { opacity: 1; transform: scale(1); filter: blur(0); }
+  to { opacity: 0; transform: scale(0.985); filter: blur(5px); }
+}
+@keyframes vip-portal-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vip-auth-shell,
+  .vip-auth-shell.is-leaving,
+  .vip-welcome,
+  ::view-transition-old(vip-root),
+  ::view-transition-new(vip-root) {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .vip-card { transition: none; }
+  .vip-card:hover { transform: none; }
+}

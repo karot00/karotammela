@@ -156,6 +156,10 @@ func runRefresh(cfg *config.Config) {
 }
 
 func runServer(cfg *config.Config) {
+	// Fail closed on a half-configured VIP portal before binding (plan §5.1).
+	if err := cfg.VIPStartupError(); err != nil {
+		log.Fatalf("vip config: %v", err)
+	}
 
 	vr, err := view.NewRenderer()
 	if err != nil {
@@ -171,17 +175,22 @@ func runServer(cfg *config.Config) {
 	if cfg.GoogleAPIKey != "" {
 		gemini = &ai.GeminiStreamer{APIKey: cfg.GoogleAPIKey, Model: cfg.AIModel}
 	}
+	var vipGemini *ai.GeminiStreamer
+	if cfg.GoogleAPIKey != "" {
+		vipGemini = &ai.GeminiStreamer{APIKey: cfg.GoogleAPIKey, Model: cfg.VIPAIModel}
+	}
 	var mailer handler.MailSender
 	if cfg.ContactConfigured() {
 		mailer = &email.ResendSender{APIKey: cfg.ResendAPIKey}
 	}
 
 	h := handler.New(cfg, vr, conn, gemini, mailer)
+	h.SetVIPGemini(vipGemini)
 	h.SetRefresher(buildRefresher(cfg))
 	r := router.New(h)
 
 	addr := ":" + cfg.Port
-	fmt.Printf("GOTH listening on %s (env=%s, ai=%v, contact=%v)\n", addr, cfg.Env, cfg.GoogleAPIKey != "", cfg.ContactConfigured())
+	fmt.Printf("GOTH listening on %s (env=%s, ai=%v, contact=%v, vip=%v)\n", addr, cfg.Env, cfg.GoogleAPIKey != "", cfg.ContactConfigured(), cfg.VIPEnabled)
 	if err := http.ListenAndServe(addr, r); err != nil {
 		log.Fatalf("server: %v", err)
 	}

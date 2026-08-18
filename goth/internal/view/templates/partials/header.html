@@ -7,6 +7,7 @@
     <nav class="flex items-center gap-2 sm:gap-3" aria-label="Primary">
       <a href="/{{.Locale}}/blog" class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">Blog</a>
       <a href="/{{.Locale}}/privacy" class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground">Privacy</a>
+      {{if .VIPURL}}<a href="{{.VIPURL}}" class="text-xs font-semibold uppercase tracking-[0.12em] text-primary hover:text-foreground">VIP</a>{{end}}
         <div class="flex items-center gap-1 rounded-md border border-border/60 p-0.5" role="group" aria-label="{{call .Tr "localeSwitcher.label"}}">
         <a href="{{.SwitchToEn}}" class="rounded px-2 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition-colors {{if eq .Locale "en"}}bg-primary/20 text-primary{{else}}text-muted-foreground hover:text-foreground{{end}}">EN</a>
         <a href="{{.SwitchToFi}}" class="rounded px-2 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition-colors {{if eq .Locale "fi"}}bg-primary/20 text-primary{{else}}text-muted-foreground hover:text-foreground{{end}}">FI</a>

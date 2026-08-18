@@ -22,6 +22,7 @@ import {
 import { getLocaleFromSegment, getLocalizedAlternates } from "@/lib/seo";
 import { verifyUnlockCookieValue } from "@/lib/security/unlock-cookie";
 import { trackServerEvent } from "@/lib/telemetry/events";
+import { getVipUrl } from "@/lib/vip";
 import { AI_TICKERS } from "@/lib/ai/stocks-fetcher";
 
 type DashboardPageProps = {
@@ -162,6 +163,9 @@ export default async function DashboardPage({
   const posts = await getAllBlogPosts(locale === "fi" ? "fi" : "en");
   const paginatedPosts = paginateBlogPosts(posts, normalizedBlogState.page, 10);
   const changelog = getChangelog(locale === "fi" ? "fi" : "en");
+  // Resolved independently of stats/content (fail-closed): a status timeout or
+  // error hides the link but never blocks the dashboard (plan §5.2).
+  const vipUrl = await getVipUrl();
   const aiPulse =
     normalizedBlogState.view === "ai-pulse" ? await getAiPulseData() : null;
 
@@ -178,6 +182,7 @@ export default async function DashboardPage({
       initialView={normalizedBlogState.view}
       changelog={changelog}
       aiPulse={aiPulse}
+      vipUrl={vipUrl}
       blog={{
         page: paginatedPosts.page,
         pageSize: paginatedPosts.pageSize,

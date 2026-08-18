@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-const geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/%s:streamGenerateContent?alt=sse"
+var geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/%s:streamGenerateContent?alt=sse"
 
 type geminiPart struct {
 	Text string `json:"text"`
@@ -51,6 +51,11 @@ type GeminiStreamer struct {
 type StreamOptions struct {
 	Locale  string
 	History []Message
+	// SystemPrompt and generation settings are optional so existing Sentinel
+	// callers retain their current behavior.
+	SystemPrompt    string
+	Temperature     float64
+	MaxOutputTokens int
 }
 
 // Message mirrors the chat message shape.
@@ -64,6 +69,35 @@ type Message struct {
 // caller (handler) once the level is resolved. It returns the full concatenated
 // text so the caller can resolve the level.
 func (g *GeminiStreamer) Stream(opts StreamOptions, ctx context.Context, w io.Writer, flusher http.Flusher) (string, error) {
+	if opts.SystemPrompt == "" {
+		opts.SystemPrompt = BuildSentinelSystemPrompt(opts.Locale)
+	}
+	if opts.Temperature == 0 {
+		opts.Temperature = 0.7
+	}
+	if opts.MaxOutputTokens == 0 {
+		opts.MaxOutputTokens = 300
+	}
+	return g.stream(opts, ctx, w, flusher)
+}
+
+// StreamWithPrompt is the generic streaming boundary used by features with a
+// prompt contract different from Sentinel. It deliberately shares only the
+// HTTP transport and SSE parsing, not Sentinel's level/unlock behavior.
+func (g *GeminiStreamer) StreamWithPrompt(opts StreamOptions, ctx context.Context, w io.Writer, flusher http.Flusher) (string, error) {
+	if strings.TrimSpace(opts.SystemPrompt) == "" {
+		return "", fmt.Errorf("system prompt is required")
+	}
+	if opts.Temperature == 0 {
+		opts.Temperature = 0.3
+	}
+	if opts.MaxOutputTokens == 0 {
+		opts.MaxOutputTokens = 500
+	}
+	return g.stream(opts, ctx, w, flusher)
+}
+
+func (g *GeminiStreamer) stream(opts StreamOptions, ctx context.Context, w io.Writer, flusher http.Flusher) (string, error) {
 	if g.Client == nil {
 		g.Client = &http.Client{Timeout: 90 * time.Second}
 	}
@@ -86,12 +120,12 @@ func (g *GeminiStreamer) Stream(opts StreamOptions, ctx context.Context, w io.Wr
 	reqBody := geminiRequest{
 		SystemInstruction: &geminiContent{
 			Role:  "user",
-			Parts: []geminiPart{{Text: BuildSentinelSystemPrompt(opts.Locale)}},
+			Parts: []geminiPart{{Text: opts.SystemPrompt}},
 		},
 		Contents: contents,
 		GenerationConfig: geminiGenConfig{
-			Temperature:     0.7,
-			MaxOutputTokens: 300,
+			Temperature:     opts.Temperature,
+			MaxOutputTokens: opts.MaxOutputTokens,
 		},
 	}
 

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"os"
 	"strconv"
 )
@@ -25,6 +26,16 @@ type Config struct {
 	GeminiBaseURL      string
 	BackupDir          string
 	BackupKeep         int
+
+	// VIP portal (MeetingPackage application). Disabled by default; one flag
+	// closes every VIP route and hides every VIP link in both stacks.
+	VIPEnabled      bool
+	VIPPasswordHash string
+	VIPCookieSecret string
+	VIPAIModel      string
+	VIPCVPath       string
+	VIPContactEmail string
+	VIPContactPhone string
 }
 
 func Load() *Config {
@@ -48,6 +59,14 @@ func Load() *Config {
 		GeminiBaseURL:      os.Getenv("GOTH_GEMINI_BASE_URL"),
 		BackupDir:          getEnv("GOTH_BACKUP_DIR", "backups"),
 		BackupKeep:         getEnvInt("GOTH_BACKUP_KEEP", 14),
+
+		VIPEnabled:      getEnvBool("VIP_ENABLED", false),
+		VIPPasswordHash: os.Getenv("VIP_PASSWORD_HASH"),
+		VIPCookieSecret: os.Getenv("VIP_COOKIE_SECRET"),
+		VIPAIModel:      getEnv("VIP_AI_MODEL", "gemini-3.5-flash-lite"),
+		VIPCVPath:       os.Getenv("VIP_CV_PATH"),
+		VIPContactEmail: os.Getenv("VIP_CONTACT_EMAIL"),
+		VIPContactPhone: os.Getenv("VIP_CONTACT_PHONE"),
 	}
 	return c
 }
@@ -71,6 +90,14 @@ func getEnv(key, fallback string) string {
 	return fallback
 }
 
+func getEnvBool(key string, fallback bool) bool {
+	v, err := strconv.ParseBool(os.Getenv(key))
+	if err != nil {
+		return fallback
+	}
+	return v
+}
+
 func (c *Config) IsProduction() bool {
 	return c.Env == "production"
 }
@@ -80,6 +107,30 @@ func (c *Config) IsProduction() bool {
 // Next.js reference). Anything less disables delivery (503).
 func (c *Config) ContactConfigured() bool {
 	return c.ResendAPIKey != "" && c.ContactFromEmail != "" && c.ContactToEmail != ""
+}
+
+// VIPConfigured reports whether the VIP portal has the minimum credentials to
+// run its access flow. VIPCVPath is optional: when unset, the CV download link
+// and route stay hidden.
+func (c *Config) VIPConfigured() bool {
+	return c.VIPPasswordHash != "" && c.VIPCookieSecret != ""
+}
+
+// VIPStartupError fails startup when the VIP portal is enabled but too
+// incomplete to run safely, so a half-configured portal fails closed instead
+// of exposing a broken login. Enforced in production only; development may
+// enable the routing skeleton without credentials.
+func (c *Config) VIPStartupError() error {
+	if !c.VIPEnabled || !c.IsProduction() {
+		return nil
+	}
+	if c.VIPPasswordHash == "" {
+		return errors.New("VIP_ENABLED=true requires VIP_PASSWORD_HASH (Argon2id/scrypt hash, never plaintext)")
+	}
+	if c.VIPCookieSecret == "" {
+		return errors.New("VIP_ENABLED=true requires VIP_COOKIE_SECRET (independent signing secret)")
+	}
+	return nil
 }
 
 func (c *Config) IntPort() int {

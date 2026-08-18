@@ -30,6 +30,20 @@ func New(h *handler.Handlers) http.Handler {
 	r.Get("/robots.txt", h.Robots)
 	r.Get("/sitemap.xml", h.Sitemap)
 
+	// VIP portal (MeetingPackage application). Disabled by default: every
+	// route except /api/vip/status answers with an indistinguishable 404 and
+	// no navigation shows a link. Go owns the canonical /en/vip; the Next.js
+	// stack only links to it (plan §4).
+	r.Get("/api/vip/status", h.VIPStatus)
+	r.Get("/vip", h.VIPEntry)
+	r.Get("/fi/vip", h.VIPEntry)
+	r.Get("/en/vip", h.VIPPage)
+	r.Post("/api/vip/notify", h.VIPNotify)
+	r.Post("/api/vip/login", h.VIPLogin)
+	r.Post("/api/vip/logout", h.VIPLogout)
+	r.Get("/api/vip/cv", h.VIPCV)
+	r.Post("/api/vip/chat", h.VIPChat)
+
 	sub, err := fs.Sub(webstatic.StaticFS, "static")
 	if err == nil {
 		fileServer := http.FileServer(http.FS(sub))

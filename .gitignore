@@ -68,3 +68,7 @@ next-env.d.ts
 .claude/scheduled_tasks.lock
 .claude/scheduled_tasks.json
 # END swamp managed section
+
+# private application source material (never commit)
+Karo_Tammela_CV_*.pdf
+Profile.pdf

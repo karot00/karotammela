@@ -68,6 +68,7 @@
   <a href="{{.DashBase}}?view=changelog" {{if eq .ActiveView "changelog"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "changelog")}}">{{.NavChangelog}}</a>
   <a href="{{.DashBase}}?view=ai-pulse" {{if eq .ActiveView "ai-pulse"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "ai-pulse")}}">{{.NavAiPulse}}</a>
   <a href="{{.DashBase}}?view=settings" {{if eq .ActiveView "settings"}}aria-current="true"{{end}} class="block w-full rounded-lg px-3 py-2 text-left text-sm transition {{sideActive (eq .ActiveView "settings")}}">{{.NavSettings}}</a>
+  {{if .VIPURL}}<a href="{{.VIPURL}}" class="block w-full rounded-lg px-3 py-2 text-left text-sm font-semibold transition text-primary hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">VIP</a>{{end}}
 </nav>
 {{end}}
 

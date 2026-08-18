@@ -12,7 +12,10 @@ import (
 func (h *Handlers) Robots(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	base := strings.TrimRight(h.cfg.BaseURL, "/")
-	fmt.Fprintf(w, "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n", base)
+	// VIP paths are disallowed regardless of the feature flag (plan §4.5):
+	// the rules are harmless while disabled and must not be forgotten when
+	// the portal is enabled. No VIP URL is ever added to the sitemap.
+	fmt.Fprintf(w, "User-agent: *\nAllow: /\nDisallow: /vip\nDisallow: /en/vip\nDisallow: /fi/vip\nDisallow: /api/vip/\n\nSitemap: %s/sitemap.xml\n", base)
 }
 
 func (h *Handlers) Sitemap(w http.ResponseWriter, r *http.Request) {
