@@ -13,7 +13,7 @@
         this.messages.push({ id: this.nextID++, role: "assistant", content: "" });
         this.streaming = true; this.stateMessage = "AI guide is thinking..."; this.controller = new AbortController();
         try {
-          var response = await fetch("/api/vip/chat", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json", Accept: "text/event-stream" }, body: JSON.stringify({ messages: this.messages.slice(0, -1).map(function (m) { return { role: m.role, content: m.content }; }) }), signal: this.controller.signal });
+          var response = await fetch("/api/vip/chat", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json", Accept: "text/event-stream" }, body: JSON.stringify({ message: text }), signal: this.controller.signal });
           if (!response.ok || !response.body) throw new Error(response.status === 429 ? "The concierge is taking a short break. Please try again later." : "The concierge is temporarily unavailable.");
           var reader = response.body.getReader(), decoder = new TextDecoder(), buffer = "";
           while (true) {

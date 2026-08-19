@@ -19,7 +19,7 @@ import (
 // Only the static event tag is logged — never the client IP, query, or any
 // user content — so rate-limit logs stay redaction-safe across every endpoint.
 func (h *Handlers) enforceIPRateLimit(w http.ResponseWriter, r *http.Request, scope string, limit int, window time.Duration, event, message string) bool {
-	ip := security.GetClientIP(headerMap(r))
+	ip := security.ClientIP(r)
 	allowed, _, retryAfterMs := security.EnforceRateLimit(scope, ip, limit, window)
 	if allowed {
 		return true

@@ -14,6 +14,7 @@ import (
 	"goth/internal/ai"
 	"goth/internal/aipulse"
 	"goth/internal/config"
+	"goth/internal/content"
 	"goth/internal/db"
 	"goth/internal/email"
 	"goth/internal/handler"
@@ -160,6 +161,14 @@ func runServer(cfg *config.Config) {
 	if err := cfg.VIPStartupError(); err != nil {
 		log.Fatalf("vip config: %v", err)
 	}
+	var vipContent content.VIPContent
+	if cfg.VIPEnabled {
+		var err error
+		vipContent, err = content.LoadVIP(cfg.VIPContentDir)
+		if err != nil {
+			log.Fatalf("vip content: %v", err)
+		}
+	}
 
 	vr, err := view.NewRenderer()
 	if err != nil {
@@ -186,12 +195,14 @@ func runServer(cfg *config.Config) {
 
 	h := handler.New(cfg, vr, conn, gemini, mailer)
 	h.SetVIPGemini(vipGemini)
+	h.SetVIPContent(vipContent)
 	h.SetRefresher(buildRefresher(cfg))
 	r := router.New(h)
 
-	addr := ":" + cfg.Port
+	addr := cfg.Host + ":" + cfg.Port
 	fmt.Printf("GOTH listening on %s (env=%s, ai=%v, contact=%v, vip=%v)\n", addr, cfg.Env, cfg.GoogleAPIKey != "", cfg.ContactConfigured(), cfg.VIPEnabled)
-	if err := http.ListenAndServe(addr, r); err != nil {
+	server := &http.Server{Addr: addr, Handler: r, ReadHeaderTimeout: 5 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 1 << 20}
+	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("server: %v", err)
 	}
 }

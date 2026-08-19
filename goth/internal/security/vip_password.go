@@ -50,6 +50,51 @@ func VerifyVIPPassword(encoded, password string) bool {
 	}
 }
 
+// ValidateVIPPasswordHash checks the encoded profile without performing the
+// expensive derivation. Production callers use it before accepting traffic.
+func ValidateVIPPasswordHash(encoded string, production bool) bool {
+	fields := strings.Split(encoded, "$")
+	if len(fields) == 6 && fields[1] == "argon2id" {
+		if fields[0] != "" || fields[2] != "v=19" {
+			return false
+		}
+		params := parseParams(fields[3])
+		if params == nil || params["m"] > vipArgon2MaxMemoryKiB || params["t"] > vipArgon2MaxIterations || params["p"] > vipArgon2MaxThreads {
+			return false
+		}
+		if production && (params["m"] < 64*1024 || params["t"] < 3 || params["p"] < 1) {
+			return false
+		}
+		salt, key, ok := decodeVIPHashSegments(fields[4], fields[5])
+		return ok && len(salt) >= 16 && len(key) >= 32
+	}
+	if len(fields) == 5 && fields[1] == "scrypt" {
+		params := parseParams(fields[2])
+		if params == nil || params["ln"] > vipScryptMaxLogN || params["r"] > vipScryptMaxR || params["p"] > vipScryptMaxP {
+			return false
+		}
+		if production && (params["ln"] < 15 || params["r"] < 8 || params["p"] < 1) {
+			return false
+		}
+		_, key, ok := decodeVIPHashSegments(fields[3], fields[4])
+		return ok && len(key) >= 32
+	}
+	return false
+}
+
+func parseParams(raw string) map[string]int {
+	params := map[string]int{}
+	for _, kv := range strings.Split(raw, ",") {
+		k, v, ok := strings.Cut(kv, "=")
+		n, err := strconv.Atoi(v)
+		if !ok || k == "" || err != nil || n < 1 {
+			return nil
+		}
+		params[k] = n
+	}
+	return params
+}
+
 func verifyArgon2id(fields []string, password string) bool {
 	// fields: ["", "argon2id", "v=19", "m=..,t=..,p=..", salt, hash]
 	if fields[0] != "" || fields[2] != "v=19" {

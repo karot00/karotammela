@@ -138,8 +138,9 @@ func TestVIPStartupErrorProduction(t *testing.T) {
 			cfg: Config{
 				Env:             "production",
 				VIPEnabled:      true,
-				VIPPasswordHash: "hash",
-				VIPCookieSecret: "secret",
+				VIPPasswordHash: "$argon2id$v=19$m=65536,t=3,p=1$YWJjZGVmZ2hpamtsbW5vcA$YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXl6MDEyMzQ1",
+				VIPCookieSecret: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+				VIPContentDir:   "/var/lib/goth/private/vip",
 			},
 			wantErr: false,
 		},

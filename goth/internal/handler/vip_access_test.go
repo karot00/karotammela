@@ -16,6 +16,7 @@ import (
 	"golang.org/x/crypto/argon2"
 
 	"goth/internal/config"
+	"goth/internal/content"
 	"goth/internal/security"
 	"goth/internal/view"
 )
@@ -28,6 +29,10 @@ func vipAccessHandlers(t *testing.T, mailer MailSender) *Handlers {
 	vr, err := view.NewRenderer()
 	if err != nil {
 		t.Fatalf("view.NewRenderer() = %v", err)
+	}
+	vip, err := content.LoadVIP("../../content/vip")
+	if err != nil {
+		t.Fatalf("content.LoadVIP() = %v", err)
 	}
 	return &Handlers{
 		cfg: &config.Config{
@@ -43,6 +48,7 @@ func vipAccessHandlers(t *testing.T, mailer MailSender) *Handlers {
 		mailer:        mailer,
 		vipThrottle:   security.NewVIPLoginThrottle(),
 		vipLoginFloor: 0,
+		vipContent:    vip,
 	}
 }
 
@@ -68,6 +74,7 @@ func vipPost(t *testing.T, h *Handlers, path string, form url.Values, ip string,
 	req := httptest.NewRequest(http.MethodPost, path, strings.NewReader(form.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("X-Forwarded-For", ip)
+	req.RemoteAddr = "127.0.0.1:12345"
 	for k, vs := range hdr {
 		for _, v := range vs {
 			req.Header.Add(k, v)

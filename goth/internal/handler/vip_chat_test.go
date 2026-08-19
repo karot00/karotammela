@@ -23,7 +23,7 @@ func TestVIPChatRequiresCookieAndStreamsGroundedResponse(t *testing.T) {
 	defer provider.Close()
 	h.SetVIPGemini(&ai.GeminiStreamer{APIKey: "test-key", Model: "vip-test-model", Client: &http.Client{Transport: rewriteTransport{base: provider.URL, next: provider.Client().Transport}}})
 
-	body := `{"messages":[{"role":"user","content":"What has Karo shipped?"}]}`
+	body := `{"message":"What has Karo shipped?"}`
 	unauth := httptest.NewRequest(http.MethodPost, "/api/vip/chat", strings.NewReader(body))
 	unauth.Header.Set("Content-Type", "application/json")
 	unauthRec := httptest.NewRecorder()

@@ -15,6 +15,7 @@ import (
 	"goth/internal/ai"
 	"goth/internal/aipulse"
 	"goth/internal/config"
+	"goth/internal/content"
 	"goth/internal/email"
 	"goth/internal/i18n"
 	"goth/internal/security"
@@ -43,6 +44,7 @@ type Handlers struct {
 	vipThrottle   *security.VIPLoginThrottle
 	vipLoginFloor time.Duration
 	vipChat       *security.VIPChatLimiter
+	vipContent    content.VIPContent
 }
 
 // New builds the handler set.
@@ -67,7 +69,8 @@ func (h *Handlers) SetRefresher(r *aipulse.Refresher) {
 
 // SetVIPGemini installs the VIP-only model client without changing Sentinel's
 // configured model or transport behavior.
-func (h *Handlers) SetVIPGemini(g *ai.GeminiStreamer) { h.vipGemini = g }
+func (h *Handlers) SetVIPGemini(g *ai.GeminiStreamer)  { h.vipGemini = g }
+func (h *Handlers) SetVIPContent(v content.VIPContent) { h.vipContent = v }
 
 func themeFromCookie(r *http.Request) string {
 	c, err := r.Cookie("theme")

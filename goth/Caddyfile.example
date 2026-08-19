@@ -10,6 +10,12 @@ map {http.request.cookie.tech} {upstream} {
 }
 
 :80 {
+	header {
+		Content-Security-Policy "frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+	}
 	# Canonical + SEO passthrough to whichever upstream is active.
 	reverse_proxy {upstream}
 }

@@ -14,6 +14,11 @@ import (
 
 var geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/%s:streamGenerateContent?alt=sse"
 
+const (
+	geminiMaxErrorBytes  = 16 << 10
+	geminiMaxOutputBytes = 64 << 10
+)
+
 type geminiPart struct {
 	Text string `json:"text"`
 }
@@ -150,8 +155,8 @@ func (g *GeminiStreamer) stream(opts StreamOptions, ctx context.Context, w io.Wr
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return "", fmt.Errorf("gemini error %d: %s", resp.StatusCode, string(body))
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, geminiMaxErrorBytes))
+		return "", fmt.Errorf("gemini error %d: %s", resp.StatusCode, strings.TrimSpace(string(body)))
 	}
 
 	var full strings.Builder
@@ -170,10 +175,18 @@ func (g *GeminiStreamer) stream(opts StreamOptions, ctx context.Context, w io.Wr
 		if err := json.Unmarshal([]byte(data), &sse); err != nil {
 			continue
 		}
-		for _, cand := range sse.Candidates {
+		if len(sse.Candidates) > 0 {
+			cand := sse.Candidates[0]
 			for _, part := range cand.Content.Parts {
 				if part.Text == "" {
 					continue
+				}
+				remaining := geminiMaxOutputBytes - full.Len()
+				if remaining <= 0 {
+					return full.String(), fmt.Errorf("gemini output limit exceeded")
+				}
+				if len(part.Text) > remaining {
+					return full.String(), fmt.Errorf("gemini output limit exceeded")
 				}
 				full.WriteString(part.Text)
 				writeTokenEvent(w, part.Text)
@@ -183,6 +196,9 @@ func (g *GeminiStreamer) stream(opts StreamOptions, ctx context.Context, w io.Wr
 	}
 	if err := scanner.Err(); err != nil {
 		return full.String(), err
+	}
+	if full.Len() == 0 {
+		return "", fmt.Errorf("gemini stream produced no text")
 	}
 	return full.String(), nil
 }

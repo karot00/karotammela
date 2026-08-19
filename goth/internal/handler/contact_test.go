@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -46,6 +47,7 @@ func postContact(t *testing.T, h *Handlers, body, ip string) *httptest.ResponseR
 	req := httptest.NewRequest(http.MethodPost, "/api/contact", strings.NewReader(body))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-Forwarded-For", ip)
+	req.RemoteAddr = ip + ":12345"
 	rec := httptest.NewRecorder()
 	h.Contact(rec, req)
 	return rec
@@ -104,7 +106,7 @@ func TestContactValidationMatrix(t *testing.T) {
 	for i, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			// Unique IP per case so the shared rate limiter never interferes.
-			rec := postContact(t, h, tc.body, "198.51.100."+strings.Repeat("1", i+1))
+			rec := postContact(t, h, tc.body, fmt.Sprintf("198.51.100.%d", i+1))
 			if rec.Code != http.StatusBadRequest {
 				t.Errorf("status = %d, want 400; body: %s", rec.Code, rec.Body.String())
 			}

@@ -15,7 +15,6 @@ import (
 	"strings"
 	"time"
 
-	"goth/internal/content"
 	"goth/internal/email"
 	"goth/internal/security"
 )
@@ -100,12 +99,7 @@ func (h *Handlers) VIPPage(w http.ResponseWriter, r *http.Request) {
 		"Authed":      h.vipAuthorized(r),
 	}
 	if data["Authed"].(bool) {
-		vip, err := content.VIP()
-		if err != nil {
-			http.Error(w, "portal content unavailable", http.StatusInternalServerError)
-			return
-		}
-		data["VIP"] = vip
+		data["VIP"] = h.vipContent
 		data["CVAvailable"] = h.cfg.VIPCVPath != ""
 		data["VIPContactEmail"] = h.cfg.VIPContactEmail
 		data["VIPContactPhone"] = h.cfg.VIPContactPhone
@@ -149,7 +143,7 @@ func (h *Handlers) VIPNotify(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ip := security.GetClientIP(headerMap(r))
+	ip := security.ClientIP(r)
 	if allowed, _, retryMs := security.EnforceRateLimit("vip-notify-ip", ip, vipNotifyIPLimit, time.Hour); !allowed {
 		log.Printf("vip.notify rate_limited")
 		h.vipRateLimited(w, retryMs, "Too many notifications from this connection. Please try again later.")
@@ -219,7 +213,7 @@ func (h *Handlers) VIPLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ip := security.GetClientIP(headerMap(r))
+	ip := security.ClientIP(r)
 	start := time.Now()
 	allowed, retry := h.vipThrottle.Allow(ip, time.Now())
 	if !allowed {
@@ -238,7 +232,13 @@ func (h *Handlers) VIPLogin(w http.ResponseWriter, r *http.Request) {
 
 	ok := false
 	if code != "" && len(code) <= vipCodeMaxLen && h.cfg.VIPPasswordHash != "" {
-		ok = security.VerifyVIPPassword(h.cfg.VIPPasswordHash, code)
+		if security.AcquireVIPLogin(time.Now()) {
+			defer security.ReleaseVIPLogin()
+			ok = security.VerifyVIPPassword(h.cfg.VIPPasswordHash, code)
+		} else {
+			h.vipRateLimited(w, time.Second.Milliseconds(), "Too many attempts from this connection. Please try again later.")
+			return
+		}
 	}
 	// Uniform timing regardless of outcome, applied before the response is
 	// written so verification cost does not leak through response time.
@@ -252,13 +252,8 @@ func (h *Handlers) VIPLogin(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("vip.login ok=true ipHash=%s duration_ms=%d", vipHash(ip), time.Since(start).Milliseconds())
 	h.vipSetCookie(w, time.Now())
-	vip, err := content.VIP()
-	if err != nil {
-		http.Error(w, "portal content unavailable", http.StatusInternalServerError)
-		return
-	}
 	h.render(w, "vip-portal", map[string]any{
-		"VIP":                 vip,
+		"VIP":                 h.vipContent,
 		"CVAvailable":         h.cfg.VIPCVPath != "",
 		"VIPContactEmail":     h.cfg.VIPContactEmail,
 		"VIPContactPhone":     h.cfg.VIPContactPhone,
@@ -445,5 +440,6 @@ func vipHash(s string) string {
 // route. It must not redirect to a login or reveal that a VIP feature exists
 // (plan §5.1).
 func (h *Handlers) vipNotFound(w http.ResponseWriter, r *http.Request) {
+	h.vipNoStoreHeaders(w)
 	http.NotFound(w, r)
 }

@@ -13,3 +13,4 @@
 
 # Local env (secrets); the example is committed
 .env
+/content/vip/

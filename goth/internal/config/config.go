@@ -1,13 +1,18 @@
 package config
 
 import (
+	"encoding/hex"
 	"errors"
 	"os"
 	"strconv"
+	"strings"
+
+	"goth/internal/security"
 )
 
 type Config struct {
 	Port               string
+	Host               string
 	DBPath             string
 	GoogleAPIKey       string
 	AIModel            string
@@ -36,11 +41,13 @@ type Config struct {
 	VIPCVPath       string
 	VIPContactEmail string
 	VIPContactPhone string
+	VIPContentDir   string
 }
 
 func Load() *Config {
 	c := &Config{
 		Port:               getEnv("GOTH_PORT", "8080"),
+		Host:               getEnv("GOTH_HOST", "127.0.0.1"),
 		DBPath:             getEnv("GOTH_DB_PATH", "goth.db"),
 		GoogleAPIKey:       os.Getenv("GOOGLE_GENERATIVE_AI_API_KEY"),
 		AIModel:            getEnv("AI_MODEL", "gemini-3.1-flash-lite"),
@@ -67,6 +74,7 @@ func Load() *Config {
 		VIPCVPath:       os.Getenv("VIP_CV_PATH"),
 		VIPContactEmail: os.Getenv("VIP_CONTACT_EMAIL"),
 		VIPContactPhone: os.Getenv("VIP_CONTACT_PHONE"),
+		VIPContentDir:   getEnv("VIP_CONTENT_DIR", "content/vip"),
 	}
 	return c
 }
@@ -121,14 +129,32 @@ func (c *Config) VIPConfigured() bool {
 // of exposing a broken login. Enforced in production only; development may
 // enable the routing skeleton without credentials.
 func (c *Config) VIPStartupError() error {
+	if c.Env != "development" && c.Env != "test" && c.Env != "production" {
+		return errors.New("GOTH_ENV must be development, test, or production")
+	}
+	if c.IsProduction() && c.Host != "" && c.Host != "127.0.0.1" && c.Host != "::1" {
+		return errors.New("production GOTH_HOST must be loopback")
+	}
 	if !c.VIPEnabled || !c.IsProduction() {
 		return nil
 	}
 	if c.VIPPasswordHash == "" {
 		return errors.New("VIP_ENABLED=true requires VIP_PASSWORD_HASH (Argon2id/scrypt hash, never plaintext)")
 	}
+	if !security.ValidateVIPPasswordHash(c.VIPPasswordHash, true) {
+		return errors.New("VIP_PASSWORD_HASH is malformed or below the production work profile")
+	}
 	if c.VIPCookieSecret == "" {
 		return errors.New("VIP_ENABLED=true requires VIP_COOKIE_SECRET (independent signing secret)")
+	}
+	if len(c.VIPCookieSecret) != 64 {
+		return errors.New("VIP_COOKIE_SECRET must be exactly 64 hexadecimal characters")
+	}
+	if _, err := hex.DecodeString(c.VIPCookieSecret); err != nil {
+		return errors.New("VIP_COOKIE_SECRET must be exactly 64 hexadecimal characters")
+	}
+	if strings.TrimSpace(c.VIPContentDir) == "" {
+		return errors.New("VIP_ENABLED=true requires VIP_CONTENT_DIR")
 	}
 	return nil
 }

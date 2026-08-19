@@ -54,7 +54,7 @@ func (h *Handlers) SentinelStream(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Rate limit: IP + session.
-	ip := security.GetClientIP(headerMap(r))
+	ip := security.ClientIP(r)
 	if ok, _, _ := security.EnforceRateLimit("sentinel-ip", ip, 40, time.Minute); !ok {
 		http.Error(w, "Rate limit exceeded.", http.StatusTooManyRequests)
 		return

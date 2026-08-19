@@ -7,6 +7,9 @@ import (
 	"crypto/subtle"
 	"encoding/base64"
 	"encoding/json"
+	"net"
+	"net/http"
+	"net/netip"
 	"strings"
 	"sync"
 	"time"
@@ -242,6 +245,25 @@ func GetClientIP(headers map[string]string) string {
 	}
 	if v, ok := headers["x-real-ip"]; ok && v != "" {
 		return v
+	}
+	return "unknown"
+}
+
+func ClientIP(r *http.Request) string {
+	peer, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		peer = r.RemoteAddr
+	}
+	peerAddr, peerErr := netip.ParseAddr(peer)
+	if peerErr == nil && peerAddr.IsLoopback() {
+		for _, raw := range []string{r.Header.Get("X-Real-IP"), strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]} {
+			if addr, err := netip.ParseAddr(strings.TrimSpace(raw)); err == nil {
+				return addr.Unmap().String()
+			}
+		}
+	}
+	if peerErr == nil {
+		return peerAddr.Unmap().String()
 	}
 	return "unknown"
 }
