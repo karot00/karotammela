@@ -1,6 +1,25 @@
 {
   "releases": [
     {
+      "version": "v2.1",
+      "date": "2026-08-19",
+      "title": "VIP-portaali ja itse ylläpidetty stack",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Lisätty yksityinen palvelinpohjainen portaali, joka käyttää Go:ta, HTMX:ää, Alpinea, Gemini-streamausta, allekirjoitettuja käyttöoikeussessioita ja sisältövetoista build-lokia."
+        },
+        {
+          "type": "added",
+          "text": "Dashboardiin lisätty toissijainen itse ylläpidetty stack: Go, chi, HTMX, SQLite WAL, Hetzner VPS, Caddy, systemd, Let's Encrypt ja GitHub Actions."
+        },
+        {
+          "type": "changed",
+          "text": "H2/2026-koodausmallien listaan lisätty Qwen 3.8 27B."
+        }
+      ]
+    },
+    {
       "version": "v2.0",
       "date": "2026-07-25",
       "title": "Go+HTMX-tuotantovertailu, AI Pulse ja automaattinen deploy",

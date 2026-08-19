@@ -299,6 +299,21 @@
       </div>
     </section>
   {{end}}
+
+  <h2 class="border-t border-border pt-10 text-xl font-semibold text-foreground">{{.TechSecondaryTitle}}</h2>
+  {{range .TechSecondaryCategories}}
+    <section class="space-y-6">
+      <h3 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground after:h-px after:flex-1 after:bg-border">{{.Label}}</h3>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {{range .Items}}
+          <article class="group flex items-start gap-4 rounded-xl border border-border bg-card p-5 text-foreground transition-colors hover:bg-muted/40">
+            <div class="rounded-lg bg-muted p-2.5 text-muted-foreground transition-colors group-hover:text-foreground">{{icon .ID "size-5"}}</div>
+            <div><h4 class="text-base font-medium text-foreground">{{.Name}}</h4><p class="mt-1 text-sm leading-relaxed text-muted-foreground">{{.Description}}</p></div>
+          </article>
+        {{end}}
+      </div>
+    </section>
+  {{end}}
 </section>
 {{end}}
 

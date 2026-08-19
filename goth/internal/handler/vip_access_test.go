@@ -459,7 +459,7 @@ func TestVIPPageRendersPortalWithValidCookie(t *testing.T) {
 	if strings.Contains(rec.Body.String(), "render error:") {
 		t.Fatalf("portal template failed during rendering: %s", rec.Body.String())
 	}
-	for _, marker := range []string{"Ask the application anything.", "Why me", "Track record", "Build log", "The evidence is the application.", "MeetingPackage needs", "A pattern of ownership across domains.", "Levi Golf Green Fee Sales Platform"} {
+	for _, marker := range []string{"Ask about the work.", "Why me", "Track record", "Build log", "What I have shipped is the evidence.", "MeetingPackage needs", "A pattern of ownership across domains.", "Levi Golf Green Fee Sales Platform"} {
 		if !strings.Contains(rec.Body.String(), marker) {
 			t.Errorf("portal missing Phase 3 marker %q", marker)
 		}

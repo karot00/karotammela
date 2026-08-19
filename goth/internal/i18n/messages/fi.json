@@ -58,7 +58,7 @@
     "codingModelsLabel": "Koodaukseen: Gemini 3.5 Flash, GPT Codex 5.3, Opus 4.7",
     "chatbotModelLabel": "Paras hinta-laatu -suhde chatbotteihin: Gemini 3.1 Flash Lite",
     "toolkitTitleH2": "Lempi kielimallini H2 / 2026",
-    "codingModelsLabelH2": "Koodaukseen: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max, Hy3",
+    "codingModelsLabelH2": "Koodaukseen: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max, Hy3, Qwen 3.8 27B",
     "chatbotModelLabelH2": "Paras hinta-laatu -suhde chatbotteihin: Gemini 3.1 Flash Lite",
     "analyticsTitle": "AI-portsarihaasteen analytiikka",
     "totalAttemptsLabel": "Viestejä yhteensä",
@@ -91,6 +91,7 @@
     "projectPostcardStackBadge": "Toteutettu Next.js:llä",
     "projectGithubLabel": "GitHub: karot00/karotammela",
     "techTitle": "Pääasiallinen teknologia-stack",
+    "techSecondaryTitle": "Toissijainen teknologia-stack",
     "techCategories": {
       "frontend": "Frontend",
       "backendDb": "Backend ja tietokannat",
@@ -137,7 +138,17 @@
       "kiloCode": {
         "name": "Kilo Code",
         "description": "avoimen lähdekoodin tekoälypohjainen ohjelmointiagentti (AI coding agent)."
-      }
+      },
+      "go": { "name": "Go", "description": "Kompiloitu kieli itse hostattuun sovellukseen." },
+      "chi": { "name": "chi", "description": "Pieni ja yhdisteltävä HTTP-reititin Golle." },
+      "htmx": { "name": "HTMX", "description": "HTML-pohjaiset käyttöliittymäinteraktiot ilman raskasta frontend-ajonaikaista ympäristöä." },
+      "sqliteWal": { "name": "SQLite + WAL", "description": "Tuotantotietokanta migraatioilla, varmuuskopioilla ja palautusharjoituksilla." },
+      "hetzner": { "name": "Hetzner VPS", "description": "Itse ylläpidetty CX23-palvelin Helsingissä." },
+      "caddy": { "name": "Caddy", "description": "Reverse proxy automaattisella HTTPS:llä." },
+      "systemd": { "name": "systemd", "description": "Palveluiden valvonta ja hallitut uudelleenkäynnistykset." },
+      "letsEncrypt": { "name": "Let's Encrypt", "description": "Tuotantodomainin automaattiset TLS-varmenteet." },
+      "githubActions": { "name": "GitHub Actions", "description": "Automaattinen testaus-, build- ja julkaisupipeline." },
+      "r2Rclone": { "name": "Cloudflare R2 + rclone", "description": "Etävarmuuskopiot checksum- ja palautusvarmistuksilla." }
     },
     "blogPreviousLabel": "Edellinen",
     "blogNextLabel": "Seuraava",

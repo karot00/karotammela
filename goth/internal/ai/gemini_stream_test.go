@@ -16,7 +16,7 @@ func (f *flushBuffer) Flush() {}
 func TestStreamWithPromptUsesPromptAndParsesTokens(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, _ := io.ReadAll(r.Body)
-		if !strings.Contains(string(body), "Approved dossier") {
+		if !strings.Contains(string(body), "Approved application materials") {
 			t.Error("request did not contain the concierge system prompt")
 		}
 		w.Header().Set("Content-Type", "text/event-stream")
@@ -32,7 +32,7 @@ func TestStreamWithPromptUsesPromptAndParsesTokens(t *testing.T) {
 
 	var out flushBuffer
 	full, err := streamer.StreamWithPrompt(StreamOptions{
-		SystemPrompt: "Approved dossier",
+		SystemPrompt: "Approved application materials",
 		History:      []Message{{Role: "user", Content: "Hello?"}},
 	}, context.Background(), &out, &out)
 	if err != nil {

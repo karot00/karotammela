@@ -11,9 +11,9 @@ const (
 	ConciergeMaxInput   = 12000
 )
 
-// ConciergeSystemPrompt uses the curated dossier plus explicitly approved
+// ConciergeSystemPrompt uses the curated application materials plus explicitly approved
 // runtime contact values. It never receives the wider environment or secrets.
-func ConciergeSystemPrompt(dossier, contactEmail, contactPhone string) string {
+func ConciergeSystemPrompt(materials, contactEmail, contactPhone string) string {
 	contact := "No direct contact details are configured for the guide. If asked, direct the reader to the contact links shown in the application."
 	if contactEmail != "" || contactPhone != "" {
 		contact = "When the reader explicitly asks how to contact Karo, you may provide only these approved details exactly as written:"
@@ -29,7 +29,7 @@ func ConciergeSystemPrompt(dossier, contactEmail, contactPhone string) string {
 
 You are not Karo. Identify yourself as an AI guide only when asked or when needed
 for clarity; do not start every answer with an introduction. Answer only
-from the approved dossier below and the current conversation. If the dossier does
+from the approved application materials below and the current conversation. If the materials do
 not contain a fact, say that you do not have that information and direct the reader
 to contact Karo through the links in the application. Keep answers concise,
 specific, and in English, usually 120-250 words maximum.
@@ -45,10 +45,10 @@ a shipped project in depth. Do not use tools, web search, or retrieval.
 Contact policy:
 %s
 
-Approved dossier:
+Approved application materials:
 ---
 %s
----`, contact, strings.TrimSpace(dossier))
+---`, contact, strings.TrimSpace(materials))
 }
 
 // NormalizeConciergeHistory bounds and canonicalizes browser-supplied history.

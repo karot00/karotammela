@@ -98,6 +98,16 @@ var strokeIcons = map[string]string{
 	"star":        `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
 	"vsCode":      `<path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/>`,
 	"kiloCode":    `<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>`,
+	"go":          `<path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/>`,
+	"chi":         `<path d="M5 5h14v14H5z"/><path d="M9 9h6v6H9z"/>`,
+	"htmx":        `<path d="m5 5 14 14M19 5 5 19"/><circle cx="12" cy="12" r="9"/>`,
+	"sqliteWal":   `<path d="M4 5h16v14H4z"/><path d="M4 9h16M8 5v14M12 5v14"/>`,
+	"hetzner":     `<path d="M4 4h16v16H4z"/><path d="M8 8h8v8H8z"/>`,
+	"caddy":       `<path d="M12 3 4 8v8l8 5 8-5V8z"/><path d="m8 12 3 3 5-6"/>`,
+	"systemd":     `<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>`,
+	"letsEncrypt": `<path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7z"/><path d="M9 12h6M12 9v6"/>`,
+	"githubActions": `<circle cx="12" cy="12" r="8"/><path d="m8 12 3 3 5-6"/>`,
+	"r2Rclone":    `<path d="M4 6h16v12H4z"/><path d="M8 10h8M8 14h5"/>`,
 }
 
 // fillIcons are 24x24 brand icons rendered with fill="currentColor". Paths

@@ -80,7 +80,17 @@ type TechnologyItemId =
   | "github"
   | "resend"
   | "vsCode"
-  | "kiloCode";
+  | "kiloCode"
+  | "go"
+  | "chi"
+  | "htmx"
+  | "sqliteWal"
+  | "hetzner"
+  | "caddy"
+  | "systemd"
+  | "letsEncrypt"
+  | "githubActions"
+  | "r2Rclone";
 
 type DashboardCopy = {
   badge: string;
@@ -134,6 +144,7 @@ type DashboardCopy = {
   projectFiveDescription: string;
   projectGithubLabel: string;
   techTitle: string;
+  techSecondaryTitle: string;
   techCategories: Record<TechnologyCategoryId, string>;
   techItems: Record<
     TechnologyItemId,
@@ -698,6 +709,23 @@ function TechView({ copy }: { copy: DashboardCopy }) {
     { id: "kiloCode", category: "tools", icon: "Cpu" },
   ];
 
+  const secondaryTechnologyConfig: Array<{
+    id: TechnologyItemId;
+    category: TechnologyCategoryId;
+    icon: TechnologyIconName;
+  }> = [
+    { id: "go", category: "backendDb", icon: "Code2" },
+    { id: "chi", category: "backendDb", icon: "Layout" },
+    { id: "htmx", category: "backendDb", icon: "Code2" },
+    { id: "sqliteWal", category: "backendDb", icon: "HardDrive" },
+    { id: "hetzner", category: "infrastructure", icon: "Cloud" },
+    { id: "caddy", category: "infrastructure", icon: "Shield" },
+    { id: "systemd", category: "infrastructure", icon: "Cpu" },
+    { id: "letsEncrypt", category: "infrastructure", icon: "Shield" },
+    { id: "githubActions", category: "tools", icon: "GitFork" },
+    { id: "r2Rclone", category: "tools", icon: "HardDrive" },
+  ];
+
   const technologies: Technology[] = technologyConfig.map((item) => ({
     category: item.category,
     icon: item.icon,
@@ -709,6 +737,19 @@ function TechView({ copy }: { copy: DashboardCopy }) {
     category,
     label: copy.techCategories[category],
     items: technologies.filter(
+      (technology) => technology.category === category,
+    ),
+  }));
+  const secondaryTechnologies = secondaryTechnologyConfig.map((item) => ({
+    category: item.category,
+    icon: item.icon,
+    name: copy.techItems[item.id].name,
+    description: copy.techItems[item.id].description,
+  }));
+  const secondaryTechnologiesByCategory = categoryOrder.map((category) => ({
+    category,
+    label: copy.techCategories[category],
+    items: secondaryTechnologies.filter(
       (technology) => technology.category === category,
     ),
   }));
@@ -745,6 +786,34 @@ function TechView({ copy }: { copy: DashboardCopy }) {
                     <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                       {technology.description}
                     </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+
+      <h2 className="border-border border-t pt-10 text-xl font-semibold text-foreground">
+        {copy.techSecondaryTitle}
+      </h2>
+
+      {secondaryTechnologiesByCategory.map((group) => (
+        <section key={group.category} className="space-y-6">
+          <h3 className="flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase after:h-px after:flex-1 after:bg-border">
+            {group.label}
+          </h3>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {group.items.map((technology) => {
+              const Icon = technologyIconMap[technology.icon];
+              return (
+                <article key={technology.name} className="group flex items-start gap-4 rounded-xl border border-border bg-card p-5 text-foreground transition-colors hover:bg-muted/40">
+                  <div className="rounded-lg bg-muted p-2.5 text-muted-foreground transition-colors group-hover:text-foreground">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h4 className="text-base font-medium text-foreground">{technology.name}</h4>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{technology.description}</p>
                   </div>
                 </article>
               );

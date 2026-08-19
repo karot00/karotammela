@@ -144,6 +144,7 @@ func (h *Handlers) Dashboard(w http.ResponseWriter, r *http.Request) {
 
 	// Technologies.
 	data["TechTitle"] = tr("dashboard.techTitle")
+	data["TechSecondaryTitle"] = tr("dashboard.techSecondaryTitle")
 	data["TechCategories"] = []map[string]any{
 		techCategory("frontend", tr("dashboard.techCategories.frontend"),
 			techItem("nextjs", tr("dashboard.techItems.nextjs.name"), tr("dashboard.techItems.nextjs.description")),
@@ -162,6 +163,24 @@ func (h *Handlers) Dashboard(w http.ResponseWriter, r *http.Request) {
 			techItem("resend", tr("dashboard.techItems.resend.name"), tr("dashboard.techItems.resend.description")),
 			techItem("vsCode", tr("dashboard.techItems.vsCode.name"), tr("dashboard.techItems.vsCode.description")),
 			techItem("kiloCode", tr("dashboard.techItems.kiloCode.name"), tr("dashboard.techItems.kiloCode.description")),
+		),
+	}
+	data["TechSecondaryCategories"] = []map[string]any{
+		techCategory("backendDb", tr("dashboard.techCategories.backendDb"),
+			techItem("go", tr("dashboard.techItems.go.name"), tr("dashboard.techItems.go.description")),
+			techItem("chi", tr("dashboard.techItems.chi.name"), tr("dashboard.techItems.chi.description")),
+			techItem("htmx", tr("dashboard.techItems.htmx.name"), tr("dashboard.techItems.htmx.description")),
+			techItem("sqliteWal", tr("dashboard.techItems.sqliteWal.name"), tr("dashboard.techItems.sqliteWal.description")),
+		),
+		techCategory("infrastructure", tr("dashboard.techCategories.infrastructure"),
+			techItem("hetzner", tr("dashboard.techItems.hetzner.name"), tr("dashboard.techItems.hetzner.description")),
+			techItem("caddy", tr("dashboard.techItems.caddy.name"), tr("dashboard.techItems.caddy.description")),
+			techItem("systemd", tr("dashboard.techItems.systemd.name"), tr("dashboard.techItems.systemd.description")),
+			techItem("letsEncrypt", tr("dashboard.techItems.letsEncrypt.name"), tr("dashboard.techItems.letsEncrypt.description")),
+		),
+		techCategory("tools", tr("dashboard.techCategories.tools"),
+			techItem("githubActions", tr("dashboard.techItems.githubActions.name"), tr("dashboard.techItems.githubActions.description")),
+			techItem("r2Rclone", tr("dashboard.techItems.r2Rclone.name"), tr("dashboard.techItems.r2Rclone.description")),
 		),
 	}
 

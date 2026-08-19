@@ -58,7 +58,7 @@ func (h *Handlers) VIPChat(w http.ResponseWriter, r *http.Request) {
 		h.vipSSEErrorStatus(w, http.StatusBadRequest, "Please send a shorter conversation.")
 		return
 	}
-	dossier, err := blogcontent.FS.ReadFile("vip/dossier.md")
+	applicationMaterials, err := blogcontent.FS.ReadFile("vip/dossier.md")
 	if err != nil {
 		h.vipSSEError(w, "The concierge is temporarily unavailable.")
 		return
@@ -76,7 +76,7 @@ func (h *Handlers) VIPChat(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 	_, err = h.vipGemini.StreamWithPrompt(ai.StreamOptions{
 		History:         history,
-		SystemPrompt:    ai.ConciergeSystemPrompt(string(dossier), h.cfg.VIPContactEmail, h.cfg.VIPContactPhone),
+		SystemPrompt:    ai.ConciergeSystemPrompt(string(applicationMaterials), h.cfg.VIPContactEmail, h.cfg.VIPContactPhone),
 		Temperature:     0.25,
 		MaxOutputTokens: 500,
 	}, r.Context(), w, flusher)

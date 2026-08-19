@@ -31,7 +31,7 @@ func TestNormalizeConciergeHistoryRejectsUnsafeShapes(t *testing.T) {
 	}
 }
 
-func TestConciergePromptContainsBoundariesAndDossier(t *testing.T) {
+func TestConciergePromptContainsBoundariesAndMaterials(t *testing.T) {
 	prompt := ConciergeSystemPrompt("Approved fact: Karo ships products.", "karo@example.com", "+358 400 234 711")
 	for _, want := range []string{"not Karo", "do not start every answer with an introduction", "Never invent", "Approved fact: Karo ships products.", "karo@example.com", "+358 400 234 711"} {
 		if !strings.Contains(prompt, want) {

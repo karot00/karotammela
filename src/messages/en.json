@@ -59,7 +59,7 @@
     "codingModelsLabel": "For coding: Gemini 3.5 Flash, GPT Codex 5.3, Opus 4.7",
     "chatbotModelLabel": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite",
     "toolkitTitleH2": "My favorite language models H2 / 2026",
-    "codingModelsLabelH2": "For coding: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max, Hy3",
+    "codingModelsLabelH2": "For coding: Sonnet 5, GPT 5.6, Qwen 3.7 Plus/Max, Hy3, Qwen 3.8 27B",
     "chatbotModelLabelH2": "Best price-performance ratio for chatbots: Gemini 3.1 Flash Lite",
     "analyticsTitle": "AI Bouncer challenge analytics",
     "totalAttemptsLabel": "Total messages",
@@ -91,6 +91,7 @@
     "projectFiveDescription": "Real-time custom postcard generator and sender (Sydänliitto POC).",
     "projectGithubLabel": "GitHub: karot00/karotammela",
     "techTitle": "Primary technology stack",
+    "techSecondaryTitle": "Secondary technology stack",
     "techCategories": {
       "frontend": "Frontend",
       "backendDb": "Backend & DB",
@@ -137,7 +138,17 @@
       "kiloCode": {
         "name": "Kilo Code",
         "description": "open-source AI coding agent."
-      }
+      },
+      "go": { "name": "Go", "description": "Compiled language used for the self-hosted application." },
+      "chi": { "name": "chi", "description": "Small, composable HTTP router for Go." },
+      "htmx": { "name": "HTMX", "description": "HTML-driven interactions without a heavy frontend runtime." },
+      "sqliteWal": { "name": "SQLite + WAL", "description": "Local production database with migrations, backups and restore drills." },
+      "hetzner": { "name": "Hetzner VPS", "description": "Self-hosted CX23 server in Helsinki." },
+      "caddy": { "name": "Caddy", "description": "Reverse proxy with automatic HTTPS." },
+      "systemd": { "name": "systemd", "description": "Service supervision and controlled application restarts." },
+      "letsEncrypt": { "name": "Let's Encrypt", "description": "Automatic TLS certificates for the production domain." },
+      "githubActions": { "name": "GitHub Actions", "description": "Automated test, build and deployment pipeline." },
+      "r2Rclone": { "name": "Cloudflare R2 + rclone", "description": "Off-site backups with checksum and restore verification." }
     },
     "blogPreviousLabel": "Previous",
     "blogNextLabel": "Next",

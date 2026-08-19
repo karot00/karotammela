@@ -1,6 +1,25 @@
 {
   "releases": [
     {
+      "version": "v2.1",
+      "date": "2026-08-19",
+      "title": "VIP portal build & self-hosted stack details",
+      "changes": [
+        {
+          "type": "added",
+          "text": "Added a private, server-rendered portal with Go, HTMX, Alpine, Gemini streaming, signed access sessions and a content-driven build log."
+        },
+        {
+          "type": "added",
+          "text": "Added the secondary self-hosted stack to the dashboard: Go, chi, HTMX, SQLite WAL, Hetzner VPS, Caddy, systemd, Let's Encrypt and GitHub Actions."
+        },
+        {
+          "type": "changed",
+          "text": "Added Qwen 3.8 27B to the H2/2026 coding model list."
+        }
+      ]
+    },
+    {
       "version": "v2.0",
       "date": "2026-07-25",
       "title": "Go+HTMX production comparison, AI Pulse & automated deploys",

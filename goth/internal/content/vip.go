@@ -12,6 +12,7 @@ type VIPApplication struct {
 	Identity      VIPIdentity       `json:"identity"`
 	Headline      string            `json:"headline"`
 	Pitch         string            `json:"pitch"`
+	DashboardLink string            `json:"dashboardLink"`
 	Availability  string            `json:"availability"`
 	EvidenceCards []VIPEvidenceCard `json:"evidenceCards"`
 	Alignment     []VIPAlignment    `json:"alignment"`
