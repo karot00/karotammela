@@ -118,6 +118,7 @@ func translatedBlogSlug(currentLocale, targetLocale, slug string) string {
 		"go-htmx-vs-nextjs-hetzner":                     "go-htmx-nextjs-vertailu-hetzner",
 		"how-i-moved-wordpress-site-to-next-js":         "miten-siirsin-wordpress-sivuston-next-js-teknologiaan",
 		"home-ai-lab-qwen-3-8-27b":                      "kotilabra-ja-qwen-3-8-27b",
+		"agentic-shopping-and-ai-web-browsing":          "agenttinen-shoppailu-ja-tekoalyn-nettiselaus",
 	}
 	if currentLocale == "fi" {
 		for english, finnish := range pairs {

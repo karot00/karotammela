@@ -14,6 +14,8 @@ const translatedSlugs: Record<BlogLocale, Record<string, string>> = {
     "how-i-moved-wordpress-site-to-next-js":
       "miten-siirsin-wordpress-sivuston-next-js-teknologiaan",
     "home-ai-lab-qwen-3-8-27b": "kotilabra-ja-qwen-3-8-27b",
+    "agentic-shopping-and-ai-web-browsing":
+      "agenttinen-shoppailu-ja-tekoalyn-nettiselaus",
   },
   fi: {
     "tekoaly-avasi-koodaukseni-lukot": "how-ai-unlocked-my-coding",
@@ -29,6 +31,8 @@ const translatedSlugs: Record<BlogLocale, Record<string, string>> = {
     "miten-siirsin-wordpress-sivuston-next-js-teknologiaan":
       "how-i-moved-wordpress-site-to-next-js",
     "kotilabra-ja-qwen-3-8-27b": "home-ai-lab-qwen-3-8-27b",
+    "agenttinen-shoppailu-ja-tekoalyn-nettiselaus":
+      "agentic-shopping-and-ai-web-browsing",
   },
 };
 
