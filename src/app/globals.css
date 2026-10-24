@@ -235,6 +235,32 @@
     margin: 1.1rem auto;
   }
 
+  .blog-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.6rem 0;
+    font-size: 0.92em;
+    line-height: 1.55;
+  }
+
+  .blog-prose th,
+  .blog-prose td {
+    border: 1px solid var(--border);
+    padding: 0.7rem 0.9rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .blog-prose th {
+    background-color: var(--muted);
+    color: var(--foreground);
+    font-weight: 700;
+  }
+
+  .blog-prose tbody tr:nth-child(even) {
+    background-color: color-mix(in oklab, var(--muted) 45%, transparent);
+  }
+
   .blog-prose br {
     display: block;
     content: "";

@@ -21,6 +21,10 @@ Tekoälyt eivät enää vain hae linkkejä. Ne lukevat, vertailevat, tekevät p�
 
 Käytän tässä kirjoituksessa esimerkkinä omaa projektiani, [Kanavoi.comia](https://kanavoi.com). Kanavoi on suomalainen UTM-työkalu markkinointitiimeille ja -toimistoille. Se pitää kampanjalinkkien nimeämisen yhtenäisenä ja näyttää jo ennen julkaisua, missä Google Analytics 4:n kanavassa (esimerkiksi Paid Social tai Email) liikenne raportoidaan. Kanavoi on sopiva esimerkki, koska se on aito, pieni ja tuore sivusto. Kun aloitin tämän tekstin, siitä puuttui vielä osa tekoälyajan perusasioista, joten toteutin ne kirjoittamisen lomassa. Kaikki alla olevat esimerkit ovat Kanavoin oikeita, tuotannossa olevia tiedostoja.
 
+Tein Kanavoin ilmaisella UTM-generaattorilla linkin tähän kirjoitukseen LinkedIn-julkaisua varten. Kampanjan nimi siistiytyy automaattisesti (lokakuu 2026 → lokakuu_2026), ja GA4-kanava (Organic Social) näkyy jo ennen kuin linkki lähtee jakoon:
+
+![Kanavoin UTM-generaattori: linkki tähän blogikirjoitukseen LinkedIn-julkaisua varten, GA4-kanavana Organic Social](/media/kanavoi-utm-generaattori-ga4-kanava.png)
+
 Tekoälyaikakauden keskusteluun on noussut kolme käsitettä: avoin standardiehdotus **`llms.txt`**, sen rinnalle vakiintunut **`llms-full.txt`** ja laajempi optimointioppi **GEO (Generative Engine Optimization)**. Ne sekoitetaan usein toisiinsa, joten erotellaan ne tässä kunnolla.
 
 ---
@@ -407,7 +411,7 @@ Rakennan Kanavoita julkisesti, joten tässä tilannekatsaus:
 - ✅ **Rakenteinen data etusivulla:** `Organization`, `WebSite`, `SoftwareApplication` (paketit `Offer`-tietoina) ja `FAQPage`.
 - ✅ **llms.txt, llms-full.txt ja ohjeiden `.md`-versiot**, kaikki tuotettuina samoista lähteistä kuin sivut.
 
-Googlen [Rich Results Test](https://search.google.com/test/rich-results) hyväksyi etusivulta organisaation ja ohjelmistosovelluksen. Testi opetti kolme asiaa:
+Kun muutokset olivat tuotannossa, ajoin etusivun Googlen [Rich Results Testin](https://search.google.com/test/rich-results) läpi. Se hyväksyi organisaation ja ohjelmistosovelluksen, ja testistä opin kolme asiaa:
 
 1. **Googlen hyväksymä ei ole sama kuin schema.org:n sallima.** Ilmoitin hinnat ensin tarkemmalla `UnitPriceSpecification`-rakenteella (kuukausihinta, ALV 0). Schema.org sallii sen, mutta Googlen testi merkitsi sen ohjelmistosovelluksen tarjouksessa virheelliseksi. Hinta ja valuutta riittävät, joten kuukausijakso ja ALV-tieto siirtyivät tarjouksen kuvaukseen.
 2. **Puuttuvaa arvosanaa ei korjata keksimällä.** Testi huomauttaa yhä, että `aggregateRating` puuttuu. Kanavoilla ei vielä ole aitoja asiakasarvioita, ja keksityt tähdet rikkoisivat Googlen ohjeita. Arvosana lisätään, kun arvioita on.

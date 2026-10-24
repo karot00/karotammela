@@ -21,6 +21,10 @@ AI systems no longer just fetch links. They read, compare, make decisions and in
 
 Throughout this post I use my own project, [Kanavoi.com](https://kanavoi.com), as the example. Kanavoi is a Finnish UTM tool for marketing teams and agencies. It keeps campaign link naming consistent and shows, before you publish, which Google Analytics 4 channel (such as Paid Social or Email) the traffic will be reported in. It makes a good example because it is a real, small and new website. When I started this post, some of the AI-era basics were still missing, so I implemented them while writing. Every example below is one of Kanavoi's real files, live in production.
 
+I used Kanavoi's free UTM generator to create a link to this post for a LinkedIn update. The campaign name is cleaned up automatically (lokakuu 2026 → lokakuu_2026), and the GA4 channel (Organic Social) is visible before the link is shared. The interface is in Finnish:
+
+![Kanavoi's UTM generator: a link to this post for a LinkedIn update, reported in GA4 as Organic Social](/media/kanavoi-utm-generaattori-ga4-kanava.png)
+
 Three concepts dominate the conversation: the open proposal **`llms.txt`**, the companion convention **`llms-full.txt`**, and the broader discipline of **GEO (Generative Engine Optimization)**. They are often mixed up, so let us separate them properly.
 
 ---
@@ -409,7 +413,7 @@ I am building Kanavoi in public, so here is a status check:
 - ✅ **Structured data on the landing page:** `Organization`, `WebSite`, `SoftwareApplication` (plans as `Offer` items) and `FAQPage`.
 - ✅ **llms.txt, llms-full.txt and `.md` versions of the guides**, all generated from the same sources as the pages.
 
-Google's [Rich Results Test](https://search.google.com/test/rich-results) accepted the organization and the software application on the landing page. The test taught me three things:
+Once the changes were live, I ran the landing page through Google's [Rich Results Test](https://search.google.com/test/rich-results). It accepted the organization and the software application, and the test taught me three things:
 
 1. **What Google accepts is not the same as what schema.org allows.** I first described the prices with a more detailed `UnitPriceSpecification` (monthly price, excluding VAT). Schema.org allows it, but Google's test flagged it as invalid on a software offer. Price and currency are enough, so the billing period and VAT moved into the offer description.
 2. **A missing rating is not fixed by inventing one.** The test still notes that `aggregateRating` is missing. Kanavoi has no genuine customer reviews yet, and made-up stars would break Google's guidelines. The rating will be added once there are reviews.
