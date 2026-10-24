@@ -14,7 +14,6 @@ import (
 	"goth/internal/ai"
 	"goth/internal/aipulse"
 	"goth/internal/config"
-	"goth/internal/content"
 	"goth/internal/db"
 	"goth/internal/email"
 	"goth/internal/handler"
@@ -157,17 +156,9 @@ func runRefresh(cfg *config.Config) {
 }
 
 func runServer(cfg *config.Config) {
-	// Fail closed on a half-configured VIP portal before binding (plan §5.1).
-	if err := cfg.VIPStartupError(); err != nil {
-		log.Fatalf("vip config: %v", err)
-	}
-	var vipContent content.VIPContent
-	if cfg.VIPEnabled {
-		var err error
-		vipContent, err = content.LoadVIP(cfg.VIPContentDir)
-		if err != nil {
-			log.Fatalf("vip content: %v", err)
-		}
+	// Fail closed on an invalid environment before binding.
+	if err := cfg.StartupError(); err != nil {
+		log.Fatalf("config: %v", err)
 	}
 
 	vr, err := view.NewRenderer()
@@ -184,23 +175,17 @@ func runServer(cfg *config.Config) {
 	if cfg.GoogleAPIKey != "" {
 		gemini = &ai.GeminiStreamer{APIKey: cfg.GoogleAPIKey, Model: cfg.AIModel}
 	}
-	var vipGemini *ai.GeminiStreamer
-	if cfg.GoogleAPIKey != "" {
-		vipGemini = &ai.GeminiStreamer{APIKey: cfg.GoogleAPIKey, Model: cfg.VIPAIModel}
-	}
 	var mailer handler.MailSender
 	if cfg.ContactConfigured() {
 		mailer = &email.ResendSender{APIKey: cfg.ResendAPIKey}
 	}
 
 	h := handler.New(cfg, vr, conn, gemini, mailer)
-	h.SetVIPGemini(vipGemini)
-	h.SetVIPContent(vipContent)
 	h.SetRefresher(buildRefresher(cfg))
 	r := router.New(h)
 
 	addr := cfg.Host + ":" + cfg.Port
-	fmt.Printf("GOTH listening on %s (env=%s, ai=%v, contact=%v, vip=%v)\n", addr, cfg.Env, cfg.GoogleAPIKey != "", cfg.ContactConfigured(), cfg.VIPEnabled)
+	fmt.Printf("GOTH listening on %s (env=%s, ai=%v, contact=%v)\n", addr, cfg.Env, cfg.GoogleAPIKey != "", cfg.ContactConfigured())
 	server := &http.Server{Addr: addr, Handler: r, ReadHeaderTimeout: 5 * time.Second, IdleTimeout: 60 * time.Second, MaxHeaderBytes: 1 << 20}
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("server: %v", err)

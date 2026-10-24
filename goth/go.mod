@@ -8,7 +8,6 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/yuin/goldmark v1.8.4
 	github.com/yuin/goldmark-meta v1.1.0
-	golang.org/x/crypto v0.55.0
 	golang.org/x/net v0.57.0
 	modernc.org/sqlite v1.54.0
 )

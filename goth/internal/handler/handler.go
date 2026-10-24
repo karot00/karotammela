@@ -15,7 +15,6 @@ import (
 	"goth/internal/ai"
 	"goth/internal/aipulse"
 	"goth/internal/config"
-	"goth/internal/content"
 	"goth/internal/email"
 	"goth/internal/i18n"
 	"goth/internal/security"
@@ -34,30 +33,18 @@ type Handlers struct {
 	view      *view.Renderer
 	conn      *sql.DB
 	gemini    *ai.GeminiStreamer
-	vipGemini *ai.GeminiStreamer
 	mailer    MailSender
 	refresher *aipulse.Refresher
-
-	// VIP access flow (plan §6): per-IP login throttle with escalating
-	// cooldowns, and the minimum login response duration that flattens trivial
-	// timing signal. Tests construct Handlers literals and may zero the floor.
-	vipThrottle   *security.VIPLoginThrottle
-	vipLoginFloor time.Duration
-	vipChat       *security.VIPChatLimiter
-	vipContent    content.VIPContent
 }
 
 // New builds the handler set.
 func New(cfg *config.Config, vr *view.Renderer, conn *sql.DB, g *ai.GeminiStreamer, mailer MailSender) *Handlers {
 	return &Handlers{
-		cfg:           cfg,
-		view:          vr,
-		conn:          conn,
-		gemini:        g,
-		mailer:        mailer,
-		vipThrottle:   security.NewVIPLoginThrottle(),
-		vipLoginFloor: vipDefaultLoginFloor,
-		vipChat:       security.NewVIPChatLimiter(),
+		cfg:    cfg,
+		view:   vr,
+		conn:   conn,
+		gemini: g,
+		mailer: mailer,
 	}
 }
 
@@ -66,11 +53,6 @@ func New(cfg *config.Config, vr *view.Renderer, conn *sql.DB, g *ai.GeminiStream
 func (h *Handlers) SetRefresher(r *aipulse.Refresher) {
 	h.refresher = r
 }
-
-// SetVIPGemini installs the VIP-only model client without changing Sentinel's
-// configured model or transport behavior.
-func (h *Handlers) SetVIPGemini(g *ai.GeminiStreamer)  { h.vipGemini = g }
-func (h *Handlers) SetVIPContent(v content.VIPContent) { h.vipContent = v }
 
 func themeFromCookie(r *http.Request) string {
 	c, err := r.Cookie("theme")
@@ -144,14 +126,6 @@ func (h *Handlers) common(r *http.Request, locale string) map[string]any {
 	}
 	canonical, ogURL, links := localizedAlternates(h.cfg, r.URL.Path)
 	base := strings.TrimRight(h.cfg.BaseURL, "/")
-	// VIP navigation is controlled by the single Go runtime flag (plan §5):
-	// the label is the locale-invariant "VIP" and the destination is always
-	// the English Go route. Empty string hides the link in both the global
-	// header and the dashboard navigation.
-	vipURL := ""
-	if h.cfg.VIPEnabled {
-		vipURL = vipCanonicalPath
-	}
 	return map[string]any{
 		"Locale":      locale,
 		"Theme":       themeFromCookie(r),
@@ -175,9 +149,7 @@ func (h *Handlers) common(r *http.Request, locale string) map[string]any {
 		// Next.js is hosted on its own Vercel subdomain (2026-07-25 decision).
 		"GoURL":   strings.TrimRight(h.cfg.BaseURL, "/"),
 		"NextURL": strings.TrimRight(h.cfg.NextURL, "/"),
-		// Conditional VIP link target ("" hides the link everywhere).
-		"VIPURL": vipURL,
-		"Year":   time.Now().Year(),
+		"Year":    time.Now().Year(),
 		// Global WebSite + publisher Person JSON-LD (src/app/layout.tsx).
 		"JSONLDSite": websiteJSONLD(h.cfg),
 		// SSR gate for the consent banner: render only until the first

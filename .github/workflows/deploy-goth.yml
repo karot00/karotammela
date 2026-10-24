@@ -97,34 +97,3 @@ jobs:
             sleep 3
           done
           echo "ERROR: production health check failed after deploy"; exit 1
-      - name: Verify production VIP routing
-        run: |
-          set -euo pipefail
-          status_body="$(curl -fsS https://karotammela.fi/api/vip/status)"
-          enabled="$(printf '%s' "$status_body" | jq -er '.enabled | if type == "boolean" then tostring else error end')"
-          for cookie in '' 'tech=next'; do
-            headers="$(mktemp)"
-            if [ -n "$cookie" ]; then
-              curl -fsS -D "$headers" -o /dev/null -H "Cookie: $cookie" \
-                https://karotammela.fi/api/vip/status
-            else
-              curl -fsS -D "$headers" -o /dev/null \
-                https://karotammela.fi/api/vip/status
-            fi
-            grep -qi '^cache-control:.*no-store' "$headers"
-            grep -qi '^x-robots-tag:.*noindex' "$headers"
-            if [ -n "$cookie" ]; then
-              code="$(curl -sS -o /dev/null -w '%{http_code}' -H "Cookie: $cookie" \
-                https://karotammela.fi/en/vip)"
-            else
-              code="$(curl -sS -o /dev/null -w '%{http_code}' \
-                https://karotammela.fi/en/vip)"
-            fi
-            if [ "$enabled" = true ]; then
-              test "$code" = 200
-            else
-              test "$code" = 404
-            fi
-            rm -f "$headers"
-          done
-          echo "production VIP routing OK (enabled=$enabled; direct + tech=next)"

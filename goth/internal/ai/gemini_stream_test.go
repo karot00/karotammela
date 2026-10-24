@@ -17,7 +17,7 @@ func TestStreamWithPromptUsesPromptAndParsesTokens(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, _ := io.ReadAll(r.Body)
 		if !strings.Contains(string(body), "Approved application materials") {
-			t.Error("request did not contain the concierge system prompt")
+			t.Error("request did not contain the system prompt")
 		}
 		w.Header().Set("Content-Type", "text/event-stream")
 		io.WriteString(w, "data: {\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"Hello\"}]}}]}\n\n")

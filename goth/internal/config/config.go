@@ -1,13 +1,9 @@
 package config
 
 import (
-	"encoding/hex"
 	"errors"
 	"os"
 	"strconv"
-	"strings"
-
-	"goth/internal/security"
 )
 
 type Config struct {
@@ -31,17 +27,6 @@ type Config struct {
 	GeminiBaseURL      string
 	BackupDir          string
 	BackupKeep         int
-
-	// VIP portal (MeetingPackage application). Disabled by default; one flag
-	// closes every VIP route and hides every VIP link in both stacks.
-	VIPEnabled      bool
-	VIPPasswordHash string
-	VIPCookieSecret string
-	VIPAIModel      string
-	VIPCVPath       string
-	VIPContactEmail string
-	VIPContactPhone string
-	VIPContentDir   string
 }
 
 func Load() *Config {
@@ -66,15 +51,6 @@ func Load() *Config {
 		GeminiBaseURL:      os.Getenv("GOTH_GEMINI_BASE_URL"),
 		BackupDir:          getEnv("GOTH_BACKUP_DIR", "backups"),
 		BackupKeep:         getEnvInt("GOTH_BACKUP_KEEP", 14),
-
-		VIPEnabled:      getEnvBool("VIP_ENABLED", false),
-		VIPPasswordHash: os.Getenv("VIP_PASSWORD_HASH"),
-		VIPCookieSecret: os.Getenv("VIP_COOKIE_SECRET"),
-		VIPAIModel:      getEnv("VIP_AI_MODEL", "gemini-3.5-flash-lite"),
-		VIPCVPath:       os.Getenv("VIP_CV_PATH"),
-		VIPContactEmail: os.Getenv("VIP_CONTACT_EMAIL"),
-		VIPContactPhone: os.Getenv("VIP_CONTACT_PHONE"),
-		VIPContentDir:   getEnv("VIP_CONTENT_DIR", "content/vip"),
 	}
 	return c
 }
@@ -117,44 +93,14 @@ func (c *Config) ContactConfigured() bool {
 	return c.ResendAPIKey != "" && c.ContactFromEmail != "" && c.ContactToEmail != ""
 }
 
-// VIPConfigured reports whether the VIP portal has the minimum credentials to
-// run its access flow. VIPCVPath is optional: when unset, the CV download link
-// and route stay hidden.
-func (c *Config) VIPConfigured() bool {
-	return c.VIPPasswordHash != "" && c.VIPCookieSecret != ""
-}
-
-// VIPStartupError fails startup when the VIP portal is enabled but too
-// incomplete to run safely, so a half-configured portal fails closed instead
-// of exposing a broken login. Enforced in production only; development may
-// enable the routing skeleton without credentials.
-func (c *Config) VIPStartupError() error {
+// StartupError fails startup on an unknown environment or, in production,
+// a non-loopback listen address: Caddy is the only public entry point.
+func (c *Config) StartupError() error {
 	if c.Env != "development" && c.Env != "test" && c.Env != "production" {
 		return errors.New("GOTH_ENV must be development, test, or production")
 	}
 	if c.IsProduction() && c.Host != "" && c.Host != "127.0.0.1" && c.Host != "::1" {
 		return errors.New("production GOTH_HOST must be loopback")
-	}
-	if !c.VIPEnabled || !c.IsProduction() {
-		return nil
-	}
-	if c.VIPPasswordHash == "" {
-		return errors.New("VIP_ENABLED=true requires VIP_PASSWORD_HASH (Argon2id/scrypt hash, never plaintext)")
-	}
-	if !security.ValidateVIPPasswordHash(c.VIPPasswordHash, true) {
-		return errors.New("VIP_PASSWORD_HASH is malformed or below the production work profile")
-	}
-	if c.VIPCookieSecret == "" {
-		return errors.New("VIP_ENABLED=true requires VIP_COOKIE_SECRET (independent signing secret)")
-	}
-	if len(c.VIPCookieSecret) != 64 {
-		return errors.New("VIP_COOKIE_SECRET must be exactly 64 hexadecimal characters")
-	}
-	if _, err := hex.DecodeString(c.VIPCookieSecret); err != nil {
-		return errors.New("VIP_COOKIE_SECRET must be exactly 64 hexadecimal characters")
-	}
-	if strings.TrimSpace(c.VIPContentDir) == "" {
-		return errors.New("VIP_ENABLED=true requires VIP_CONTENT_DIR")
 	}
 	return nil
 }
