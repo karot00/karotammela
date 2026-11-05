@@ -120,13 +120,8 @@ func TestRenderDashboardViews(t *testing.T) {
 
 	tr := func(key string) string { return key }
 
-	project := func(title, desc, href, gh string, internal bool) map[string]any {
-		return map[string]any{"Title": title, "Description": desc, "Href": href, "GithubHref": gh, "IsInternal": internal, "GithubLabel": "GH"}
-	}
-	projectBadge := func(title, desc, href, badge string) map[string]any {
-		m := project(title, desc, href, "", false)
-		m["Badge"] = badge
-		return m
+	project := func(title, desc, href, gh string) map[string]any {
+		return map[string]any{"Title": title, "Description": desc, "Href": href, "GithubHref": gh, "GithubLabel": "GH"}
 	}
 	techItem := func(id, name, desc string) map[string]any {
 		return map[string]any{"ID": id, "Name": name, "Description": desc}
@@ -204,11 +199,11 @@ func TestRenderDashboardViews(t *testing.T) {
 				"ProjectsProductionSubtitle": "prod",
 				"ProjectsShowcaseSubtitle":   "show",
 				"ProjectsProduction": []map[string]any{
-					project("P1", "d", "https://e.fi", "", false),
-					project("P4", "d", "", "https://github.com/x", true),
+					project("P1", "d", "https://e.fi", ""),
+					project("P4", "d", "", "https://github.com/x"),
 				},
 				"ProjectsShowcase": []map[string]any{
-					projectBadge("P5", "d", "https://karotammela.fi/fi/postikortti", "Built with Next.js"),
+					project("P5", "d", "", ""),
 				},
 				"TechTitle": "Tech",
 				"TechCategories": []map[string]any{

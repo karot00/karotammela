@@ -245,20 +245,14 @@
 
 {{define "dash-project-card"}}
   {{if .Href}}
-    <a href="{{.Href}}" {{if not .IsInternal}}target="_blank" rel="noreferrer noopener"{{end}}
+    <a href="{{.Href}}" target="_blank" rel="noreferrer noopener"
       class="group block rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-      <div class="flex flex-wrap items-center gap-2">
-        <h3 class="font-semibold text-foreground">{{.Title}}</h3>
-        {{if .Badge}}<span class="inline-block rounded border border-border bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{{.Badge}}</span>{{end}}
-      </div>
+      <h3 class="font-semibold text-foreground">{{.Title}}</h3>
       <p class="mt-2 text-sm text-muted-foreground">{{.Description}}</p>
     </a>
   {{else}}
     <article class="rounded-xl border border-border bg-card p-5">
-      <div class="flex flex-wrap items-center gap-2">
-        <h3 class="font-semibold text-foreground">{{.Title}}</h3>
-        {{if .Badge}}<span class="inline-block rounded border border-border bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{{.Badge}}</span>{{end}}
-      </div>
+      <h3 class="font-semibold text-foreground">{{.Title}}</h3>
       <p class="mt-2 text-sm text-muted-foreground">{{.Description}}</p>
       {{if .GithubHref}}
         <a href="{{.GithubHref}}" target="_blank" rel="noreferrer noopener"

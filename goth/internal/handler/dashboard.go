@@ -131,22 +131,24 @@ func (h *Handlers) Dashboard(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Projects, grouped like the Next.js ProjectsView: production first, then
-	// the showcase group. The postcard is intentionally NOT ported to the Go
-	// build (owner decision 2026-07-24): the card links to the Next.js
-	// deployment and carries a "built with Next.js" badge.
+	// the showcase group.
 	data["ProjectsTitle"] = tr("dashboard.projectsTitle")
 	data["ProjectsProductionSubtitle"] = tr("dashboard.projectsProductionSubtitle")
 	data["ProjectsShowcaseSubtitle"] = tr("dashboard.projectsShowcaseSubtitle")
 	ghLabel := tr("dashboard.projectGithubLabel")
 	data["ProjectsProduction"] = []map[string]any{
-		projectCard(tr("dashboard.projectOneTitle"), tr("dashboard.projectOneDescription"), "https://levifinland.fi", "", false, ghLabel, ""),
-		projectCard(tr("dashboard.projectTwoTitle"), tr("dashboard.projectTwoDescription"), "https://greenfee.levifinland.fi", "", false, ghLabel, ""),
-		projectCard(tr("dashboard.projectThreeTitle"), tr("dashboard.projectThreeDescription"), "", "", false, ghLabel, ""),
-		projectCard(tr("dashboard.projectFourTitle"), tr("dashboard.projectFourDescription"), "", githubURL, true, ghLabel, ""),
+		projectCard(tr("dashboard.projectOneTitle"), tr("dashboard.projectOneDescription"), "https://levifinland.fi", "", ghLabel),
+		projectCard(tr("dashboard.projectExperienceLeviTitle"), tr("dashboard.projectExperienceLeviDescription"), "https://experiencelevi.fi", "", ghLabel),
+		projectCard(tr("dashboard.projectHiihtogreeniTitle"), tr("dashboard.projectHiihtogreeniDescription"), "https://hiihtogreeni.fi", "", ghLabel),
+		projectCard(tr("dashboard.projectLeviNowTitle"), tr("dashboard.projectLeviNowDescription"), "https://map.levifinland.fi", "", ghLabel),
+		projectCard(tr("dashboard.projectTwoTitle"), tr("dashboard.projectTwoDescription"), "https://greenfee.levifinland.fi", "", ghLabel),
+		projectCard(tr("dashboard.projectKanavoiTitle"), tr("dashboard.projectKanavoiDescription"), "https://kanavoi.com", "", ghLabel),
+		projectCard(tr("dashboard.projectThreeTitle"), tr("dashboard.projectThreeDescription"), "", "", ghLabel),
+		projectCard(tr("dashboard.projectFourTitle"), tr("dashboard.projectFourDescription"), "", githubURL, ghLabel),
 	}
-	postcardURL := strings.TrimRight(h.cfg.BaseURL, "/") + "/" + locale + "/postikortti"
 	data["ProjectsShowcase"] = []map[string]any{
-		projectCard(tr("dashboard.projectFiveTitle"), tr("dashboard.projectFiveDescription"), postcardURL, "", false, ghLabel, tr("dashboard.projectPostcardStackBadge")),
+		projectCard(tr("dashboard.projectProsessistudioTitle"), tr("dashboard.projectProsessistudioDescription"), "", "", ghLabel),
+		projectCard(tr("dashboard.projectSkibusRallyTitle"), tr("dashboard.projectSkibusRallyDescription"), "https://game.levifinland.fi", "", ghLabel),
 	}
 
 	// Technologies.
@@ -371,15 +373,13 @@ func (h *Handlers) dashboardBlogData(locale string, r *http.Request, data map[st
 	data["BlogDraftBadgeLabel"] = tr("dashboard.blogDraftBadgeLabel")
 }
 
-func projectCard(title, description, href, githubHref string, isInternal bool, githubLabel, badge string) map[string]any {
+func projectCard(title, description, href, githubHref, githubLabel string) map[string]any {
 	return map[string]any{
 		"Title":       title,
 		"Description": description,
 		"Href":        href,
 		"GithubHref":  githubHref,
-		"IsInternal":  isInternal,
 		"GithubLabel": githubLabel,
-		"Badge":       badge,
 	}
 }
 

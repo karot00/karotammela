@@ -137,8 +137,18 @@ type DashboardCopy = {
   projectThreeDescription: string;
   projectFourTitle: string;
   projectFourDescription: string;
-  projectFiveTitle: string;
-  projectFiveDescription: string;
+  projectExperienceLeviTitle: string;
+  projectExperienceLeviDescription: string;
+  projectHiihtogreeniTitle: string;
+  projectHiihtogreeniDescription: string;
+  projectLeviNowTitle: string;
+  projectLeviNowDescription: string;
+  projectKanavoiTitle: string;
+  projectKanavoiDescription: string;
+  projectProsessistudioTitle: string;
+  projectProsessistudioDescription: string;
+  projectSkibusRallyTitle: string;
+  projectSkibusRallyDescription: string;
   projectGithubLabel: string;
   techTitle: string;
   techSecondaryTitle: string;
@@ -537,9 +547,29 @@ function ProjectsView({ copy }: { copy: DashboardCopy }) {
       href: "https://levifinland.fi",
     },
     {
+      title: copy.projectExperienceLeviTitle,
+      description: copy.projectExperienceLeviDescription,
+      href: "https://experiencelevi.fi",
+    },
+    {
+      title: copy.projectHiihtogreeniTitle,
+      description: copy.projectHiihtogreeniDescription,
+      href: "https://hiihtogreeni.fi",
+    },
+    {
+      title: copy.projectLeviNowTitle,
+      description: copy.projectLeviNowDescription,
+      href: "https://map.levifinland.fi",
+    },
+    {
       title: copy.projectTwoTitle,
       description: copy.projectTwoDescription,
       href: "https://greenfee.levifinland.fi",
+    },
+    {
+      title: copy.projectKanavoiTitle,
+      description: copy.projectKanavoiDescription,
+      href: "https://kanavoi.com",
     },
     {
       title: copy.projectThreeTitle,
@@ -555,15 +585,15 @@ function ProjectsView({ copy }: { copy: DashboardCopy }) {
 
   const showcaseProjects = [
     {
-      title: copy.projectFiveTitle,
-      description: copy.projectFiveDescription,
-      href: "/postikortti",
-      isInternal: true,
+      title: copy.projectProsessistudioTitle,
+      description: copy.projectProsessistudioDescription,
+    },
+    {
+      title: copy.projectSkibusRallyTitle,
+      description: copy.projectSkibusRallyDescription,
+      href: "https://game.levifinland.fi",
     },
   ];
-
-  const pathname = usePathname();
-  const locale = pathname.split("/")[1] || "fi";
 
   const renderProjectCard = (project: typeof productionProjects[number] | typeof showcaseProjects[number]) => {
     const cardContent = (
@@ -588,14 +618,12 @@ function ProjectsView({ copy }: { copy: DashboardCopy }) {
     );
 
     if (project.href) {
-      const isInternal = "isInternal" in project && project.isInternal;
-      const targetHref = isInternal ? `/${locale}${project.href}` : project.href;
       return (
         <Link
           key={project.title}
-          href={targetHref}
-          target={isInternal ? undefined : "_blank"}
-          rel={isInternal ? undefined : "noreferrer noopener"}
+          href={project.href}
+          target="_blank"
+          rel="noreferrer noopener"
           className="group block rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {cardContent}
