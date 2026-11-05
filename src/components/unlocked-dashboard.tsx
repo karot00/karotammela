@@ -108,12 +108,9 @@ type DashboardCopy = {
   aboutTitle: string;
   aboutBody: string;
   profileImageAlt: string;
-  toolkitTitle: string;
-  codingModelsLabel: string;
-  chatbotModelLabel: string;
-  toolkitTitleH2: string;
-  codingModelsLabelH2: string;
-  chatbotModelLabelH2: string;
+  leaderboardTitle: string;
+  leaderboardMainNote: string;
+  leaderboardLocalNote: string;
   analyticsTitle: string;
   totalAttemptsLabel: string;
   unlockedCountLabel: string;
@@ -222,6 +219,22 @@ type DashboardView =
   | "settings"
   | "ai-pulse";
 type ThemeMode = "dark" | "light";
+
+const MODEL_LEADERBOARD: ReadonlyArray<{
+  name: string;
+  noteKey?: "leaderboardMainNote" | "leaderboardLocalNote";
+}> = [
+  { name: "Opus 5.5", noteKey: "leaderboardMainNote" },
+  { name: "Sonnet 5.5" },
+  { name: "Gemini 4 Argon" },
+  { name: "GPT 6 Sol" },
+  { name: "Qwen 3.8 27B", noteKey: "leaderboardLocalNote" },
+  { name: "Sonnet 5" },
+  { name: "GPT 5.6" },
+  { name: "Qwen 3.7 Plus/Max" },
+  { name: "Hy3" },
+  { name: "Gemini 3.1 Flash Lite" },
+];
 
 function formatDate(value: string, locale: string) {
   const localeCode = locale === "fi" ? "fi-FI" : "en-US";
@@ -340,30 +353,21 @@ function OverviewView({
 
             <div className="mt-5">
               <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
-                {copy.toolkitTitle}
+                {copy.leaderboardTitle}
               </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
-                  {copy.codingModelsLabel}
-                </span>
-                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
-                  {copy.chatbotModelLabel}
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
-                {copy.toolkitTitleH2}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
-                  {copy.codingModelsLabelH2}
-                </span>
-                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-foreground">
-                  {copy.chatbotModelLabelH2}
-                </span>
-              </div>
+              <ol className="mt-3 list-decimal space-y-1 pl-6 text-sm text-foreground marker:text-muted-foreground">
+                {MODEL_LEADERBOARD.map((model) => (
+                  <li key={model.name}>
+                    {model.name}
+                    {model.noteKey ? (
+                      <span className="text-muted-foreground">
+                        {" "}
+                        – {copy[model.noteKey]}
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>

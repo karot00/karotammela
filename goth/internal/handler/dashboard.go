@@ -116,12 +116,19 @@ func (h *Handlers) Dashboard(w http.ResponseWriter, r *http.Request) {
 	// About / toolkit.
 	data["AboutTitle"] = tr("dashboard.aboutTitle")
 	data["AboutBody"] = tr("dashboard.aboutBody")
-	data["ToolkitTitle"] = tr("dashboard.toolkitTitle")
-	data["CodingModelsLabel"] = tr("dashboard.codingModelsLabel")
-	data["ChatbotModelLabel"] = tr("dashboard.chatbotModelLabel")
-	data["ToolkitTitleH2"] = tr("dashboard.toolkitTitleH2")
-	data["CodingModelsLabelH2"] = tr("dashboard.codingModelsLabelH2")
-	data["ChatbotModelLabelH2"] = tr("dashboard.chatbotModelLabelH2")
+	data["LeaderboardTitle"] = tr("dashboard.leaderboardTitle")
+	data["ModelLeaderboard"] = []map[string]string{
+		{"Name": "Opus 5.5", "Note": tr("dashboard.leaderboardMainNote")},
+		{"Name": "Sonnet 5.5"},
+		{"Name": "Gemini 4 Argon"},
+		{"Name": "GPT 6 Sol"},
+		{"Name": "Qwen 3.8 27B", "Note": tr("dashboard.leaderboardLocalNote")},
+		{"Name": "Sonnet 5"},
+		{"Name": "GPT 5.6"},
+		{"Name": "Qwen 3.7 Plus/Max"},
+		{"Name": "Hy3"},
+		{"Name": "Gemini 3.1 Flash Lite"},
+	}
 
 	// Projects, grouped like the Next.js ProjectsView: production first, then
 	// the showcase group. The postcard is intentionally NOT ported to the Go
