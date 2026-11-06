@@ -193,7 +193,7 @@
     "changelogTypeRemoved": "Poistettu",
     "navAiPulse": "AI Pulssi",
     "aiPulseTitle": "AI Pulssi",
-    "aiPulseDescription": "Suosituimmat AI-uutiset, GitHubin nousevat AI-repot ja reaaliaikaiset osakekurssit johtaville tekoälyyhtiöille.",
+    "aiPulseDescription": "Suosituimmat AI-uutiset, GitHubin nousevat AI-repot ja johtavien tekoälyyhtiöiden osakekurssit. Päivittyy kerran viikossa.",
     "aiPulseTrendsTitle": "AI-trendit",
     "aiPulseStocksTitle": "AI-osakkeet",
     "aiPulseTickerLabel": "Osake",
@@ -205,9 +205,6 @@
     "aiPulseNoReposLabel": "Repo-dataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen.",
     "aiPulseStarsTodayLabel": "tähteä tänään",
     "aiPulseStockChartAria": "Osakekurssihistorian kaavio",
-    "aiPulseStockTableCaption": "Päivittäiset sulkeutumishinnat",
-    "aiPulseStockDateLabel": "Päivä",
-    "aiPulseStockCloseLabel": "Sulku",
     "aiPulseNoStocksLabel": "Osakedataa ei ole vielä saatavilla. Tarkista myöhemmin uudelleen."
   },
   "localeSwitcher": {

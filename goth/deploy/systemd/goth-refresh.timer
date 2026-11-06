@@ -1,6 +1,6 @@
 # GOTH AI Pulse refresh timer (Phase 12.5e).
 #
-# Mirrors the Next.js Vercel cron schedule (0 8 * * * UTC) with a randomized
+# Mirrors the Next.js Vercel cron schedule (0 8 * * 1 UTC) with a randomized
 # delay so provider calls are jittered. Persistent=true catches up runs missed
 # while the host was down.
 #
@@ -9,10 +9,10 @@
 # Production activation happens in Phase 13 — until then the timer ships
 # disabled in the release artifact.
 [Unit]
-Description=Daily GOTH AI Pulse refresh
+Description=Weekly GOTH AI Pulse refresh
 
 [Timer]
-OnCalendar=*-*-* 08:00:00 UTC
+OnCalendar=Mon *-*-* 08:00:00 UTC
 RandomizedDelaySec=1800
 Persistent=true
 

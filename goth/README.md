@@ -78,7 +78,7 @@ per-source `ai_cache_meta` rows; sources fail independently and last-known data 
 never erased.
 
 Production scheduling ships as systemd units in `deploy/systemd/`
-(`goth-refresh.timer` daily 08:00 UTC, `goth-backup.timer` daily 03:30 UTC, both
+(`goth-refresh.timer` Mondays 08:00 UTC, `goth-backup.timer` daily 03:30 UTC, both
 with randomized delay + flock overlap protection); activation is a Phase 13 step.
 
 ## Backups (plan §11.3)

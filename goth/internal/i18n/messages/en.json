@@ -193,7 +193,7 @@
     "changelogTypeRemoved": "Removed",
     "navAiPulse": "AI Pulse",
     "aiPulseTitle": "AI Pulse",
-    "aiPulseDescription": "Top AI stories, trending AI repositories on GitHub, and live stock prices for leading AI companies.",
+    "aiPulseDescription": "Top AI stories, trending AI repositories on GitHub, and stock prices for leading AI companies. Updated once a week.",
     "aiPulseTrendsTitle": "AI Trends",
     "aiPulseStocksTitle": "AI Stocks",
     "aiPulseTickerLabel": "Ticker",
@@ -205,9 +205,6 @@
     "aiPulseNoReposLabel": "No repository data available yet. Check back after the next data refresh.",
     "aiPulseStarsTodayLabel": "stars today",
     "aiPulseStockChartAria": "Stock price history chart",
-    "aiPulseStockTableCaption": "Daily closing prices",
-    "aiPulseStockDateLabel": "Date",
-    "aiPulseStockCloseLabel": "Close",
     "aiPulseNoStocksLabel": "No stock data available yet. Check back after the next data refresh."
   },
   "localeSwitcher": {

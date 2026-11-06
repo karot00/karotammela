@@ -17,27 +17,7 @@
 
   <script id="stock-chart-data" type="application/json">{{.StockInitialDataJSON}}</script>
 
-  <div class="mt-2 overflow-x-auto">
-    <table class="w-full text-xs text-muted-foreground">
-      <caption class="sr-only">{{.AiPulseStockTableCaption}}</caption>
-      <thead>
-        <tr class="border-b border-border text-left">
-          <th scope="col" class="py-1 pr-4 font-medium">{{.AiPulseStockDateLabel}}</th>
-          <th scope="col" class="py-1 font-medium">{{.AiPulseStockCloseLabel}}</th>
-        </tr>
-      </thead>
-      <tbody id="stock-chart-tbody">
-        {{range .StockInitialData}}
-          <tr class="border-b border-border/60">
-            <td class="py-1 pr-4">{{.Date}}</td>
-            <td class="py-1">${{printf "%.2f" .Close}}</td>
-          </tr>
-        {{else}}
-          <tr><td colspan="2" class="py-3 text-center">{{.AiPulseNoStocksLabel}}</td></tr>
-        {{end}}
-      </tbody>
-    </table>
-  </div>
+  <p id="stock-chart-empty" x-show="empty" class="py-3 text-center text-xs text-muted-foreground"{{if .StockInitialData}} style="display: none"{{end}}>{{.AiPulseNoStocksLabel}}</p>
 </div>
 
 <script src="/static/lightweight-charts.standalone.production.js"></script>
@@ -46,6 +26,7 @@
     return {
       ticker: '{{.StockInitialTicker}}',
       chart: null,
+      empty: {{if .StockInitialData}}false{{else}}true{{end}},
       init() {
         var self = this;
         var dataEl = document.getElementById('stock-chart-data');
@@ -93,21 +74,9 @@
           .then(function (json) {
             if (!json) return;
             self.renderChart(self.$refs.chart, json.data);
-            self.updateTable(json.data);
+            self.empty = !json.data || json.data.length === 0;
           })
           .catch(function () {});
-      },
-      updateTable(rows) {
-        var tbody = document.getElementById('stock-chart-tbody');
-        if (!tbody) return;
-        if (!rows || rows.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="2" class="py-3 text-center">{{.AiPulseNoStocksLabel}}</td></tr>';
-          return;
-        }
-        tbody.innerHTML = rows.map(function (r) {
-          var c = (r.close != null) ? '$' + Number(r.close).toFixed(2) : '';
-          return '<tr class="border-b border-border/60"><td class="py-1 pr-4">' + r.date + '</td><td class="py-1">' + c + '</td></tr>';
-        }).join('');
       }
     };
   }

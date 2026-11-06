@@ -247,9 +247,6 @@ func (h *Handlers) Dashboard(w http.ResponseWriter, r *http.Request) {
 		data["AiPulseSourceLabel"] = tr("dashboard.aiPulseSourceLabel")
 		data["AiPulseStarsTodayLabel"] = tr("dashboard.aiPulseStarsTodayLabel")
 		data["AiPulseStockChartAria"] = tr("dashboard.aiPulseStockChartAria")
-		data["AiPulseStockTableCaption"] = tr("dashboard.aiPulseStockTableCaption")
-		data["AiPulseStockDateLabel"] = tr("dashboard.aiPulseStockDateLabel")
-		data["AiPulseStockCloseLabel"] = tr("dashboard.aiPulseStockCloseLabel")
 		data["AiPulseNoStocksLabel"] = tr("dashboard.aiPulseNoStocksLabel")
 
 		// Trends + repos read from the 12b cache (fail-closed: empty

@@ -175,13 +175,15 @@ func TestDashboardAiPulseRenders(t *testing.T) {
 		"lightweight-charts.standalone.production.js",
 		`id="ticker-select"`,
 		`id="stock-chart-data"`,
-		`id="stock-chart-tbody"`,
 		">NVIDIA (NVDA)<",
-		"1.50",
+		`"close":1.5`,
 	} {
 		if !strings.Contains(out, want) {
 			t.Errorf("dashboard ai-pulse output missing %q", want)
 		}
+	}
+	if strings.Contains(out, "stock-chart-tbody") {
+		t.Error("stock prices must render as a chart only, not a table")
 	}
 }
 
@@ -319,8 +321,8 @@ func TestDashboardAiPulseNoDBFailClosed(t *testing.T) {
 	}
 	body, _ := io.ReadAll(w.Body)
 	out := string(body)
-	if !strings.Contains(out, "stock-chart-tbody") {
-		t.Error("expected stock chart table even with no DB")
+	if !strings.Contains(out, `id="stock-chart-empty"`) {
+		t.Error("expected stock empty state even with no DB")
 	}
 	// Locale is fi: the empty-state label is the Finnish copy.
 	if !strings.Contains(out, "Osakedataa ei ole vielä saatavilla") {

@@ -270,9 +270,6 @@ func TestRenderDashboardViews(t *testing.T) {
 				"AiPulseStarsTodayLabel":      "stars",
 				"AiPulseAvailable":            true,
 				"AiPulseStockChartAria":       "chart",
-				"AiPulseStockTableCaption":    "table",
-				"AiPulseStockDateLabel":       "Date",
-				"AiPulseStockCloseLabel":      "Close",
 				"AiPulseNoStocksLabel":        "no stocks",
 				"StockTickers": []map[string]any{
 					{"Ticker": "NVDA", "Name": "NVIDIA"},
