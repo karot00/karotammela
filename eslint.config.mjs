@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The Go build has its own tooling and ships minified third-party JS.
+    "goth/**",
+    "extensions/**",
   ]),
 ]);
 
