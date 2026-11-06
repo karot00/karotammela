@@ -19,8 +19,8 @@ jobs:
       run:
         working-directory: goth
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: goth/go.mod
           cache-dependency-path: goth/go.sum
@@ -38,21 +38,21 @@ jobs:
       run:
         working-directory: goth
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: goth/go.mod
           cache-dependency-path: goth/go.sum
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '22'
+          node-version: '26'
           cache: npm
           cache-dependency-path: goth/package-lock.json
       - name: Install Tailwind CLI
         run: npm ci
       - name: Build release artifact
         run: make release RELEASE="goth-$(date +%Y%m%d)-${GITHUB_SHA::8}-linux-amd64"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: goth-release
           path: goth/dist/*.tar.gz*
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: goth-release
           path: dist
