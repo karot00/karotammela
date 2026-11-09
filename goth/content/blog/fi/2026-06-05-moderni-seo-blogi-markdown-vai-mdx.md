@@ -7,7 +7,7 @@ draft: false
 tags: ["nextjs", "markdown", "mdx", "seo", "webdev"]
 ---
 
-Agenttisen tekoälyn aikakaudella blogin rakentaminen ei vaadi monimutkaisia julkaisujärjestelmiä, raskaita tietokantoja tai loputonta tietoturvapaikkailua. Tässä oppaassa käyn läpi, miten rakennat erittäin suorituskykyisen, hakukoneoptimoidun ja monikielisen blogin Next.js:llä ja staattisilla tiedostoilla – hyödyntäen oikeita arkkitehtuureja, jotka olen vienyt tuotantoon [levifinland.fi-sivustolla](https://www.levifinland.fi) ja täällä omassa blogissani.
+Agenttisen tekoälyn aikakaudella blogin rakentaminen ei vaadi monimutkaisia julkaisujärjestelmiä, raskaita tietokantoja tai loputonta tietoturvapaikkailua. Tässä oppaassa käyn läpi, miten rakennat erittäin suorituskykyisen, hakukoneoptimoidun ja monikielisen blogin Next.js:llä ja staattisilla tiedostoilla – hyödyntäen oikeita arkkitehtuureja, jotka olen vienyt tuotantoon [levifinland.fi-sivustolla](https://levifinland.fi/fi) ja täällä omassa blogissani.
 
 Ja mikä parasta? Tämä arkkitehtuuri käsittelee sisältöä koodina, mikä tekee siitä täydellisen optimoidun niin ihmiskehittäjille kuin tekoälyagenteillekin.
 

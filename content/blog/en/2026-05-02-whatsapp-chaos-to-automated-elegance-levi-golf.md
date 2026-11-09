@@ -11,7 +11,7 @@ For anyone who has managed a high-demand service, the manual era is a familiar n
 
 The risk of double-booking was real, the administrative stress was massive. I wanted a system where customers could do everything themselves: choose a date, pay securely, and receive confirmation instantly, with almost zero manual work on my side.
 
-This is how I built the [Levi Golf Green Fee application](https://greenfee.levifinland.fi) using an Agentic AI workflow.
+This is how I built the [Levi Golf Green Fee application](https://greenfee.levifinland.fi/en) using an Agentic AI workflow.
 
 ### The Core Challenge: Share-Based Allocation Logic
 

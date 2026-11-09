@@ -11,7 +11,7 @@ Jos on hallinnoinut kovalla kysynnällä toimivaa palvelua, ovat manuaaliset ty�
 
 Tuplabuukkauksen riski oli todellinen, ja hallinnollinen säätäminen oli lähes päivittäistä. Halusin järjestelmän, jossa asiakas voi hoitaa kaiken itse: valita päivän, maksaa turvallisesti ja saada vahvistuksen heti ilman, että minun täytyy tehdä juuri lainkaan manuaalista työtä.
 
-Näin rakensin [Levi Golfin Green Fee -sovelluksen](https://greenfee.levifinland.fi) Agentic AI -työnkululla.
+Näin rakensin [Levi Golfin Green Fee -sovelluksen](https://greenfee.levifinland.fi/fi) Agentic AI -työnkululla.
 
 ### Ydinhaaste: osakepohjainen allokointilogiikka
 
@@ -57,6 +57,6 @@ Tämä roolipohjainen toimintamalli tuottaa parempia tuloksia kuin yhden mallin 
 
 Operatiivinen ero on dramaattinen. Tehtävät, jotka aiemmin veivät tunteja manuaalista koordinointia, hoituvat nyt automaattisesti: saatavuustarkistukset, maksun vahvistus, lipun allokointi, asiakasviestintä ja myyjätason seuranta.
 
-En enää käytä aikaa taulukoiden ja viestiketjujen täsmäyttämiseen. Alusta on nyt turvallinen, skaalautuva ja omavarainen. En pitänyt kirjaa tähän projektiin käytetyistä työtunneista, sillä se on ollut osa laajempaa [levifinland.fi](https://levifinland.fi) -projektia. Tämä green fee myyntialusta on yksi applikaatio neljästä, jotka olen tähän samaan Turborepo-projektiin rakentanut. Se esimerkiksi jakaa saman hallintapaneelin kuin mökkien vuokrausalusta. Olin jo vuonna 2025 rakentanut ensimmäisen version green fee myyntialustasta. Silloin vasta harjoittelin agentic AI ohjelmointia, eikä minulla ollut vielä kokemusta Next.js:stä, libSQL:stä tai monorepostakaan. Se oli toimiva järjestelmä, mutta tämä nykyinen versio on nykyaikainen, tietoturvallisempi ja sen skaalaaminen on helpompaa.
+En enää käytä aikaa taulukoiden ja viestiketjujen täsmäyttämiseen. Alusta on nyt turvallinen, skaalautuva ja omavarainen. En pitänyt kirjaa tähän projektiin käytetyistä työtunneista, sillä se on ollut osa laajempaa [levifinland.fi](https://levifinland.fi/fi) -projektia. Tämä green fee myyntialusta on yksi applikaatio neljästä, jotka olen tähän samaan Turborepo-projektiin rakentanut. Se esimerkiksi jakaa saman hallintapaneelin kuin mökkien vuokrausalusta. Olin jo vuonna 2025 rakentanut ensimmäisen version green fee myyntialustasta. Silloin vasta harjoittelin agentic AI ohjelmointia, eikä minulla ollut vielä kokemusta Next.js:stä, libSQL:stä tai monorepostakaan. Se oli toimiva järjestelmä, mutta tämä nykyinen versio on nykyaikainen, tietoturvallisempi ja sen skaalaaminen on helpompaa.
 
 Manuaalinen aikakausi lippujen myymiseksi on osaltani virallisesti ohi.

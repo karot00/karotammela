@@ -7,7 +7,7 @@ draft: false
 tags: ["nextjs", "markdown", "mdx", "seo", "webdev"]
 ---
 
-In the age of agentic AI, building a blog doesn't require complex CMS setups, heavy databases, or endless security patching. This guide walks you through how to build a highly performant, SEO-optimized, and multilingual blog using Next.js and static files, using real-world architectures I've deployed for [levifinland.fi](https://levifinland.fi) and my own portfolio here at [karotammela.fi](https://karotammela.fi).
+In the age of agentic AI, building a blog doesn't require complex CMS setups, heavy databases, or endless security patching. This guide walks you through how to build a highly performant, SEO-optimized, and multilingual blog using Next.js and static files, using real-world architectures I've deployed for [levifinland.fi](https://levifinland.fi/en) and my own portfolio here at [karotammela.fi](https://karotammela.fi).
 
 Best of all? This architecture treats content as code, making it perfectly optimized for human developers and AI agents alike.
 
